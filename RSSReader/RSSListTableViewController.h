@@ -12,8 +12,5 @@
 @interface RSSListTableViewController : UITableViewController
 
 @property NSMutableArray * NewsItems;
-@property NewsItem * currentNewsItem;
-
-- (IBAction) unwindToList: (UIStoryboardSegue *) segue ;
 
 @end

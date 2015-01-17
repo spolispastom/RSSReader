@@ -7,6 +7,8 @@
 //
 
 #import "RSSListTableViewController.h"
+#import "NewsCintentViewController.h"
+#import "SelectionContext.h"
 
 @interface RSSListTableViewController ()
 
@@ -17,48 +19,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.NewsItems = [self dowlandRSSDataFromURL: @"http://news.yandex.ru/hardware.rss"];
-    
-    if (!self.NewsItems)
-        self.NewsItems = [[ NSMutableArray alloc ] init ];
+    self.NewsItems = [[ NSMutableArray alloc ] init ];
     
      defaultDateFormatter = [[NSDateFormatter alloc] init];
     [defaultDateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     
     [ self loadInitialData ];
-    
 }
 
 NSDateFormatter * defaultDateFormatter;
-
--(NSMutableArray *) dowlandRSSDataFromURL: (NSString *) url{
-  
-    NSMutableArray * dataNewsItems = [[ NSMutableArray alloc ] init ];
-    
-    NSData * rssData = [self getDataFromURL: url];
-    
-    NSXMLParser * parser = [[NSXMLParser alloc] initWithData: rssData ];
-        
-        
-    return dataNewsItems;
-}
-
-- (NSData *) getDataFromURL:(NSString *) url {
-    NSMutableURLRequest * request = [[NSMutableURLRequest alloc] init];
-    [request setHTTPMethod:@"GET"];
-    [request setURL:[NSURL URLWithString:url]];
-    
-    NSError * error = [[NSError alloc] init];
-    NSHTTPURLResponse * responseCode = nil;
-    
-    NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
-    
-    if([responseCode statusCode] != 200){
-        return nil;
-    }
-    
-    return oResponseData;
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -87,6 +56,8 @@ NSDateFormatter * defaultDateFormatter;
     
     return cell;
 }
+
+
 
 
 /*
@@ -133,11 +104,6 @@ NSDateFormatter * defaultDateFormatter;
 }
 */
 
-- ( IBAction ) unwindToList: ( UIStoryboardSegue * ) segue {
-    //AddToDoItemViewController * sourse = [segue sourceViewController];
-    
-}
-
 
 - ( void ) loadInitialData {
     
@@ -159,12 +125,12 @@ NSDateFormatter * defaultDateFormatter;
 
 #pragma mark - Table view delegate
 
-- ( void ) tableView: ( UITableView * ) tableView didSelectRowAtIndexPath: ( NSIndexPath * ) indexPath {
-    [ tableView deselectRowAtIndexPath: indexPath animated: NO ];
+- (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath {
+    [tableView deselectRowAtIndexPath: indexPath animated: NO ];
     
-    _currentNewsItem = [ self.NewsItems objectAtIndex: indexPath . row ];
+    [SelectionContext Instance].SelectionNews = [self.NewsItems objectAtIndex: indexPath.row];
     
-    [ tableView reloadRowsAtIndexPaths: @[ indexPath ] withRowAnimation: UITableViewRowAnimationNone ];
+    [tableView reloadRowsAtIndexPaths: @[ indexPath ] withRowAnimation: UITableViewRowAnimationNone ];
 }
 
 @end

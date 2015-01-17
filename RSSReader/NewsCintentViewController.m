@@ -7,9 +7,9 @@
 //
 
 #import "NewsCintentViewController.h"
+#import "SelectionContext.h"
 
 @interface NewsCintentViewController ()
-
 @property (weak, nonatomic) IBOutlet UILabel *titleLable;
 @property (weak, nonatomic) IBOutlet UILabel *dateLable;
 @property (weak, nonatomic) IBOutlet UITextView *contentTextView;
@@ -18,26 +18,34 @@
 
 @implementation NewsCintentViewController
 
-- (NewsCintentViewController *) initFronNewsItem: (NewsItem *) news
+- (NewsCintentViewController *) init
 {
     self = [super init];
-    
-    defaultDateFormatter = [[NSDateFormatter alloc] init];
-    [defaultDateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-    
-    _titleLable.text = news.Title;
-    _dateLable.text = [defaultDateFormatter stringFromDate:news.CreationDate];
-    _contentTextView.text = news.Content;
     
     return self;
 }
 
+- (void) setCurrentNewsItem: (NewsItem *) item
+{
+    if (item){
+      }
+}
 
 NSDateFormatter * defaultDateFormatter;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    
+    defaultDateFormatter = [[NSDateFormatter alloc] init];
+    [defaultDateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    
+    
+    NewsItem * news = [SelectionContext Instance].SelectionNews;
+    
+    self.titleLable.text = news.Title;
+    self.dateLable.text = [defaultDateFormatter stringFromDate: news.CreationDate];
+    self.contentTextView.text = news.Content;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,15 +53,15 @@ NSDateFormatter * defaultDateFormatter;
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
+
+#pragma mark - Nzavigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-*/
+
 
 
 @end

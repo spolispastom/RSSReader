@@ -12,6 +12,8 @@
 
 @interface NewsCintentViewController : UIViewController
 
-- (NewsCintentViewController *) initFronNewsItem: (NewsItem *) news;
+- (void) setCurrentNewsItem: (NewsItem *) item;
+
+- (NewsCintentViewController *) init;
 
 @end

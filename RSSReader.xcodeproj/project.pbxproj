@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CF2DF36A1A6AAF1500789B08 /* SelectionContext.m in Sources */ = {isa = PBXBuildFile; fileRef = CF2DF3691A6AAF1500789B08 /* SelectionContext.m */; };
 		CF68EAF31A691A29009BF032 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CF68EAF21A691A29009BF032 /* main.m */; };
 		CF68EAF61A691A29009BF032 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CF68EAF51A691A29009BF032 /* AppDelegate.m */; };
 		CF68EAFC1A691A29009BF032 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF68EAFA1A691A29009BF032 /* Main.storyboard */; };
@@ -29,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CF2DF3681A6AAF1500789B08 /* SelectionContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectionContext.h; sourceTree = "<group>"; };
+		CF2DF3691A6AAF1500789B08 /* SelectionContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectionContext.m; sourceTree = "<group>"; };
 		CF68EAED1A691A29009BF032 /* RSSReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSSReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF68EAF11A691A29009BF032 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF68EAF21A691A29009BF032 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -99,6 +102,8 @@
 				CF68EB1A1A691AC1009BF032 /* RSSListTableViewController.m */,
 				CFFCB1C41A69310800BAD3D6 /* NewsCintentViewController.h */,
 				CFFCB1C51A69310800BAD3D6 /* NewsCintentViewController.m */,
+				CF2DF3681A6AAF1500789B08 /* SelectionContext.h */,
+				CF2DF3691A6AAF1500789B08 /* SelectionContext.m */,
 			);
 			path = RSSReader;
 			sourceTree = "<group>";
@@ -231,6 +236,7 @@
 			files = (
 				CF68EB181A691A3D009BF032 /* NewsItem.m in Sources */,
 				CFFCB1C61A69310800BAD3D6 /* NewsCintentViewController.m in Sources */,
+				CF2DF36A1A6AAF1500789B08 /* SelectionContext.m in Sources */,
 				CF68EAF61A691A29009BF032 /* AppDelegate.m in Sources */,
 				CF68EB1B1A691AC1009BF032 /* RSSListTableViewController.m in Sources */,
 				CF68EAF31A691A29009BF032 /* main.m in Sources */,
