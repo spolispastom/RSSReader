@@ -7,7 +7,7 @@
 //
 
 #import "RSSListTableViewController.h"
-#import "NewsCintentViewController.h"
+#import "NewsContentViewController.h"
 #import "SelectionContext.h"
 
 @interface RSSListTableViewController ()

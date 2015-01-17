@@ -10,10 +10,10 @@
 #import "RSSListTableViewController.h"
 #import "NewsItem.h"
 
-@interface NewsCintentViewController : UIViewController
+@interface NewsContentViewController : UIViewController
 
 - (void) setCurrentNewsItem: (NewsItem *) item;
 
-- (NewsCintentViewController *) init;
+- (NewsContentViewController *) init;
 
 @end

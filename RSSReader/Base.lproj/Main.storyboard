@@ -51,10 +51,10 @@
             </objects>
             <point key="canvasLocation" x="1548" y="490"/>
         </scene>
-        <!--News Cintent View Controller-->
+        <!--News Content View Controller-->
         <scene sceneID="mz4-mu-Ij5">
             <objects>
-                <viewController id="acl-oM-SX4" customClass="NewsCintentViewController" sceneMemberID="viewController">
+                <viewController id="acl-oM-SX4" customClass="NewsContentViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NjX-l1-VHr"/>
                         <viewControllerLayoutGuide type="bottom" id="SbV-Ae-zoG"/>

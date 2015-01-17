@@ -16,7 +16,7 @@
 		CF68EB0D1A691A29009BF032 /* RSSReaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CF68EB0C1A691A29009BF032 /* RSSReaderTests.m */; };
 		CF68EB181A691A3D009BF032 /* NewsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CF68EB171A691A3D009BF032 /* NewsItem.m */; };
 		CF68EB1B1A691AC1009BF032 /* RSSListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF68EB1A1A691AC1009BF032 /* RSSListTableViewController.m */; };
-		CFFCB1C61A69310800BAD3D6 /* NewsCintentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFFCB1C51A69310800BAD3D6 /* NewsCintentViewController.m */; };
+		CFFCB1C61A69310800BAD3D6 /* NewsContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFFCB1C51A69310800BAD3D6 /* NewsContentViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,8 +47,8 @@
 		CF68EB171A691A3D009BF032 /* NewsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsItem.m; sourceTree = "<group>"; };
 		CF68EB191A691AC1009BF032 /* RSSListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSListTableViewController.h; sourceTree = "<group>"; };
 		CF68EB1A1A691AC1009BF032 /* RSSListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSListTableViewController.m; sourceTree = "<group>"; };
-		CFFCB1C41A69310800BAD3D6 /* NewsCintentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsCintentViewController.h; sourceTree = "<group>"; };
-		CFFCB1C51A69310800BAD3D6 /* NewsCintentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsCintentViewController.m; sourceTree = "<group>"; };
+		CFFCB1C41A69310800BAD3D6 /* NewsContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsContentViewController.h; sourceTree = "<group>"; };
+		CFFCB1C51A69310800BAD3D6 /* NewsContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsContentViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,8 +100,8 @@
 				CF68EB171A691A3D009BF032 /* NewsItem.m */,
 				CF68EB191A691AC1009BF032 /* RSSListTableViewController.h */,
 				CF68EB1A1A691AC1009BF032 /* RSSListTableViewController.m */,
-				CFFCB1C41A69310800BAD3D6 /* NewsCintentViewController.h */,
-				CFFCB1C51A69310800BAD3D6 /* NewsCintentViewController.m */,
+				CFFCB1C41A69310800BAD3D6 /* NewsContentViewController.h */,
+				CFFCB1C51A69310800BAD3D6 /* NewsContentViewController.m */,
 				CF2DF3681A6AAF1500789B08 /* SelectionContext.h */,
 				CF2DF3691A6AAF1500789B08 /* SelectionContext.m */,
 			);
@@ -235,7 +235,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF68EB181A691A3D009BF032 /* NewsItem.m in Sources */,
-				CFFCB1C61A69310800BAD3D6 /* NewsCintentViewController.m in Sources */,
+				CFFCB1C61A69310800BAD3D6 /* NewsContentViewController.m in Sources */,
 				CF2DF36A1A6AAF1500789B08 /* SelectionContext.m in Sources */,
 				CF68EAF61A691A29009BF032 /* AppDelegate.m in Sources */,
 				CF68EB1B1A691AC1009BF032 /* RSSListTableViewController.m in Sources */,

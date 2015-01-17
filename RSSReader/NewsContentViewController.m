@@ -6,19 +6,19 @@
 //  Copyright (c) 2015 Михаил Куренков. All rights reserved.
 //
 
-#import "NewsCintentViewController.h"
+#import "NewsContentViewController.h"
 #import "SelectionContext.h"
 
-@interface NewsCintentViewController ()
+@interface NewsContentViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *titleLable;
 @property (weak, nonatomic) IBOutlet UILabel *dateLable;
 @property (weak, nonatomic) IBOutlet UITextView *contentTextView;
 
 @end
 
-@implementation NewsCintentViewController
+@implementation NewsContentViewController
 
-- (NewsCintentViewController *) init
+- (NewsContentViewController *) init
 {
     self = [super init];
     
