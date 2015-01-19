@@ -37,6 +37,8 @@
     [_RSSList reloadData];
 }
 
+NewsContentViewController * newsContent;
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -67,12 +69,14 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
 {
-    UINavigationController * navigation = [segue destinationViewController];
-    
-    NewsContentViewController * newsContent = [navigation topViewController];
-    
-     NewsItem * item = [_newsList objectAtIndex: [_RSSList indexPathForCell:sender].row];
-     [newsContent setNewsItem: item];
+    if (!newsContent)
+    {
+        UINavigationController * navigation = [segue destinationViewController];
+        if ([[navigation topViewController] isKindOfClass:[NewsContentViewController class]])
+            newsContent = (NewsContentViewController *)[navigation topViewController];
+    }
+    NewsItem * item = [_newsList objectAtIndex: [_RSSList indexPathForCell:sender].row];
+    [newsContent setNewsItem: item];
 }
 
 @end

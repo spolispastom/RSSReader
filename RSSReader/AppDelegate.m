@@ -31,9 +31,9 @@
                                          andCreationDate: [NSDate date]
                                               andContent: @"Компания Google объявила об остановке производства текущей версии Google Glass — очков с прозрачным дисплеем и камерой. Об этом сообщил в четверг, 15 января, телеканал CNBC." ];
     
-    UINavigationController * navigation = self.window.rootViewController;
+    UINavigationController * navigation = (UINavigationController *)self.window.rootViewController;
     
-    RSSListViewController * RSSList = [navigation topViewController];
+    RSSListViewController * RSSList = (RSSListViewController *)[navigation topViewController];
   
     RSSList.newsList = @[item1, item2, item3];
     

@@ -11,7 +11,7 @@
 
 @interface RSSListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
-@property (setter=setNewsList:) NSArray * newsList;
-@property (getter=defaultDateFormatter) NSDateFormatter * defaultDateFormatter;
+@property (nonatomic, setter=setNewsList:) NSArray * newsList;
+@property (nonatomic, getter=defaultDateFormatter) NSDateFormatter * defaultDateFormatter;
 
 @end
