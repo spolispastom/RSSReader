@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "NewsItem.h"
 
-@interface RSSListTableViewController : UITableViewController
+@interface RSSListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
-@property NSMutableArray * NewsItems;
+@property (setter=setNewsList:) NSArray * newsList;
+@property (getter=defaultDateFormatter) NSDateFormatter * defaultDateFormatter;
 
 @end

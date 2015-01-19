@@ -7,13 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RSSListTableViewController.h"
+#import "RSSListViewController.h"
 #import "NewsItem.h"
 
 @interface NewsContentViewController : UIViewController
 
-- (void) setCurrentNewsItem: (NewsItem *) item;
-
-- (NewsContentViewController *) init;
+- (void) setNewsItem: (NewsItem *) news;
 
 @end

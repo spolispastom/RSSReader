@@ -10,20 +10,20 @@
 
 @implementation NewsItem
 
-- (NewsItem *) initFromTitle: (NSString * ) title andCreationDate: (NSDate *) creationDate andContent: (NSString *) content
+- (NewsItem *) initWithTitle: (NSString * ) title andCreationDate: (NSDate *) creationDate andContent: (NSString *) content
 {
     self = [super init];
     
-    _Title = title;
-    _CreationDate = creationDate;
-    _Content = content;
+    _title = title;
+    _creationDate = creationDate;
+    _content = content;
     
     return self;
 }
 
-- (NewsItem *) initFromTitle: (NSString * ) title andCreationDate: (NSDate *) creationDate
+- (NewsItem *) initWithTitle: (NSString * ) title andCreationDate: (NSDate *) creationDate
 {
-    return [self initFromTitle: title andCreationDate: creationDate andContent: nil];
+    return [self initWithTitle: title andCreationDate: creationDate andContent: nil];
 }
 
 @end

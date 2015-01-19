@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "NewsItem.h"
+#import "RSSListViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +19,24 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    NewsItem * item1 = [[ NewsItem alloc ] initWithTitle: @"Китайский производитель смартфонов «вдохновился» моделями Apple и Samsung"
+                                         andCreationDate: [NSDate date]
+                                              andContent: @"Xiaomi, третий в мире производитель смартфонов, анонсировал модели Mi Note и Mi Note Pro, по дизайну похожие на iPhone 6 Plus. Об этом сообщается в официальном аккаунте компании в Facebook." ];
+    
+    NewsItem * item2 = [[ NewsItem alloc ] initWithTitle: @"Российские ракетные двигатели разрешили продать в США"
+                                         andCreationDate: [NSDate date]
+                                              andContent: @"Правительство России выдало разрешение НПО «Энергомаш» и Объединенной ракетно-космической корпорации (ОРКК) на поставку ракетных двигателей РД-181 для ракет-носителей Antares американской корпорации Orbital Sciences. Об этом пишут в пятницу, 16 января, «Известия» со ссылкой на президента ракетно-космической корпорации «Энергия» Владимира Солнцева." ];
+    NewsItem * item3 = [[ NewsItem alloc ] initWithTitle: @"Google приостановит производство своих очков"
+                                         andCreationDate: [NSDate date]
+                                              andContent: @"Компания Google объявила об остановке производства текущей версии Google Glass — очков с прозрачным дисплеем и камерой. Об этом сообщил в четверг, 15 января, телеканал CNBC." ];
+    
+    UINavigationController * navigation = self.window.rootViewController;
+    
+    RSSListViewController * RSSList = [navigation topViewController];
+  
+    RSSList.newsList = @[item1, item2, item3];
+    
     return YES;
 }
 

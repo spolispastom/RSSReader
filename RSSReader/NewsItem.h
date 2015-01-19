@@ -10,11 +10,11 @@
 
 @interface NewsItem : NSObject
 
-@property NSString * Title;
-@property (readonly) NSDate * CreationDate ;
-@property NSString * Content;
+@property (readonly, nonatomic) NSString * title;
+@property (readonly, nonatomic) NSDate * creationDate ;
+@property (readonly, nonatomic) NSString * content;
 
-- (NewsItem *) initFromTitle: (NSString * ) title andCreationDate: (NSDate *) creationDate andContent: (NSString *) content;
-- (NewsItem *) initFromTitle: (NSString * ) title andCreationDate: (NSDate *) creationDate;
+- (NewsItem *) initWithTitle: (NSString * ) title andCreationDate: (NSDate *) creationDate andContent: (NSString *) content;
+- (NewsItem *) initWithTitle: (NSString * ) title andCreationDate: (NSDate *) creationDate;
 
 @end

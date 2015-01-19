@@ -7,7 +7,6 @@
 //
 
 #import "NewsContentViewController.h"
-#import "SelectionContext.h"
 
 @interface NewsContentViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *titleLable;
@@ -17,51 +16,46 @@
 @end
 
 @implementation NewsContentViewController
-
-- (NewsContentViewController *) init
-{
-    self = [super init];
+- (void)viewDidLoad {
+    [super viewDidLoad];
     
-    return self;
-}
-
-- (void) setCurrentNewsItem: (NewsItem *) item
-{
-    if (item){
-      }
+    if (title)
+        self.titleLable.text = title;
+    if (creationDate)
+        self.dateLable.text = creationDate;
+    if (content)
+        self.contentTextView.text = content;
 }
 
 NSDateFormatter * defaultDateFormatter;
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+NSString * title;
+NSString * creationDate ;
+NSString * content;
+
+- (void) setNewsItem: (NewsItem *) news;
+{
+    if (!defaultDateFormatter)
+    {
+        defaultDateFormatter = [[NSDateFormatter alloc] init];
+        [defaultDateFormatter setDateFormat:@"dd MMMM YYYY HH:mm"];
+    }
     
-    
-    defaultDateFormatter = [[NSDateFormatter alloc] init];
-    [defaultDateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-    
-    
-    NewsItem * news = [SelectionContext Instance].SelectionNews;
-    
-    self.titleLable.text = news.Title;
-    self.dateLable.text = [defaultDateFormatter stringFromDate: news.CreationDate];
-    self.contentTextView.text = news.Content;
+    if (news)
+    {
+        title = news.title;
+        creationDate = [defaultDateFormatter stringFromDate: news.creationDate];
+        content = news.content;
+        
+        if (title)
+            self.titleLable.text = title;
+        if (creationDate)
+            self.dateLable.text = creationDate;
+        if (content)
+            self.contentTextView.text = content;
+        
+        [self updateViewConstraints];
+    }
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-#pragma mark - Nzavigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-
-
 
 @end
