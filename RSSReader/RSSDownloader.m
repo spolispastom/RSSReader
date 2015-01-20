@@ -37,11 +37,14 @@ RSSParser * rssParser;
 
 - (void) download
 {
+    
+    __weak RSSParser * parser = rssParser;
+    
     NSURLSessionDataTask * task = [session dataTaskWithURL: rssURL
                                          completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                                              
-                                             rssParser.data = data;
-                                             [rssParser parse];
+                                             parser.data = data;
+                                             [parser parse];
     }];
     
     [task resume];
