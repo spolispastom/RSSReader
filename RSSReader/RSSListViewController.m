@@ -37,6 +37,7 @@
     [_RSSList reloadData];
 }
 
+
 NewsContentViewController * newsContent;
 
 #pragma mark - Table view data source
