@@ -17,20 +17,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="568" placeholderIntrinsicHeight="21" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xtr-qm-PLg">
-                                <rect key="frame" x="16" y="72" width="568" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="568" placeholderIntrinsicHeight="21" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZn-kQ-toF">
-                                <rect key="frame" x="16" y="101" width="568" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="568" placeholderIntrinsicHeight="21" text="CreationDate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZn-kQ-toF">
+                                <rect key="frame" x="16" y="110" width="568" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mYF-zn-pNw">
-                                <rect key="frame" x="16" y="130" width="568" height="456"/>
+                            <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="568" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d6H-Wu-GGx">
+                                <rect key="frame" x="16" y="72" width="568" height="30"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
+                                <state key="normal" title="link"/>
+                                <connections>
+                                    <action selector="goLink:" destination="acl-oM-SX4" eventType="touchDown" id="bVn-jb-icy"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mYF-zn-pNw">
+                                <rect key="frame" x="16" y="139" width="568" height="461"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -39,23 +41,23 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="SbV-Ae-zoG" firstAttribute="top" secondItem="mYF-zn-pNw" secondAttribute="bottom" constant="14" id="6MX-HJ-cMz"/>
-                            <constraint firstItem="wZn-kQ-toF" firstAttribute="trailing" secondItem="SHU-yy-RF5" secondAttribute="trailingMargin" id="ZqL-yo-z41"/>
-                            <constraint firstItem="Xtr-qm-PLg" firstAttribute="leading" secondItem="SHU-yy-RF5" secondAttribute="leadingMargin" id="a6l-pG-5Zk"/>
-                            <constraint firstItem="mYF-zn-pNw" firstAttribute="trailing" secondItem="SHU-yy-RF5" secondAttribute="trailingMargin" id="dtp-MX-D19"/>
-                            <constraint firstItem="mYF-zn-pNw" firstAttribute="top" secondItem="wZn-kQ-toF" secondAttribute="bottom" constant="8" id="dx4-vd-McD"/>
-                            <constraint firstItem="Xtr-qm-PLg" firstAttribute="trailing" secondItem="SHU-yy-RF5" secondAttribute="trailingMargin" id="gFN-kN-kIM"/>
-                            <constraint firstItem="mYF-zn-pNw" firstAttribute="leading" secondItem="SHU-yy-RF5" secondAttribute="leadingMargin" id="mBx-GP-RKy"/>
-                            <constraint firstItem="Xtr-qm-PLg" firstAttribute="top" secondItem="NjX-l1-VHr" secondAttribute="bottom" constant="8" id="rOz-F7-nPd"/>
-                            <constraint firstItem="wZn-kQ-toF" firstAttribute="top" secondItem="Xtr-qm-PLg" secondAttribute="bottom" constant="8" id="st3-8a-kZZ"/>
-                            <constraint firstItem="wZn-kQ-toF" firstAttribute="leading" secondItem="SHU-yy-RF5" secondAttribute="leadingMargin" id="wcJ-C9-zuf"/>
+                            <constraint firstItem="d6H-Wu-GGx" firstAttribute="top" secondItem="NjX-l1-VHr" secondAttribute="bottom" constant="8" id="3gf-Xv-8Cw"/>
+                            <constraint firstItem="SbV-Ae-zoG" firstAttribute="top" secondItem="mYF-zn-pNw" secondAttribute="bottom" id="965-gE-PeZ"/>
+                            <constraint firstItem="d6H-Wu-GGx" firstAttribute="leading" secondItem="SHU-yy-RF5" secondAttribute="leadingMargin" id="JAJ-6K-yzk"/>
+                            <constraint firstItem="mYF-zn-pNw" firstAttribute="leading" secondItem="SHU-yy-RF5" secondAttribute="leadingMargin" id="Zh7-mb-Hsy"/>
+                            <constraint firstItem="wZn-kQ-toF" firstAttribute="trailing" secondItem="SHU-yy-RF5" secondAttribute="trailingMargin" id="bvM-r1-guo"/>
+                            <constraint firstItem="mYF-zn-pNw" firstAttribute="trailing" secondItem="SHU-yy-RF5" secondAttribute="trailingMargin" id="e0w-v5-doh"/>
+                            <constraint firstItem="mYF-zn-pNw" firstAttribute="top" secondItem="wZn-kQ-toF" secondAttribute="bottom" constant="8" id="kCI-an-FBS"/>
+                            <constraint firstItem="d6H-Wu-GGx" firstAttribute="trailing" secondItem="SHU-yy-RF5" secondAttribute="trailingMargin" id="nRC-yw-wjl"/>
+                            <constraint firstItem="wZn-kQ-toF" firstAttribute="leading" secondItem="SHU-yy-RF5" secondAttribute="leadingMargin" id="rRr-5s-CGw"/>
+                            <constraint firstItem="wZn-kQ-toF" firstAttribute="top" secondItem="d6H-Wu-GGx" secondAttribute="bottom" constant="8" id="vLE-aF-fea"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5EJ-Nj-NYp"/>
                     <connections>
                         <outlet property="contentTextView" destination="mYF-zn-pNw" id="akc-JZ-1rT"/>
                         <outlet property="dateLable" destination="wZn-kQ-toF" id="e7y-3b-fOg"/>
-                        <outlet property="titleLable" destination="Xtr-qm-PLg" id="99N-rG-zv6"/>
+                        <outlet property="titleButton" destination="d6H-Wu-GGx" id="rSh-Kq-Tby"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HsD-fY-E6W" userLabel="First Responder" sceneMemberID="firstResponder"/>

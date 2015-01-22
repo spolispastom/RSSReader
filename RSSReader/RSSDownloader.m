@@ -53,7 +53,7 @@ RSSParser * rssParser;
 
 - (void) setNewsArray: (NSArray *) news
 {
-    rssDelegate.newsList = news;
+    [rssDelegate setNewsArray: news];
 }
 
 @end

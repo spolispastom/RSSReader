@@ -10,6 +10,6 @@
 
 @required
 
-@property (nonatomic) NSArray * newsList;
+- (void) setNewsArray: (NSArray *) news;
 
 @end

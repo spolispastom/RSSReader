@@ -13,7 +13,9 @@
 @property (readonly, nonatomic) NSString * title;
 @property (readonly, nonatomic) NSDate * creationDate ;
 @property (readonly, nonatomic) NSString * content;
+@property (readonly, nonatomic) NSString * link;
 
+- (NewsItem *) initWithTitle: (NSString * ) title andCreationDate: (NSDate *) creationDate andContent: (NSString *) content andLink: (NSString *) link;
 - (NewsItem *) initWithTitle: (NSString * ) title andCreationDate: (NSDate *) creationDate andContent: (NSString *) content;
 - (NewsItem *) initWithTitle: (NSString * ) title andCreationDate: (NSDate *) creationDate;
 

@@ -9,7 +9,7 @@
 #import "NewsContentViewController.h"
 
 @interface NewsContentViewController ()
-@property (weak, nonatomic) IBOutlet UILabel *titleLable;
+@property (weak, nonatomic) IBOutlet UIButton *titleButton;
 @property (weak, nonatomic) IBOutlet UILabel *dateLable;
 @property (weak, nonatomic) IBOutlet UITextView *contentTextView;
 
@@ -20,11 +20,12 @@
     [super viewDidLoad];
     
     if (title)
-        self.titleLable.text = title;
+        [self.titleButton setTitle: title forState: UIControlStateNormal];
     if (creationDate)
         self.dateLable.text = creationDate;
     if (content)
         self.contentTextView.text = content;
+    
 }
 
 NSDateFormatter * defaultDateFormatter;
@@ -32,6 +33,7 @@ NSDateFormatter * defaultDateFormatter;
 NSString * title;
 NSString * creationDate ;
 NSString * content;
+NSString * linkString;
 
 - (void) setNewsItem: (NewsItem *) news;
 {
@@ -46,16 +48,21 @@ NSString * content;
         title = news.title;
         creationDate = [defaultDateFormatter stringFromDate: news.creationDate];
         content = news.content;
+        linkString = news.link;
         
         if (title)
-            self.titleLable.text = title;
+            [self.titleButton setTitle: title forState: UIControlStateNormal];
         if (creationDate)
             self.dateLable.text = creationDate;
         if (content)
             self.contentTextView.text = content;
         
+        
         [self updateViewConstraints];
     }
+}
+- (IBAction)goLink:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:linkString]];
 }
 
 @end

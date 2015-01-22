@@ -38,6 +38,11 @@
 }
 
 
+- (void) setNewsArray: (NSArray *) news;
+{
+    self.newsList = news;
+}
+
 NewsContentViewController * newsContent;
 
 #pragma mark - Table view data source

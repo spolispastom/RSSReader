@@ -19,6 +19,9 @@ NSMutableString * currentValue;
 NSString * title;
 NSDate * creationDate ;
 NSString * content;
+NSString * linkString;
+
+BOOL isParseItem = NO;
 
 NSMutableArray * newsList;
 
@@ -49,6 +52,13 @@ NSMutableArray * newsList;
         content = @"";
         currentPropertyName = @"";
         currentValue = [[NSMutableString alloc] init];
+        
+        title = nil;
+        creationDate = nil;
+        content = nil;
+        linkString = nil;
+        
+        isParseItem = YES;
     }
     else currentPropertyName = elementName;
 }
@@ -87,9 +97,11 @@ NSMutableArray * newsList;
     {
         [newsList addObject:[[NewsItem alloc] initWithTitle: title
                                             andCreationDate: creationDate
-                                                 andContent: content]];
+                                                 andContent: content
+                                                    andLink: linkString]];
+        isParseItem = NO;
     }
-    else
+    else if (isParseItem)
     {
         if ([currentPropertyName  isEqual: @"title"])
         {
@@ -104,6 +116,11 @@ NSMutableArray * newsList;
         else if ([currentPropertyName  isEqual: @"pubDate"])
         {
             creationDate = [rssDateFormatter dateFromString: currentValue];
+            [currentValue deleteCharactersInRange: NSMakeRange(0, currentValue.length)];
+        }
+        else if ([currentPropertyName  isEqual: @"link"])
+        {
+            linkString =[currentValue copy];
             [currentValue deleteCharactersInRange: NSMakeRange(0, currentValue.length)];
         }
     }
