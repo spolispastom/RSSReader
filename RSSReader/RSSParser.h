@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "NewsItem.h"
+#import "NewsParser.h"
 #import "NewsParserDelegate.h"
 
 @interface RSSParser : NSObject<NSXMLParserDelegate, NewsParser>
