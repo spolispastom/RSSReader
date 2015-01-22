@@ -10,7 +10,7 @@
 #import "NewsItem.h"
 #import "RSSListViewController.h"
 #import "RSSParser.h"
-#import "RSSDownloader.h"
+#import "NewsDownloader.h"
 
 @interface AppDelegate ()
 
@@ -29,7 +29,7 @@
     //NSURL * url = [NSURL URLWithString:@"http://news.yandex.ru/computers.rss"];
     NSURL * url = [NSURL URLWithString:@"http://news.yandex.ru/hardware.rss"];
     
-    RSSDownloader * downloader = [[RSSDownloader alloc] initWithDelegate: RSSList
+    NewsDownloader * downloader = [[NewsDownloader alloc] initWithDelegate: RSSList
                                                                   andURL: url
                                                                andParser: [[RSSParser alloc] init]];
     

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CF48D5311A6D68F30025EE2F /* RSSParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CF48D5301A6D68F30025EE2F /* RSSParser.m */; };
-		CF48D5371A6DA4220025EE2F /* RSSDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = CF48D5361A6DA4220025EE2F /* RSSDownloader.m */; };
+		CF48D5371A6DA4220025EE2F /* NewsDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = CF48D5361A6DA4220025EE2F /* NewsDownloader.m */; };
 		CF68EAF31A691A29009BF032 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CF68EAF21A691A29009BF032 /* main.m */; };
 		CF68EAF61A691A29009BF032 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CF68EAF51A691A29009BF032 /* AppDelegate.m */; };
 		CF68EAFC1A691A29009BF032 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF68EAFA1A691A29009BF032 /* Main.storyboard */; };
@@ -33,10 +33,10 @@
 /* Begin PBXFileReference section */
 		CF48D52F1A6D68F30025EE2F /* RSSParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSParser.h; sourceTree = "<group>"; };
 		CF48D5301A6D68F30025EE2F /* RSSParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSParser.m; sourceTree = "<group>"; };
-		CF48D5351A6DA4220025EE2F /* RSSDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSDownloader.h; sourceTree = "<group>"; };
-		CF48D5361A6DA4220025EE2F /* RSSDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSDownloader.m; sourceTree = "<group>"; };
-		CF48D5391A6E3BB70025EE2F /* RSSDownloaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSDownloaderDelegate.h; sourceTree = "<group>"; };
-		CF48D53B1A6E40B60025EE2F /* RSSParserDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSSParserDelegate.h; sourceTree = "<group>"; };
+		CF48D5351A6DA4220025EE2F /* NewsDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsDownloader.h; sourceTree = "<group>"; };
+		CF48D5361A6DA4220025EE2F /* NewsDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsDownloader.m; sourceTree = "<group>"; };
+		CF48D5391A6E3BB70025EE2F /* NewsDownloaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsDownloaderDelegate.h; sourceTree = "<group>"; };
+		CF48D53B1A6E40B60025EE2F /* NewsParserDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewsParserDelegate.h; sourceTree = "<group>"; };
 		CF68EAED1A691A29009BF032 /* RSSReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSSReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF68EAF11A691A29009BF032 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF68EAF21A691A29009BF032 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -52,6 +52,7 @@
 		CF68EB171A691A3D009BF032 /* NewsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsItem.m; sourceTree = "<group>"; };
 		CF68EB191A691AC1009BF032 /* RSSListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSListViewController.h; sourceTree = "<group>"; };
 		CF68EB1A1A691AC1009BF032 /* RSSListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSListViewController.m; sourceTree = "<group>"; };
+		CF8682631A7139C600F4EC08 /* NewsParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewsParser.h; sourceTree = "<group>"; };
 		CFFCB1C41A69310800BAD3D6 /* NewsContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsContentViewController.h; sourceTree = "<group>"; };
 		CFFCB1C51A69310800BAD3D6 /* NewsContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsContentViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,12 +108,13 @@
 				CF68EB1A1A691AC1009BF032 /* RSSListViewController.m */,
 				CFFCB1C41A69310800BAD3D6 /* NewsContentViewController.h */,
 				CFFCB1C51A69310800BAD3D6 /* NewsContentViewController.m */,
+				CF8682631A7139C600F4EC08 /* NewsParser.h */,
 				CF48D52F1A6D68F30025EE2F /* RSSParser.h */,
 				CF48D5301A6D68F30025EE2F /* RSSParser.m */,
-				CF48D53B1A6E40B60025EE2F /* RSSParserDelegate.h */,
-				CF48D5351A6DA4220025EE2F /* RSSDownloader.h */,
-				CF48D5361A6DA4220025EE2F /* RSSDownloader.m */,
-				CF48D5391A6E3BB70025EE2F /* RSSDownloaderDelegate.h */,
+				CF48D53B1A6E40B60025EE2F /* NewsParserDelegate.h */,
+				CF48D5351A6DA4220025EE2F /* NewsDownloader.h */,
+				CF48D5361A6DA4220025EE2F /* NewsDownloader.m */,
+				CF48D5391A6E3BB70025EE2F /* NewsDownloaderDelegate.h */,
 			);
 			path = RSSReader;
 			sourceTree = "<group>";
@@ -243,7 +245,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF48D5371A6DA4220025EE2F /* RSSDownloader.m in Sources */,
+				CF48D5371A6DA4220025EE2F /* NewsDownloader.m in Sources */,
 				CF68EB181A691A3D009BF032 /* NewsItem.m in Sources */,
 				CF48D5311A6D68F30025EE2F /* RSSParser.m in Sources */,
 				CFFCB1C61A69310800BAD3D6 /* NewsContentViewController.m in Sources */,

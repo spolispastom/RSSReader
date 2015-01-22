@@ -6,14 +6,14 @@
 //  Copyright (c) 2015 Михаил Куренков. All rights reserved.
 //
 
-#import "RSSDownloader.h"
-#import "RSSParser.h"
+#import "NewsDownloader.h"
+#import "NewsParser.h"
 
-@implementation RSSDownloader
+@implementation NewsDownloader
 
-- (RSSDownloader *) initWithDelegate: (id<RSSDownloaderDelegate>) delegate
+- (NewsDownloader *) initWithDelegate: (id<NewsDownloaderDelegate>) delegate
                               andURL: (NSURL *) url
-                           andParser: (RSSParser *) parser{
+                           andParser: (id<NewsParser>) parser{
     self = [super init];
     
     rssDelegate = delegate;
@@ -29,16 +29,16 @@
     return self;
 }
 
-id<RSSDownloaderDelegate> rssDelegate;
+id<NewsDownloaderDelegate> rssDelegate;
 NSURL * rssURL;
 NSURLSession * session;
 
-RSSParser * rssParser;
+id<NewsParser> rssParser;
 
 - (void) download
 {
     
-    __weak RSSParser * parser = rssParser;
+    __weak id<NewsParser> parser = rssParser;
     
     NSURLSessionDataTask * task = [session dataTaskWithURL: rssURL
                                          completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {

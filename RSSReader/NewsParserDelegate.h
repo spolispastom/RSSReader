@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Михаил Куренков. All rights reserved.
 //
 
-@protocol RSSParserDelegate <NSObject>
+@protocol NewsParserDelegate <NSObject>
 
 @required
 

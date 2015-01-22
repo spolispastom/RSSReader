@@ -35,7 +35,7 @@ NSMutableArray * newsList;
         parser = [[NSXMLParser alloc] initWithData: _data];
         [parser setDelegate: self];
         [parser setShouldResolveExternalEntities:YES];
-    
+        
         return [parser parse];
     }
     else return NO;

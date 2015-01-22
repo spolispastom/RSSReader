@@ -7,18 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RSSDownloaderDelegate.h"
-#import "RSSParserDelegate.h"
-#import "RSSParser.h"
+#import "NewsDownloaderDelegate.h"
+#import "NewsParserDelegate.h"
+#import "NewsParser.h"
 
 
-@interface RSSDownloader : NSObject<RSSParserDelegate>
+@interface NewsDownloader : NSObject<NewsParserDelegate>
 
 @property NSURL * url;
 
-- (RSSDownloader *) initWithDelegate: (id<RSSDownloaderDelegate>) delegate
+- (NewsDownloader *) initWithDelegate: (id<NewsDownloaderDelegate>) delegate
                               andURL: (NSURL *) url
-                           andParser: (RSSParser *) parser;
+                           andParser: (id<NewsParser>) parser;
 
 - (void) download;
 
