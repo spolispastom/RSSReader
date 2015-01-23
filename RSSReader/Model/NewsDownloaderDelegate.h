@@ -1,15 +1,13 @@
 //
-//  RSSParserDelegate.h
+//  RSSDownloaderDelegate.h
 //  RSSReader
 //
 //  Created by Михаил Куренков on 20.01.15.
 //  Copyright (c) 2015 Михаил Куренков. All rights reserved.
 //
 
-@protocol NewsParserDelegate <NSObject>
+@protocol NewsDownloaderDelegate <NSObject>
 
-@required
-
-- (void) setNewsArray: (NSArray *) news;
+- (void)newsDownloader:(id) downloader didParseNews:(NSArray *)newsItems;
 
 @end

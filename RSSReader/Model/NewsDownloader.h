@@ -22,7 +22,9 @@
 
 - (void) download;
 
-- (void) setNewsArray: (NSArray *) news;
+- (void) cancel;
+
+- (void)newsParser:(id<NewsParser>)parser didParseNews:(NSArray *)newsItems;
 
 @end
 

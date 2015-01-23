@@ -13,8 +13,7 @@
 
 @interface RSSParser : NSObject<NSXMLParserDelegate, NewsParser>
 
-@property (nonatomic) NSData * data;
-@property (nonatomic) id<NewsParserDelegate> delegate;
+- (RSSParser *) initWithData: (NSData *) data;
 
 - (BOOL) parse;
 

@@ -12,7 +12,6 @@
 
 - (NewsItem *) initWithTitle: (NSString * ) title andCreationDate: (NSDate *) creationDate andContent: (NSString *) content andLink: (NSString *) link
 {
-    
     self = [super init];
     
     _title = title;

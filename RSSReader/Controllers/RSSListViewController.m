@@ -10,7 +10,7 @@
 #import "NewsContentViewController.h"
 
 @interface RSSListViewController ()
-@property (weak, nonatomic) IBOutlet UITableView * RSSList;
+@property (weak, nonatomic) IBOutlet UITableView *rssList;
 
 @end
 
@@ -19,8 +19,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _RSSList.dataSource = self;
-    _RSSList.delegate = self;
+    _rssList.dataSource = self;
+    _rssList.delegate = self;
 }
 
 - (NSDateFormatter *)defaultDateFormatter {
@@ -34,16 +34,14 @@
 - (void) setNewsList: (NSArray *) newsItemList
 {
     _newsList = newsItemList;
-    [_RSSList reloadData];
+    [_rssList reloadData];
 }
 
 
-- (void) setNewsArray: (NSArray *) news;
+- (void)newsDownloader:(id) downloader didParseNews:(NSArray *)newsItems
 {
-    self.newsList = news;
+    self.newsList = newsItems;
 }
-
-NewsContentViewController * newsContent;
 
 #pragma mark - Table view data source
 
@@ -75,14 +73,14 @@ NewsContentViewController * newsContent;
 
 - (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
 {
-    if (!newsContent)
+    UINavigationController * navigation = [segue destinationViewController];
+    if ([[navigation topViewController] isKindOfClass:[NewsContentViewController class]])
     {
-        UINavigationController * navigation = [segue destinationViewController];
-        if ([[navigation topViewController] isKindOfClass:[NewsContentViewController class]])
-            newsContent = (NewsContentViewController *)[navigation topViewController];
+        NewsContentViewController * newsContent = (NewsContentViewController *)[navigation topViewController];
+    
+        NewsItem * item = [_newsList objectAtIndex: [_rssList indexPathForCell:sender].row];
+        [newsContent setNewsItem: item];
     }
-    NewsItem * item = [_newsList objectAtIndex: [_RSSList indexPathForCell:sender].row];
-    [newsContent setNewsItem: item];
 }
 
 @end

@@ -9,10 +9,8 @@
 
 @protocol NewsParser <NSObject>
 
-@required
-
 @property (nonatomic) NSData * data;
-@property (nonatomic) id<NewsParserDelegate> delegate;
+@property (weak, nonatomic) id<NewsParserDelegate> delegate;
 
 - (BOOL) parse;
 

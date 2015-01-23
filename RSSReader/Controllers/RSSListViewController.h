@@ -15,6 +15,6 @@
 @property (nonatomic, setter=setNewsList:) NSArray * newsList;
 @property (nonatomic, getter=defaultDateFormatter) NSDateFormatter * defaultDateFormatter;
 
-- (void) setNewsArray: (NSArray *) news;
+- (void)newsDownloader:(id) downloader didParseNews:(NSArray *)newsItems;
 
 @end

@@ -14,6 +14,9 @@
 
 @interface AppDelegate ()
 
+@property (weak, nonatomic) RSSListViewController * rssList;
+@property (nonatomic) NewsDownloader * downloader;
+
 @end
 
 @implementation AppDelegate
@@ -24,20 +27,18 @@
     
     UINavigationController * navigation = (UINavigationController *)self.window.rootViewController;
     
-    RSSListViewController * RSSList = (RSSListViewController *)[navigation topViewController];
+    _rssList = (RSSListViewController *)[navigation topViewController];
     
-    //NSURL * url = [NSURL URLWithString:@"http://news.yandex.ru/computers.rss"];
-    NSURL * url = [NSURL URLWithString:@"http://news.yandex.ru/hardware.rss"];
+    NSURL * url = [NSURL URLWithString:@"http://news.yandex.ru/computers.rss"];
+    //NSURL * url = [NSURL URLWithString:@"http://news.yandex.ru/hardware.rss"];
     
-    NewsDownloader * downloader = [[NewsDownloader alloc] initWithDelegate: RSSList
-                                                                  andURL: url
-                                                               andParser: [[RSSParser alloc] init]];
-    
-    [downloader download];
+    _downloader = [[NewsDownloader alloc] initWithDelegate: _rssList
+                                                   andURL: url
+                                                andParser: [[RSSParser alloc] init]];
+    [_downloader download];
     
     return YES;
 }
-
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

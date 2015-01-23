@@ -116,7 +116,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="897-N9-S54"/>
                     <connections>
-                        <outlet property="RSSList" destination="Ewu-gx-HDr" id="VHJ-D7-VXv"/>
+                        <outlet property="rssList" destination="Ewu-gx-HDr" id="ghI-f9-4SZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F9K-8s-xxq" userLabel="First Responder" sceneMemberID="firstResponder"/>
