@@ -64,10 +64,10 @@
             </objects>
             <point key="canvasLocation" x="4025" y="490"/>
         </scene>
-        <!--List View Controller-->
+        <!--News List View Controller-->
         <scene sceneID="wd4-n4-yqL">
             <objects>
-                <viewController id="1x9-y5-MEm" customClass="RSSListViewController" sceneMemberID="viewController">
+                <viewController id="1x9-y5-MEm" customClass="NewsListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Qg7-hq-Amq"/>
                         <viewControllerLayoutGuide type="bottom" id="RA3-VW-yQl"/>
@@ -105,6 +105,9 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" placeholderIntrinsicWidth="20" placeholderIntrinsicHeight="20" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="wFz-qi-3rT">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -112,10 +115,19 @@
                             <constraint firstItem="Ewu-gx-HDr" firstAttribute="top" secondItem="PXw-ht-7dR" secondAttribute="topMargin" constant="16" id="bZg-zY-mVk"/>
                             <constraint firstItem="Ewu-gx-HDr" firstAttribute="trailing" secondItem="PXw-ht-7dR" secondAttribute="trailingMargin" constant="16" id="fEl-5T-cjY"/>
                             <constraint firstItem="RA3-VW-yQl" firstAttribute="top" secondItem="Ewu-gx-HDr" secondAttribute="bottom" id="gGM-Dy-fEp"/>
+                            <constraint firstAttribute="centerX" secondItem="wFz-qi-3rT" secondAttribute="centerX" id="hih-RH-CrN"/>
+                            <constraint firstAttribute="centerY" secondItem="wFz-qi-3rT" secondAttribute="centerY" id="zxp-yt-AGt"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="897-N9-S54"/>
+                    <navigationItem key="navigationItem" id="897-N9-S54">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="vNQ-zT-Y9j">
+                            <connections>
+                                <action selector="update:" destination="1x9-y5-MEm" id="PXY-9h-3U7"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="wFz-qi-3rT" id="utj-6z-KQs"/>
                         <outlet property="rssList" destination="Ewu-gx-HDr" id="ghI-f9-4SZ"/>
                     </connections>
                 </viewController>

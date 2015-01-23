@@ -6,21 +6,29 @@
 //  Copyright (c) 2015 Михаил Куренков. All rights reserved.
 //
 
-#import "RSSListViewController.h"
+#import "NewsListViewController.h"
 #import "NewsContentViewController.h"
+#import "NewsSourse.h"
 
-@interface RSSListViewController ()
+@interface NewsListViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *rssList;
-
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) NewsSourse * sourse;
 @end
 
-@implementation RSSListViewController
+@implementation NewsListViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     _rssList.dataSource = self;
     _rssList.delegate = self;
+}
+- (IBAction)update:(id)sender {
+    
+    [_activityIndicator startAnimating];
+    [_activityIndicator setAlpha: 1];
+    [_sourse update];
 }
 
 - (NSDateFormatter *)defaultDateFormatter {
@@ -35,12 +43,21 @@
 {
     _newsList = newsItemList;
     [_rssList reloadData];
+    
 }
 
 
-- (void)newsDownloader:(id) downloader didParseNews:(NSArray *)newsItems
+- (void)newsSourse:(NewsSourse *) sourse didParseNews:(NSArray *)newsItems;
 {
+    [_activityIndicator stopAnimating];
+    [_activityIndicator setAlpha: 0];
     self.newsList = newsItems;
+}
+
+- (void)newsSourse:(NewsSourse *) sourse
+{
+    _sourse = sourse;
+    [_sourse update];
 }
 
 #pragma mark - Table view data source

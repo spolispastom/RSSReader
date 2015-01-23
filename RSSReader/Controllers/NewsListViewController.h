@@ -8,13 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "NewsItem.h"
-#import "NewsDownloaderDelegate.h"
+#import "NewsSourseDelegate.h"
 
-@interface RSSListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, NewsDownloaderDelegate>
+@interface NewsListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, NewsSourseDelegate>
 
 @property (nonatomic, setter=setNewsList:) NSArray * newsList;
 @property (nonatomic, getter=defaultDateFormatter) NSDateFormatter * defaultDateFormatter;
-
-- (void)newsDownloader:(id) downloader didParseNews:(NSArray *)newsItems;
 
 @end

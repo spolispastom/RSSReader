@@ -8,14 +8,14 @@
 
 #import "AppDelegate.h"
 #import "NewsItem.h"
-#import "RSSListViewController.h"
+#import "NewsListViewController.h"
 #import "RSSParser.h"
-#import "NewsDownloader.h"
+#import "NewsSourse.h"
 
 @interface AppDelegate ()
 
-@property (weak, nonatomic) RSSListViewController * rssList;
-@property (nonatomic) NewsDownloader * downloader;
+@property (weak, nonatomic) NewsListViewController * rssList;
+@property (nonatomic) NewsSourse * sourse;
 
 @end
 
@@ -27,15 +27,12 @@
     
     UINavigationController * navigation = (UINavigationController *)self.window.rootViewController;
     
-    _rssList = (RSSListViewController *)[navigation topViewController];
+    _rssList = (NewsListViewController *)[navigation topViewController];
     
     NSURL * url = [NSURL URLWithString:@"http://news.yandex.ru/computers.rss"];
     //NSURL * url = [NSURL URLWithString:@"http://news.yandex.ru/hardware.rss"];
     
-    _downloader = [[NewsDownloader alloc] initWithDelegate: _rssList
-                                                   andURL: url
-                                                andParser: [[RSSParser alloc] init]];
-    [_downloader download];
+    _sourse = [[NewsSourse alloc] initWithURL:url andDelegate: _rssList];
     
     return YES;
 }

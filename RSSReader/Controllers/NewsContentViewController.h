@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RSSListViewController.h"
 #import "NewsItem.h"
 
 @interface NewsContentViewController : UIViewController
