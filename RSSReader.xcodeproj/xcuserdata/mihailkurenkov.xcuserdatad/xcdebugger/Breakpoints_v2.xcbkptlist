@@ -830,11 +830,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Model/NewsParserDelegate.h"
-            timestampString = "443695665.769431"
+            timestampString = "443696823.939494"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "12"
-            endingLineNumber = "12"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
             landmarkName = "@protocol NewsParserDelegate"
             landmarkType = "2">
          </BreakpointContent>

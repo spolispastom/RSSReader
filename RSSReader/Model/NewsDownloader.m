@@ -62,7 +62,7 @@
 
 - (void)newsParser:(id<NewsParser>)parser didParseNews:(NSArray *)newsItems
 {
-    [_rssDelegate newsDownloader:self didParseNews: newsItems];
+    [_rssDelegate newsDownloader: self didParseNews: newsItems];
 }
 
 @end

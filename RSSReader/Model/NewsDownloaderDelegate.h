@@ -5,9 +5,10 @@
 //  Created by Михаил Куренков on 20.01.15.
 //  Copyright (c) 2015 Михаил Куренков. All rights reserved.
 //
+@class NewsDownloader;
 
 @protocol NewsDownloaderDelegate <NSObject>
 
-- (void)newsDownloader:(id) downloader didParseNews:(NSArray *)newsItems;
+- (void)newsDownloader:(NewsDownloader *) downloader didParseNews:(NSArray *)newsItems;
 
 @end
