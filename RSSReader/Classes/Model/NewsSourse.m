@@ -71,7 +71,11 @@
 - (void)newsDownloader:(NewsDownloader *) downloader didDownloadNews:(NSSet *)newsItems andTitle:(NSString *)title
 {
     for (NewsItem * item in newsItems) {
-        [item setValue: _newsFeed forKey:@"newsFeed"];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"url contains %@", item.url];
+        NSSet * oldItems = [_newsFeed.newsItems filteredSetUsingPredicate:predicate];
+        if ([oldItems count] == 0)
+            [item setValue: _newsFeed forKey:@"newsFeed"];
     }
     _title = title;
     [self saveContext];
