@@ -63,7 +63,15 @@
 - (void)update
 {
     if (_newsFeed.newsItems && [_newsFeed.newsItems count] > 0)
-        [_sourseDelegate newsSourse:self didParseNews:[_newsFeed.newsItems allObjects]];
+        [_sourseDelegate newsSourse:self didParseNews:[[_newsFeed.newsItems allObjects]sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            NewsItem * item1 = (NewsItem *)obj1;
+            NewsItem * item2 = (NewsItem *)obj2;
+            if (item1.creationDate > item2.creationDate)
+                return NSOrderedDescending;
+            else if (item1.creationDate < item2.creationDate)
+                return NSOrderedAscending;
+            else return NSOrderedSame;
+        }]];
     else
         [ self downloadAgain];
 }

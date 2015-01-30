@@ -38,7 +38,15 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"NewsFeed" inManagedObjectContext:_context];
     [request setEntity:entity];
     
-    return [_context executeFetchRequest:request error:nil];
+    return [[_context executeFetchRequest:request error:nil] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NewsFeed * item1 = (NewsFeed *)obj1;
+        NewsFeed * item2 = (NewsFeed *)obj2;
+        if (item1.title > item2.title)
+            return NSOrderedDescending;
+        else if (item1.title < item2.title)
+            return NSOrderedAscending;
+        else return NSOrderedSame;
+    }];
 }
 
 - (void)addNewsFeed: (NSString *) newsFeed
