@@ -8,6 +8,6 @@
 @class NewsSourse;
 @protocol NewsTitleDelegate <NSObject>
 
-- (void)newsSourse:(NewsSourse *) sourse didParseTitle: (NSString *) title;
+- (void)newsSourse:(NewsSourse *) sourse didParseTitle: (NSString *) title andImage: (NSData *) image;
 @end
 

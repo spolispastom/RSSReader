@@ -910,11 +910,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Model/RSSParser.m"
-            timestampString = "444168744.658802"
+            timestampString = "444307157.786904"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
             landmarkName = "-parse"
             landmarkType = "5">
          </BreakpointContent>
@@ -958,11 +958,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Model/RSSParser.m"
-            timestampString = "444168744.658802"
+            timestampString = "444307157.786904"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
             landmarkName = "-parser:didEndElement:namespaceURI:qualifiedName:"
             landmarkType = "5">
          </BreakpointContent>
@@ -974,11 +974,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Model/RSSParser.m"
-            timestampString = "444168744.658802"
+            timestampString = "444307157.786904"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
             landmarkName = "-parser:foundCharacters:"
             landmarkType = "5">
          </BreakpointContent>
@@ -990,11 +990,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Model/RSSParser.m"
-            timestampString = "444168744.658802"
+            timestampString = "444307157.786904"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
             landmarkName = "-parser:foundCharacters:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1006,11 +1006,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Model/RSSParser.m"
-            timestampString = "444168744.658802"
+            timestampString = "444307157.786904"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
             landmarkName = "-parser:didStartElement:namespaceURI:qualifiedName:attributes:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1022,11 +1022,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Model/RSSParser.m"
-            timestampString = "444168744.658802"
+            timestampString = "444307157.786904"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
             landmarkName = "-parser:didStartElement:namespaceURI:qualifiedName:attributes:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1038,12 +1038,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Model/DownloadAndParseNewsOperation.m"
-            timestampString = "444168744.658802"
+            timestampString = "444403637.901056"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "-newsDownloader:didDownloadNews:andTitle:"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "-newsDownloader:didDownloadNews:andTitle:andImage:"
             landmarkType = "5">
             <Locations>
                <Location
@@ -1084,28 +1084,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Model/NewsDownloader.m"
-            timestampString = "444035956.50496"
+            timestampString = "444563264.095738"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "-newsParser:didParseNews:andTitle:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RSSReader/Classes/Model/NewsSourse.m"
-            timestampString = "444302095.597764"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "-newsDownloader:didDownloadNews:andTitle:"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "-newsParser:didParseNews:andTitle:andImageLink:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1276,11 +1260,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Model/NewsSourse.m"
-            timestampString = "444172192.244532"
+            timestampString = "444403857.86071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "-downloadAgain"
             landmarkType = "5">
          </BreakpointContent>
@@ -1308,11 +1292,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Model/NewsSourse.m"
-            timestampString = "444302095.597764"
+            timestampString = "444403857.86071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
             landmarkName = "-update"
             landmarkType = "5">
          </BreakpointContent>
@@ -1324,11 +1308,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Model/NewsSourse.m"
-            timestampString = "444302095.597764"
+            timestampString = "444403857.86071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
             landmarkName = "-update"
             landmarkType = "5">
          </BreakpointContent>
@@ -1356,11 +1340,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Model/NewsSourse.m"
-            timestampString = "444302095.597764"
+            timestampString = "444562952.236202"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
             landmarkName = "-numberOfUnreadNews"
             landmarkType = "5">
          </BreakpointContent>
@@ -1436,13 +1420,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/DataModel/NewsFeed.m"
-            timestampString = "444125011.303114"
+            timestampString = "444305358.944444"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
-            landmarkName = "-initWithURL:"
-            landmarkType = "5">
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "@implementation NewsFeed"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1500,11 +1484,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Model/RSSParser.m"
-            timestampString = "444168744.658802"
+            timestampString = "444307157.786904"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
             landmarkName = "-parser:didEndElement:namespaceURI:qualifiedName:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1516,27 +1500,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Model/RSSParser.m"
-            timestampString = "444168744.658802"
+            timestampString = "444307157.786904"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
-            landmarkName = "-parser:didEndElement:namespaceURI:qualifiedName:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RSSReader/Classes/Model/RSSParser.m"
-            timestampString = "444168744.658802"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
             landmarkName = "-initWithContext:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1548,11 +1516,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Controllers/NewsListViewController.m"
-            timestampString = "444167709.790793"
+            timestampString = "444563972.240915"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
             landmarkName = "-newsSourse:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1580,11 +1548,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Controllers/NewsListViewController.m"
-            timestampString = "444168922.247446"
+            timestampString = "444563972.240915"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1633,7 +1601,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "93"
             endingLineNumber = "93"
-            landmarkName = "-newsSourse:didParseTitle:"
+            landmarkName = "-newsSourse:didParseTitle:andImage:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1660,11 +1628,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Model/NewsSourse.m"
-            timestampString = "444302095.597764"
+            timestampString = "444562952.236202"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
             landmarkName = "-saveContext"
             landmarkType = "5">
          </BreakpointContent>
@@ -1676,11 +1644,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Model/NewsSourse.m"
-            timestampString = "444302095.597764"
+            timestampString = "444562952.236202"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "-numberOfUnreadNews"
             landmarkType = "5">
          </BreakpointContent>
@@ -1688,7 +1656,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Controllers/NewsListViewController.m"
@@ -1708,11 +1676,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RSSReader/Classes/Controllers/NewsListViewController.m"
-            timestampString = "444172938.355106"
+            timestampString = "444563972.240915"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
             landmarkName = "-prepareForSegue:sender:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1746,6 +1714,182 @@
             startingLineNumber = "56"
             endingLineNumber = "56"
             landmarkName = "-newsSourse:didParseNews:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RSSReader/Classes/Model/RSSParser.m"
+            timestampString = "444307157.786904"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
+            landmarkName = "-parser:didEndElement:namespaceURI:qualifiedName:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RSSReader/Classes/Model/RSSParser.m"
+            timestampString = "444307157.786904"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
+            landmarkName = "-parser:didEndElement:namespaceURI:qualifiedName:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RSSReader/Classes/Model/RSSParser.m"
+            timestampString = "444404428.104206"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
+            landmarkName = "-parser:didEndElement:namespaceURI:qualifiedName:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RSSReader/Classes/Model/RSSParser.m"
+            timestampString = "444404428.104206"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
+            landmarkName = "-parser:didEndElement:namespaceURI:qualifiedName:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RSSReader/Classes/Model/NewsFeedSourse.m"
+            timestampString = "444403927.790827"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
+            landmarkName = "-newsSourse:didParseTitle:andImage:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RSSReader/Classes/Model/NewsDownloader.m"
+            timestampString = "444563264.095738"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "-newsParser:didParseNews:andTitle:andImageLink:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RSSReader/Classes/Controllers/NewsContentViewController.m"
+            timestampString = "444406277.02048"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "-viewDidLoad"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RSSReader/Classes/Controllers/NewsContentViewController.m"
+            timestampString = "444406280.077186"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "-setNewsItem:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RSSReader/Classes/Model/NewsDownloader.m"
+            timestampString = "444563264.095738"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "-download"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RSSReader/Classes/Controllers/NewsListViewController.m"
+            timestampString = "444563264.095738"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "-newsSourse:didFilDownload:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RSSReader/Classes/Model/NewsDownloader.m"
+            timestampString = "444563210.285281"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "-download"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

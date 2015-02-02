@@ -2,7 +2,7 @@
 //  NewsItem.h
 //  RSSReader
 //
-//  Created by Михаил Куренков on 28.01.15.
+//  Created by Михаил Куренков on 30.01.15.
 //  Copyright (c) 2015 Михаил Куренков. All rights reserved.
 //
 
@@ -18,8 +18,12 @@
 @property (nonatomic, retain) NSNumber * isRead;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * url;
+@property (nonatomic, retain) NSData * image;
 @property (nonatomic, retain) NewsFeed *newsFeed;
 
+
+- (NewsItem *) initWithTitle: (NSString * ) title andCreationDate: (NSDate *) creationDate andContent: (NSString *) content andLink: (NSString *) link
+                    andImage: (NSData *) image andContext:(NSManagedObjectContext *) context;
 - (NewsItem *) initWithTitle: (NSString * ) title andCreationDate: (NSDate *) creationDate andContent: (NSString *) content andLink: (NSString *) link
                   andContext:(NSManagedObjectContext *) context;
 - (NewsItem *) initWithTitle: (NSString * ) title andCreationDate: (NSDate *) creationDate andContent: (NSString *) content

@@ -21,13 +21,17 @@
 @property (nonatomic) NSString * title;
 @property (nonatomic) NSDate * creationDate ;
 @property (nonatomic) NSString * content;
+@property (nonatomic) NSString * imageURL;
 @property (nonatomic) NSString * linkString;
 @property (nonatomic) NSString * channelTitle;
+@property (nonatomic) NSString * channelImageURL;
+
 
 @property (nonatomic) NSMutableArray * newsList;
 
 @property (nonatomic) BOOL isParseItem;
 @property (nonatomic) BOOL isChannelItem;
+@property (nonatomic) BOOL isImageItem;
 
 @end
 
@@ -79,6 +83,7 @@
         _newsList = [[NSMutableArray alloc] init];
         _isParseItem = NO;
         _isChannelItem = YES;
+        _isImageItem = NO;
         _currentValue = [[NSMutableString alloc] init];
         _channelTitle = @"";
         
@@ -87,6 +92,7 @@
     {
         _isParseItem = NO;
         _isChannelItem = NO;
+        _isImageItem = YES;
     }
     else if ([elementName  isEqual: @"item"])
     {
@@ -102,6 +108,7 @@
 
         _isParseItem = YES;
         _isChannelItem = NO;
+        _isImageItem = NO;
     }
     else _currentPropertyName = elementName;
 }
@@ -134,14 +141,22 @@
     
     if ([elementName  isEqual: @"channel"])
     {
-        [delegate newsParser: self didParseNews: _newsList andTitle: _channelTitle];
+        [delegate newsParser: self didParseNews: _newsList andTitle: _channelTitle andImageLink: _channelImageURL];
     }
     else if ([elementName  isEqual: @"item"])
     {
+        NSData * image = nil;
+        if (_imageURL)
+        {
+            NSURL * imageLink = [[NSURL alloc] initWithString:_imageURL];
+            if (imageLink != nil)
+                image = [[NSData alloc] initWithContentsOfURL: imageLink];
+        }
         [_newsList addObject:[[NewsItem alloc] initWithTitle: _title
                                              andCreationDate: _creationDate
                                                   andContent: _content
                                                      andLink: _linkString
+                                                    andImage: image
                                                   andContext: _context]];
         _title = @"";
         _content = @"";
@@ -172,6 +187,14 @@
         {
             _linkString =[_currentValue copy];
             [_currentValue deleteCharactersInRange: NSMakeRange(0, _currentValue.length)];
+        }else if ([_currentPropertyName  isEqual: @"image"])
+        {
+            _imageURL =[_currentValue copy];
+            [_currentValue deleteCharactersInRange: NSMakeRange(0, _currentValue.length)];
+        }
+        else
+        {
+            [_currentValue deleteCharactersInRange: NSMakeRange(0, _currentValue.length)];
         }
     }
     else if (_isChannelItem)
@@ -179,6 +202,22 @@
         if ([_currentPropertyName  isEqual: @"title"])
         {
             _channelTitle = [_currentValue copy];
+            [_currentValue deleteCharactersInRange: NSMakeRange(0, _currentValue.length)];
+        }
+        else
+        {
+            [_currentValue deleteCharactersInRange: NSMakeRange(0, _currentValue.length)];
+        }
+    }
+    else if (_isImageItem)
+    {
+        if ([_currentPropertyName  isEqual: @"url"])
+        {
+            _channelImageURL = [_currentValue copy];
+            [_currentValue deleteCharactersInRange: NSMakeRange(0, _currentValue.length)];
+        }
+        else
+        {
             [_currentValue deleteCharactersInRange: NSMakeRange(0, _currentValue.length)];
         }
     }

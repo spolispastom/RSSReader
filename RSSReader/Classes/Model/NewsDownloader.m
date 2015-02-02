@@ -47,8 +47,13 @@
      _task = [_session dataTaskWithURL: _rssURL
                    completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                        
-                       parser.data = data;
-                       [parser parse];
+                       if (error)
+                           [_rssDelegate newsDownloader: self didFailDownload: error];
+                       else
+                       {
+                           parser.data = data;
+                           [parser parse];
+                       }
                    }];
     
     [_task resume];
@@ -60,9 +65,17 @@
         [_task cancel];
 }
 
-- (void)newsParser:(id<NewsParser>)parser didParseNews:(NSSet *)newsItems andTitle:(NSString *)title
+- (void)newsParser:(id<NewsParser>)parser didParseNews:(NSArray *)newsItems andTitle:(NSString *)title andImageLink:(NSString *)imageLink
 {
-    [_rssDelegate newsDownloader: self didDownloadNews: newsItems andTitle: title];
+    NSData * imageData = nil;
+    
+    if (imageLink != nil && [imageLink length] > 0)
+    {
+        NSURL * imageURL = [[NSURL alloc] initWithString:imageLink];
+        if (imageURL)
+            imageData = [[NSData alloc] initWithContentsOfURL:imageURL];
+    }
+    [_rssDelegate newsDownloader: self didDownloadNews: newsItems andTitle: title andImage: imageData];
 }
 
 @end

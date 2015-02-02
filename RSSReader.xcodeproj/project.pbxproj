@@ -24,8 +24,8 @@
 		CFD95B3C1A7784C900A894B3 /* AddNewsFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFD95B3B1A7784C900A894B3 /* AddNewsFeedViewController.m */; };
 		CFD95B451A783E3300A894B3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFD95B441A783E3300A894B3 /* CoreData.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		CFD95B4B1A783E8600A894B3 /* NewsFeedsDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CFD95B491A783E8600A894B3 /* NewsFeedsDataModel.xcdatamodeld */; };
-		CFD95B611A79041600A894B3 /* NewsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CFD95B601A79041600A894B3 /* NewsItem.m */; };
-		CFD95B641A79041700A894B3 /* NewsFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = CFD95B631A79041700A894B3 /* NewsFeed.m */; };
+		CFD95B6D1A7B8E7D00A894B3 /* NewsFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = CFD95B6C1A7B8E7D00A894B3 /* NewsFeed.m */; };
+		CFD95B701A7B8E7D00A894B3 /* NewsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CFD95B6F1A7B8E7D00A894B3 /* NewsItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,10 +76,10 @@
 		CFD95B3B1A7784C900A894B3 /* AddNewsFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewsFeedViewController.m; sourceTree = "<group>"; };
 		CFD95B441A783E3300A894B3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		CFD95B4A1A783E8600A894B3 /* NewsFeedsDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NewsFeedsDataModel.xcdatamodel; sourceTree = "<group>"; };
-		CFD95B5F1A79041600A894B3 /* NewsItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsItem.h; sourceTree = "<group>"; };
-		CFD95B601A79041600A894B3 /* NewsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsItem.m; sourceTree = "<group>"; };
-		CFD95B621A79041700A894B3 /* NewsFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsFeed.h; sourceTree = "<group>"; };
-		CFD95B631A79041700A894B3 /* NewsFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsFeed.m; sourceTree = "<group>"; };
+		CFD95B6B1A7B8E7D00A894B3 /* NewsFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewsFeed.h; path = DataModel/NewsFeed.h; sourceTree = "<group>"; };
+		CFD95B6C1A7B8E7D00A894B3 /* NewsFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewsFeed.m; path = DataModel/NewsFeed.m; sourceTree = "<group>"; };
+		CFD95B6E1A7B8E7D00A894B3 /* NewsItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewsItem.h; path = DataModel/NewsItem.h; sourceTree = "<group>"; };
+		CFD95B6F1A7B8E7D00A894B3 /* NewsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewsItem.m; path = DataModel/NewsItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,10 +260,10 @@
 		CFD95B521A78499300A894B3 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
-				CFD95B621A79041700A894B3 /* NewsFeed.h */,
-				CFD95B631A79041700A894B3 /* NewsFeed.m */,
-				CFD95B5F1A79041600A894B3 /* NewsItem.h */,
-				CFD95B601A79041600A894B3 /* NewsItem.m */,
+				CFD95B6E1A7B8E7D00A894B3 /* NewsItem.h */,
+				CFD95B6F1A7B8E7D00A894B3 /* NewsItem.m */,
+				CFD95B6B1A7B8E7D00A894B3 /* NewsFeed.h */,
+				CFD95B6C1A7B8E7D00A894B3 /* NewsFeed.m */,
 			);
 			name = DataModel;
 			sourceTree = "<group>";
@@ -372,16 +372,16 @@
 				CFD95B231A7768BC00A894B3 /* NewsContentViewController.m in Sources */,
 				CFD95B261A7768BC00A894B3 /* NewsDownloader.m in Sources */,
 				CFD95B291A7768BC00A894B3 /* RSSParser.m in Sources */,
-				CFD95B641A79041700A894B3 /* NewsFeed.m in Sources */,
 				CFD95B281A7768BC00A894B3 /* NewsSourse.m in Sources */,
+				CFD95B701A7B8E7D00A894B3 /* NewsItem.m in Sources */,
 				CFD95B3C1A7784C900A894B3 /* AddNewsFeedViewController.m in Sources */,
 				CFD95B251A7768BC00A894B3 /* DownloadAndParseNewsOperation.m in Sources */,
 				CFD95B2E1A7768BC00A894B3 /* main.m in Sources */,
 				CFD95B4B1A783E8600A894B3 /* NewsFeedsDataModel.xcdatamodeld in Sources */,
-				CFD95B611A79041600A894B3 /* NewsItem.m in Sources */,
 				CFD95B371A77757500A894B3 /* NewsFeedSourse.m in Sources */,
 				CFD95B241A7768BC00A894B3 /* NewsListViewController.m in Sources */,
 				CFD95B341A776E4300A894B3 /* NewsFeedTableViewController.m in Sources */,
+				CFD95B6D1A7B8E7D00A894B3 /* NewsFeed.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

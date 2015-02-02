@@ -88,7 +88,7 @@
     return sourse;
 }
 
-- (void)newsSourse:(NewsSourse *) sourse didParseTitle: (NSString *) title
+- (void)newsSourse:(NewsSourse *) sourse didParseTitle: (NSString *) title andImage:(NSData *)image
 {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     
@@ -102,6 +102,7 @@
     
     for (NewsFeed * newsFeed in resultNewsFeeds) {
         newsFeed.title = title;
+        newsFeed.image = image;
     }
     
     [_delegate newsSourse:self didGetNewsFeed:[self newsFeeds]];

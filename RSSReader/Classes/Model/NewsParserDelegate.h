@@ -9,6 +9,6 @@
 
 @protocol NewsParserDelegate <NSObject>
 
-- (void)newsParser:(id<NewsParser>) parser didParseNews:(NSSet *)newsItems andTitle: (NSString *) title;
+- (void)newsParser:(id<NewsParser>) parser didParseNews:(NSArray *)newsItems andTitle: (NSString *) title andImageLink: (NSString *) imageLink;
 
 @end

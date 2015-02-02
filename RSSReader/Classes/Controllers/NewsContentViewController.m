@@ -18,12 +18,16 @@
 @property (nonatomic) NSString * newsContent;
 @property (nonatomic) NSString * newsLinkString;
 @property (nonatomic) NSDateFormatter * defaultDateFormatter;
+@property (nonatomic) NSURL * url;
 
 @end
 
 @implementation NewsContentViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self.titleButton setTitleColor: [UIColor blueColor] forState:(UIControlStateNormal)];
+    [self.titleButton setTitleColor: [UIColor blackColor] forState:(UIControlStateDisabled)];
     
     if (_newsTitle)
         [self.titleButton setTitle: _newsTitle forState: UIControlStateNormal];
@@ -32,6 +36,9 @@
     if (_newsContent)
         self.contentTextView.text = _newsContent;
     
+    if (_url && [[UIApplication sharedApplication] canOpenURL: _url])
+        self.titleButton.enabled = YES;
+    else self.titleButton.enabled = NO;
 }
 
 
@@ -56,6 +63,11 @@
             self.dateLable.text = _newsCreationDate;
         if (_newsContent)
             self.contentTextView.text = _newsContent;
+        _url = [NSURL URLWithString:_newsLinkString];
+        
+        if (_url && [[UIApplication sharedApplication] canOpenURL: _url])
+            self.titleButton.enabled = YES;
+        else self.titleButton.enabled = NO;
         
         [news setIsRead:[NSNumber numberWithBool:YES]];
         
@@ -63,10 +75,9 @@
     }
 }
 - (IBAction)goLink:(id)sender {
-    NSURL * url = [NSURL URLWithString:_newsLinkString];
     
-    if ([[UIApplication sharedApplication] canOpenURL: url])
-        [[UIApplication sharedApplication] openURL: url];
+    if ([[UIApplication sharedApplication] canOpenURL: _url])
+        [[UIApplication sharedApplication] openURL: _url];
 }
 
 @end

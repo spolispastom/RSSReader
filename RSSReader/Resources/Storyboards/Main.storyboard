@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hvd-Zt-awg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hvd-Zt-awg">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -77,7 +77,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ewu-gx-HDr">
-                                <rect key="frame" x="0.0" y="16" width="600" height="584"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" restorationIdentifier="ListPrototypeCell" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ListPrototypeCell" textLabel="06r-bg-AnO" detailTextLabel="dIw-Ix-sJZ" style="IBUITableViewCellStyleSubtitle" id="KZc-z5-oZ1">
@@ -112,7 +112,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Ewu-gx-HDr" firstAttribute="leading" secondItem="PXw-ht-7dR" secondAttribute="leadingMargin" constant="-16" id="bJ4-Sz-qnt"/>
-                            <constraint firstItem="Ewu-gx-HDr" firstAttribute="top" secondItem="PXw-ht-7dR" secondAttribute="topMargin" constant="16" id="bZg-zY-mVk"/>
+                            <constraint firstItem="Ewu-gx-HDr" firstAttribute="top" secondItem="PXw-ht-7dR" secondAttribute="topMargin" id="bZg-zY-mVk"/>
                             <constraint firstItem="Ewu-gx-HDr" firstAttribute="trailing" secondItem="PXw-ht-7dR" secondAttribute="trailingMargin" constant="16" id="fEl-5T-cjY"/>
                             <constraint firstItem="RA3-VW-yQl" firstAttribute="top" secondItem="Ewu-gx-HDr" secondAttribute="bottom" id="gGM-Dy-fEp"/>
                             <constraint firstAttribute="centerX" secondItem="wFz-qi-3rT" secondAttribute="centerX" id="hih-RH-CrN"/>
@@ -194,7 +194,7 @@
                     <navigationItem key="navigationItem" id="c5b-ca-kps">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="gcH-fO-0jP">
                             <connections>
-                                <segue destination="lps-Ex-nUy" kind="show" id="Scj-29-mh1"/>
+                                <segue destination="lps-Ex-nUy" kind="presentation" id="Scj-29-mh1"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

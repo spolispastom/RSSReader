@@ -9,6 +9,7 @@
 
 @protocol NewsDownloaderDelegate <NSObject>
 
-- (void)newsDownloader:(NewsDownloader *) downloader didDownloadNews:(NSSet *)newsItems andTitle: (NSString *) title;
+- (void)newsDownloader:(NewsDownloader *) downloader didDownloadNews:(NSArray *)newsItems andTitle: (NSString *) title andImage: (NSData *) image;
+- (void)newsDownloader:(NewsDownloader *) downloader didFailDownload:(NSError *) error;
 
 @end

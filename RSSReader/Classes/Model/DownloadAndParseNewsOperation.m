@@ -43,18 +43,19 @@
      [_downloader download];
 }
 
-
-- (void)newsDownloader:(NewsDownloader *) downloader didDownloadNews:(NSArray *)newsItems andTitle:(NSString *)title
+- (void)newsDownloader:(NewsDownloader *) downloader didDownloadNews:(NSArray *)newsItems andTitle: (NSString *) title andImage: (NSData *) image
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-       [_delegate newsDownloader: _downloader didDownloadNews: newsItems andTitle: title];
+       [_delegate newsDownloader: _downloader didDownloadNews: newsItems andTitle: title andImage:image];
     });
 }
 
 
-- (void)dealloc
+- (void)newsDownloader:(NewsDownloader *) downloader didFailDownload:(NSError *) error
 {
-
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_delegate newsDownloader: (NewsDownloader *)self didFailDownload: error];
+    });
 }
 
 @end

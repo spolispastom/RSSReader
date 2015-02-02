@@ -55,6 +55,19 @@
     self.newsList = newsItems;
 }
 
+- (void)newsSourse:(NewsSourse *) sourse didFilDownload:(NSError *) error
+{
+    [_activityIndicator stopAnimating];
+    [_activityIndicator setAlpha: 0];
+    
+    UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle:@"Невозмо обновить ленту"
+                                                       message:@"Подключение к нтернету отсутствует"
+                                                      delegate:self
+                                             cancelButtonTitle:@"OK"
+                                             otherButtonTitles:nil];
+    [theAlert show];
+}
+
 - (void)newsSourse:(NewsSourse *) sourse
 {
     _sourse = sourse;

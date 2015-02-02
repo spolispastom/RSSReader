@@ -19,7 +19,6 @@
 @property (weak, nonatomic) NSManagedObjectContext * context;
 
 @property (nonatomic) NewsFeed * newsFeed;
-@property (nonatomic) NSString * title;
 
 @end
 
@@ -75,8 +74,7 @@
     else
         [ self downloadAgain];
 }
-
-- (void)newsDownloader:(NewsDownloader *) downloader didDownloadNews:(NSSet *)newsItems andTitle:(NSString *)title
+- (void)newsDownloader:(NewsDownloader *) downloader didDownloadNews:(NSArray *)newsItems andTitle: (NSString *) title andImage: (NSData *) image
 {
     for (NewsItem * item in newsItems) {
         
@@ -85,12 +83,16 @@
         if ([oldItems count] == 0)
             [item setValue: _newsFeed forKey:@"newsFeed"];
     }
-    _title = title;
+    
     [self saveContext];
     [self update];
-    [_titleDelegate newsSourse:self didParseTitle:title];
+    [_titleDelegate newsSourse:self didParseTitle:title andImage:image];
 }
 
+- (void)newsDownloader:(NewsDownloader *) downloader didFailDownload:(NSError *) error
+{
+    [_sourseDelegate newsSourse: self didFilDownload: error];
+}
 
 - (int) numberOfUnreadNews
 {

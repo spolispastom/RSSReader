@@ -2,7 +2,7 @@
 //  NewsFeed.m
 //  RSSReader
 //
-//  Created by Михаил Куренков on 28.01.15.
+//  Created by Михаил Куренков on 30.01.15.
 //  Copyright (c) 2015 Михаил Куренков. All rights reserved.
 //
 
@@ -14,9 +14,8 @@
 
 @dynamic title;
 @dynamic url;
+@dynamic image;
 @dynamic newsItems;
-
-
 
 - (NewsFeed *) initWithURL: (NSString *) url ManagedObjectContext:(NSManagedObjectContext *) context
 {
@@ -27,4 +26,5 @@
     
     return  self;
 }
+
 @end
