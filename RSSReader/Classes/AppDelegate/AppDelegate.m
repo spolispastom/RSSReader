@@ -26,6 +26,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
    
+    NSTimeInterval interval = UIApplicationBackgroundFetchIntervalMinimum;
+    [application setMinimumBackgroundFetchInterval: interval];
+    
     UINavigationController * navigation = (UINavigationController *)self.window.rootViewController;
     
     NSManagedObjectContext *context = [self managedObjectContext];
@@ -34,6 +37,10 @@
     
     _sourse = [[NewsFeedSourse alloc] initWithDelegate: _newsFeedList andContext:context];
     
+    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){
+        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
+    }
+    // Override point for customization after application launch.
     return YES;
 }
 
@@ -88,7 +95,11 @@
 - (void)application:(UIApplication *)application
 performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
 {
-    
+    for (NewsFeed * newsFeed in _sourse.newsFeeds)
+    {
+        NewsSourse * newsSourseItem = [_sourse getNewsSourseFromNewsFeed:newsFeed];
+        [newsSourseItem backgroundDownloadAgain];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -107,10 +118,17 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))comp
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    //
+    //_iconBadgeNumber = 0;
+    //for (NewsFeed * newsFeed in _sourse.newsFeeds) {
+    //    _iconBadgeNumber += [[_sourse getNewsSourseFromNewsFeed:newsFeed] numberOfUnreadNews];
+    //}
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
 
 @end

@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import <UIKit/UIKit.h>
 #import "NewsFeed.h"
 #import "NewsSourse.h"
-#import "NewsDownloader.h"
+#import "NewsForegroundDownloader.h"
 
 @class NewsSourse;
 @protocol NewsSourseDelegate <NSObject>
@@ -36,6 +37,8 @@
 - (void)update;
 
 - (void)downloadAgain;
+
+- (void)backgroundDownloadAgain;
 
 - (int) numberOfUnreadNews;
 @end

@@ -12,8 +12,8 @@
 
 @interface NewsListViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *rssList;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) NewsSourse * sourse;
+@property (nonatomic) UIRefreshControl * refreshControl;
 @end
 
 @implementation NewsListViewController
@@ -23,11 +23,13 @@
     
     _rssList.dataSource = self;
     _rssList.delegate = self;
-}
-- (IBAction)update:(id)sender {
     
-    [_activityIndicator startAnimating];
-    [_activityIndicator setAlpha: 1];
+    _refreshControl = [[UIRefreshControl alloc]init];
+    [self.rssList addSubview:_refreshControl];
+    [_refreshControl addTarget:self action: @selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)refreshTable {
     [_sourse downloadAgain];
 }
 
@@ -50,15 +52,15 @@
 {
     if (!_sourse)
         _sourse = sourse;
-    [_activityIndicator stopAnimating];
-    [_activityIndicator setAlpha: 0];
+    
+    [_refreshControl endRefreshing];
+    
     self.newsList = newsItems;
 }
 
 - (void)newsSourse:(NewsSourse *) sourse didFailDownload:(NSError *) error
 {
-    [_activityIndicator stopAnimating];
-    [_activityIndicator setAlpha: 0];
+    [_refreshControl endRefreshing];
     
     NSString * message = @"Неизвестная ошибка.";
     

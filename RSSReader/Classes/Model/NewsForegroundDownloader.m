@@ -6,10 +6,11 @@
 //  Copyright (c) 2015 Михаил Куренков. All rights reserved.
 //
 
-#import "NewsDownloader.h"
+#import "NewsForegroundDownloader.h"
+#import "NewsBackgroundDownloader.h"
 #import "NewsParser.h"
 
-@interface  NewsDownloader()
+@interface  NewsForegroundDownloader()
 
 @property (weak, nonatomic) id<NewsDownloaderDelegate> rssDelegate;
 @property (nonatomic) NSURL * rssURL;
@@ -20,9 +21,9 @@
 
 @end
 
-@implementation NewsDownloader
+@implementation NewsForegroundDownloader
 
-- (NewsDownloader *)initWithDelegate: (id<NewsDownloaderDelegate>) delegate
+- (NewsForegroundDownloader *)initWithDelegate: (id<NewsDownloaderDelegate>) delegate
                               andURL: (NSURL *) url
                            andParser: (id<NewsParser>) parser{
     self = [super init];
@@ -33,10 +34,6 @@
     _rssParser.delegate = self;
     
     NSURLSessionConfiguration * defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
-    //NSURLSessionConfiguration * defaultConfigObject = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:_rssURL.path];
-    //defaultConfigObject.sharedContainerIdentifier = @"com.me.myapp.containerIdentifier";
-    //defaultConfigObject.sessionSendsLaunchEvents = YES;
-    //defaultConfigObject.discretionary = YES;
      
     _session = [NSURLSession sessionWithConfiguration: defaultConfigObject
                                             delegate: nil
@@ -52,7 +49,7 @@
                    completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                        
                        if (error)
-                           [_rssDelegate newsDownloader: self didFailDownload: error];
+                           [_rssDelegate newsDownloader: (id<NewsDownloader>)self didFailDownload: error];
                        else
                        {
                            parser.data = data;
@@ -79,7 +76,7 @@
         if (imageURL)
             imageData = [[NSData alloc] initWithContentsOfURL:imageURL];
     }
-    [_rssDelegate newsDownloader: self didDownloadNews: newsItems andTitle: title andImage: imageData];
+    [_rssDelegate newsDownloader: (id<NewsDownloader>)self didDownloadNews: newsItems andTitle: title andImage: imageData];
 }
 
 @end

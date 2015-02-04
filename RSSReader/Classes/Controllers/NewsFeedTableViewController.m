@@ -70,9 +70,21 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"newsFeedItem" forIndexPath:indexPath];
     
     NewsFeed * newsFeedItem = [ _newsFeedList objectAtIndex: indexPath.row ];
-    cell.textLabel.text = newsFeedItem.title;
+    
+    
+    UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
+    if (newsFeedItem.image != nil && newsFeedItem.image.length > 0)
+        recipeImageView.image = [[UIImage alloc]initWithData:newsFeedItem.image];
+    else
+        recipeImageView.image = [UIImage imageNamed: @"rss"];
+    
+    UILabel * titleLable = (UILabel *)[cell viewWithTag:101];
+    titleLable.text = newsFeedItem.title;
+    
     int numberOfUnreadNews = [[_sourse getNewsSourseFromNewsFeed:newsFeedItem] numberOfUnreadNews];
-    cell.detailTextLabel.text = [[NSString alloc] initWithFormat: @"%d", numberOfUnreadNews];
+    
+    UILabel * newsCountLable = (UILabel *)[cell viewWithTag:102];
+    newsCountLable.text = [[NSString alloc] initWithFormat: @"%d", numberOfUnreadNews];
 
     
     return cell;

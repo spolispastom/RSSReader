@@ -163,6 +163,8 @@
         item.image = image;
         //[self setValue:NO forKey:@"isRead"];
         
+        [_newsList addObject:item];
+        
         _title = @"";
         _content = @"";
         _currentPropertyName = @"";

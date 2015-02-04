@@ -9,15 +9,18 @@
 #import "DownloadAndParseNewsOperation.h"
 #import "NewsDownloader.h"
 #import "RSSParser.h"
+#import "NewsForegroundDownloader.h"
+#import "NewsBackgroundDownloader.h"
 
 @interface DownloadAndParseNewsOperation()
 
 @property NSURL * url;
-@property NewsDownloader * downloader;
+@property id<NewsDownloader> downloader;
 @property RSSParser * parser;
 @property (weak) id<NewsDownloaderDelegate> delegate;
 
 @property (weak, nonatomic) NSManagedObjectContext * context;
+@property (nonatomic) BOOL isBackground;
 
 @end
 
@@ -36,6 +39,20 @@
         _url = [url copy];
         _delegate = delegate;
     }
+    
+    _isBackground = NO;
+    return  self;
+}
+
+
+- (DownloadAndParseNewsOperation *) initBackgroundDownloadAndParseNewsOperationWithURL: (NSURL *) url
+                                                                           andDelegate: (id<NewsDownloaderDelegate>) delegate
+                                                                            andContext: (NSManagedObjectContext *) context
+{
+    self = [self initWithURL:url andDelegate:delegate andContext:context];
+    
+    _isBackground = YES;
+    
     return  self;
 }
 
@@ -64,13 +81,22 @@
 
 - (void)main
 {
-    _downloader = [[NewsDownloader alloc] initWithDelegate: self
+    if (_isBackground)
+    {
+        _downloader = (id<NewsDownloader>)[[NewsBackgroundDownloader alloc] initWithDelegate: self
+                                                         andURL: _url
+                                                      andParser: [[RSSParser alloc] initWithContext:_context]];
+    }
+    else
+    {
+        _downloader = (id<NewsDownloader>)[[NewsForegroundDownloader alloc] initWithDelegate: self
                                                    andURL: _url
                                                 andParser: [[RSSParser alloc] initWithContext:_context]];
-     [_downloader download];
+    }
+    [_downloader download];
 }
 
-- (void)newsDownloader:(NewsDownloader *) downloader didDownloadNews:(NSArray *)newsItems andTitle: (NSString *) title andImage: (NSData *) image
+- (void)newsDownloader:(id<NewsDownloader>) downloader didDownloadNews:(NSArray *)newsItems andTitle: (NSString *) title andImage: (NSData *) image
 {
     dispatch_async(dispatch_get_main_queue(), ^{
        [_delegate newsDownloader: _downloader didDownloadNews: newsItems andTitle: title andImage:image];
@@ -99,10 +125,10 @@
     return YES;
 }
 
-- (void)newsDownloader:(NewsDownloader *) downloader didFailDownload:(NSError *) error
+- (void)newsDownloader:(id<NewsDownloader>) downloader didFailDownload:(NSError *) error
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [_delegate newsDownloader: (NewsDownloader *)self didFailDownload: error];
+        [_delegate newsDownloader: (id<NewsDownloader>)self didFailDownload: error];
     });
 }
 

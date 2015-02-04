@@ -11,7 +11,7 @@
 @interface NewsContentViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *titleButton;
 @property (weak, nonatomic) IBOutlet UILabel *dateLable;
-@property (weak, nonatomic) IBOutlet UITextView *contentTextView;
+@property (weak, nonatomic) IBOutlet UIWebView *contentWebVew;
 
 @property (nonatomic) NSString * newsTitle;
 @property (nonatomic) NSString * newsCreationDate;
@@ -34,7 +34,7 @@
     if (_newsCreationDate)
         self.dateLable.text = _newsCreationDate;
     if (_newsContent)
-        self.contentTextView.text = _newsContent;
+        [self.contentWebVew loadHTMLString:_newsContent baseURL:nil];
     
     if (_url && [[UIApplication sharedApplication] canOpenURL: _url])
         self.titleButton.enabled = YES;
@@ -62,7 +62,7 @@
         if (_newsCreationDate)
             self.dateLable.text = _newsCreationDate;
         if (_newsContent)
-            self.contentTextView.text = _newsContent;
+            [self.contentWebVew loadHTMLString:_newsContent baseURL:nil];
         _url = [NSURL URLWithString:_newsLinkString];
         
         if (_url && [[UIApplication sharedApplication] canOpenURL: _url])

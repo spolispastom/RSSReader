@@ -15,6 +15,7 @@
 @property (nonatomic, strong, readwrite) NSOperationQueue * queue;
 @property (nonatomic, assign, readwrite) BOOL recalculating;
 @property (nonatomic, strong, readwrite) DownloadAndParseNewsOperation *   gettingNews;
+@property (nonatomic) BOOL isBackground;
 
 @property (weak, nonatomic) NSManagedObjectContext * context;
 
@@ -52,9 +53,25 @@
 
 - (void)downloadAgain
 {
+    _isBackground = NO;
     if (_gettingNews.isReady)
         [_gettingNews cancel];
-    self.gettingNews = [[DownloadAndParseNewsOperation alloc] initWithURL: _url andDelegate: self andContext:_context];
+    self.gettingNews = [[DownloadAndParseNewsOperation alloc] initWithURL: _url
+                                                              andDelegate: self
+                                                               andContext:_context];
+    
+    [self.queue addOperation: self.gettingNews];
+}
+
+
+- (void)backgroundDownloadAgain
+{
+    _isBackground = YES;
+    if (_gettingNews.isReady)
+        [_gettingNews cancel];
+    self.gettingNews = [[DownloadAndParseNewsOperation alloc] initBackgroundDownloadAndParseNewsOperationWithURL: _url
+                                                                                                     andDelegate: self
+                                                                                                      andContext:_context];
     
     [self.queue addOperation: self.gettingNews];
 }
@@ -65,31 +82,49 @@
         [_sourseDelegate newsSourse:self didParseNews:[[_newsFeed.newsItems allObjects]sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
             NewsItem * item1 = (NewsItem *)obj1;
             NewsItem * item2 = (NewsItem *)obj2;
-            if (item1.creationDate > item2.creationDate)
+            if (item1.creationDate < item2.creationDate)
                 return NSOrderedDescending;
-            else if (item1.creationDate < item2.creationDate)
+            else if (item1.creationDate > item2.creationDate)
                 return NSOrderedAscending;
             else return NSOrderedSame;
         }]];
     else
         [ self downloadAgain];
 }
-- (void)newsDownloader:(NewsDownloader *) downloader didDownloadNews:(NSArray *)newsItems andTitle: (NSString *) title andImage: (NSData *) image
+- (void)newsDownloader:(id<NewsDownloader>) downloader didDownloadNews:(NSArray *)newsItems andTitle: (NSString *) title andImage: (NSData *) image
 {
+    NSInteger numberOfNewNews = 0;
     for (NewsItem * item in newsItems) {
         
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"url contains %@", item.url];
         NSSet * oldItems = [_newsFeed.newsItems filteredSetUsingPredicate:predicate];
         if ([oldItems count] == 0)
+        {
             [item setValue: _newsFeed forKey:@"newsFeed"];
+            numberOfNewNews++;
+        }
     }
     
     [self saveContext];
     [self update];
     [_titleDelegate newsSourse:self didParseTitle:title andImage:image];
+    
+    if (_isBackground && numberOfNewNews > 0)
+    {
+        UILocalNotification* local = [[UILocalNotification alloc]init];
+        if (local)
+        {
+            local.fireDate = [NSDate dateWithTimeIntervalSinceNow:10];
+            local.alertBody = [NSString stringWithFormat:@"У вас %ld новых новостей в ленте %@", numberOfNewNews, _newsFeed.title];
+            local.timeZone = [NSTimeZone defaultTimeZone];
+            [[UIApplication sharedApplication] scheduleLocalNotification:local];
+            
+           
+        }
+    }
 }
 
-- (void)newsDownloader:(NewsDownloader *) downloader didFailDownload:(NSError *) error
+- (void)newsDownloader:(id<NewsDownloader>) downloader didFailDownload:(NSError *) error
 {
     [_sourseDelegate newsSourse: self didFailDownload: error];
 }
