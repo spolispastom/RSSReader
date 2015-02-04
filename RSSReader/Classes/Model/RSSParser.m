@@ -68,11 +68,17 @@
     
     if (data && delegate)
     {
-        _parser = [[NSXMLParser alloc] initWithData: data];
-        [_parser setDelegate: self];
-        [_parser setShouldResolveExternalEntities:YES];
+        @try {
+            _parser = [[NSXMLParser alloc] initWithData: data];
+            [_parser setDelegate: self];
+            [_parser setShouldResolveExternalEntities:YES];
+            
+            return [_parser parse];
+        }
+        @catch (NSException *exception) {
+            return NO;
+        }
         
-        return [_parser parse];
     }
     else return NO;
 }

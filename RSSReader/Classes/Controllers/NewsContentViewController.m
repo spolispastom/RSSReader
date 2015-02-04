@@ -62,8 +62,17 @@
         if (_newsCreationDate)
             self.dateLable.text = _newsCreationDate;
         if (_newsContent)
+        {
+            NSRange loc = [_newsContent rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch];
+            if (loc.length <= 0)
+            {
+                _newsContent = [NSString stringWithFormat:@"<p style=\"font-size: 16px; font-family: Arial; text-align: justify; margin: 0px 8px;\">%@<p>", _newsContent];
+            }
             [self.contentWebVew loadHTMLString:_newsContent baseURL:nil];
+        }
         _url = [NSURL URLWithString:_newsLinkString];
+        
+        
         
         if (_url && [[UIApplication sharedApplication] canOpenURL: _url])
             self.titleButton.enabled = YES;

@@ -74,7 +74,31 @@
     
     UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
     if (newsFeedItem.image != nil && newsFeedItem.image.length > 0)
-        recipeImageView.image = [[UIImage alloc]initWithData:newsFeedItem.image];
+    {
+        UIImage * image = [[UIImage alloc]initWithData:newsFeedItem.image];
+        
+        CGImageRef imgRef = [image CGImage];
+        CGFloat width = CGImageGetWidth(imgRef);
+        CGFloat height = CGImageGetHeight(imgRef);
+        CGSize size = CGSizeMake(width, height);
+        
+        if (height < width)
+        {
+            size.width = 44;
+            size.height = 44 * height / width;
+        }
+        else
+        {
+            size.width = 44 * width / height;
+            size.height = 44;
+        }
+        UIGraphicsBeginImageContext(size);
+        [image drawInRect:CGRectMake(0.0, 0.0, size.width, size.height)];
+        UIImage *imageCopy = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        recipeImageView.image = imageCopy;
+    }
     else
         recipeImageView.image = [UIImage imageNamed: @"rss"];
     
