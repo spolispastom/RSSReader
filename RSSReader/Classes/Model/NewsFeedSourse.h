@@ -7,9 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NewsFeedSourseDelegate.h"
 #import "NewsFeed.h"
 #import "NewsSourse.h"
+
+@class NewsFeedSourse;
+@protocol NewsFeedSourseDelegate <NSObject>
+
+- (void)newsSourse:(NewsFeedSourse *) sourse didGetNewsFeed:(NSArray *)newsFeeds;
+- (void)newsSourse:(NewsFeedSourse *) sourse;
+@end
 
 @interface NewsFeedSourse : NSObject<NewsTitleDelegate>
 

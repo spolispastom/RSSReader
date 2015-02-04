@@ -31,8 +31,12 @@
     _rssURL = url;
     _rssParser = parser;
     _rssParser.delegate = self;
-
+    
     NSURLSessionConfiguration * defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+    //NSURLSessionConfiguration * defaultConfigObject = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:_rssURL.path];
+    //defaultConfigObject.sharedContainerIdentifier = @"com.me.myapp.containerIdentifier";
+    //defaultConfigObject.sessionSendsLaunchEvents = YES;
+    //defaultConfigObject.discretionary = YES;
      
     _session = [NSURLSession sessionWithConfiguration: defaultConfigObject
                                             delegate: nil

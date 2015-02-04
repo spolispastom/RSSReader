@@ -8,10 +8,22 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "NewsSourseDelegate.h"
-#import "NewsTitleDelegate.h"
-#import "NewsDownloaderDelegate.h"
 #import "NewsFeed.h"
+#import "NewsSourse.h"
+#import "NewsDownloader.h"
+
+@class NewsSourse;
+@protocol NewsSourseDelegate <NSObject>
+
+- (void)newsSourse:(NewsSourse *) sourse didParseNews:(NSArray *)newsItems;
+- (void)newsSourse:(NewsSourse *) sourse;
+- (void)newsSourse:(NewsSourse *) sourse didFailDownload:(NSError *) error;
+@end
+
+@protocol NewsTitleDelegate <NSObject>
+
+- (void)newsSourse:(NewsSourse *) sourse didParseTitle: (NSString *) title andImage: (NSData *) image;
+@end
 
 @interface NewsSourse : NSObject <NewsDownloaderDelegate>
 

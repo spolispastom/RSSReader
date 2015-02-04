@@ -152,12 +152,17 @@
             if (imageLink != nil)
                 image = [[NSData alloc] initWithContentsOfURL: imageLink];
         }
-        [_newsList addObject:[[NewsItem alloc] initWithTitle: _title
-                                             andCreationDate: _creationDate
-                                                  andContent: _content
-                                                     andLink: _linkString
-                                                    andImage: image
-                                                  andContext: _context]];
+        
+        NewsItem * item = [NewsItem alloc];
+        item = [NSEntityDescription insertNewObjectForEntityForName:@"NewsItem" inManagedObjectContext: _context];
+        
+        item.title = _title;
+        item.creationDate = _creationDate;
+        item.content = _content;
+        item.url = _linkString;
+        item.image = image;
+        //[self setValue:NO forKey:@"isRead"];
+        
         _title = @"";
         _content = @"";
         _currentPropertyName = @"";

@@ -7,10 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NewsDownloaderDelegate.h"
-#import "NewsParserDelegate.h"
 #import "NewsParser.h"
 
+@class NewsDownloader;
+
+@protocol NewsDownloaderDelegate <NSObject>
+
+- (void)newsDownloader:(NewsDownloader *) downloader didDownloadNews:(NSArray *)newsItems andTitle: (NSString *) title andImage: (NSData *) image;
+- (void)newsDownloader:(NewsDownloader *) downloader didFailDownload:(NSError *) error;
+
+@end
 
 @interface NewsDownloader : NSObject<NewsParserDelegate>
 

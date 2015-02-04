@@ -17,14 +17,4 @@
 @dynamic image;
 @dynamic newsItems;
 
-- (NewsFeed *) initWithURL: (NSString *) url ManagedObjectContext:(NSManagedObjectContext *) context
-{
-    self = [NSEntityDescription insertNewObjectForEntityForName:@"NewsFeed" inManagedObjectContext: context];
-    
-    self.title = url;
-    self.url = url;
-    
-    return  self;
-}
-
 @end

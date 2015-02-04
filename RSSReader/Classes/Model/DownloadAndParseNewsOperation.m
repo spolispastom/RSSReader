@@ -27,12 +27,39 @@
 {
     self = [self init];
     
-    _context = context;
+    if (self) {
+        executing = NO;
+        finished = NO;
     
-    _url = [url copy];
-    _delegate = delegate;
+        _context = context;
     
+        _url = [url copy];
+        _delegate = delegate;
+    }
     return  self;
+}
+
+- (BOOL) isAsynchronous
+{
+    return YES;
+}
+
+- (void)start
+{
+    if ([self isCancelled])
+    {
+        // Must move the operation to the finished state if it is canceled.
+        [self willChangeValueForKey:@"isFinished"];
+        finished = YES;
+        [self didChangeValueForKey:@"isFinished"];
+        return;
+    }
+    
+    // If the operation is not canceled, begin executing the task.
+    [self willChangeValueForKey:@"isExecuting"];
+    [NSThread detachNewThreadSelector:@selector(main) toTarget:self withObject:nil];
+    executing = YES;
+    [self didChangeValueForKey:@"isExecuting"];
 }
 
 - (void)main
@@ -48,14 +75,46 @@
     dispatch_async(dispatch_get_main_queue(), ^{
        [_delegate newsDownloader: _downloader didDownloadNews: newsItems andTitle: title andImage:image];
     });
+    [self completeOperation];
 }
 
+- (void)cancel
+{
+    [_downloader cancel];
+    [self completeOperation];
+}
+
+- (BOOL) isExecuting
+{
+    return executing;
+}
+
+- (BOOL) isFinished
+{
+    return finished;
+}
+
+- (BOOL) isConcurrent
+{
+    return YES;
+}
 
 - (void)newsDownloader:(NewsDownloader *) downloader didFailDownload:(NSError *) error
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [_delegate newsDownloader: (NewsDownloader *)self didFailDownload: error];
     });
+}
+
+- (void)completeOperation {
+    [self willChangeValueForKey:@"isFinished"];
+    [self willChangeValueForKey:@"isExecuting"];
+    
+    executing = NO;
+    finished = YES;
+    
+    [self didChangeValueForKey:@"isExecuting"];
+    [self didChangeValueForKey:@"isFinished"];
 }
 
 @end

@@ -91,7 +91,7 @@
 
 - (void)newsDownloader:(NewsDownloader *) downloader didFailDownload:(NSError *) error
 {
-    [_sourseDelegate newsSourse: self didFilDownload: error];
+    [_sourseDelegate newsSourse: self didFailDownload: error];
 }
 
 - (int) numberOfUnreadNews

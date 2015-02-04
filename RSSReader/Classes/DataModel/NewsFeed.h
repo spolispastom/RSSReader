@@ -26,6 +26,5 @@
 - (void)addNewsItems:(NSSet *)values;
 - (void)removeNewsItems:(NSSet *)values;
 
-- (NewsFeed *) initWithURL: (NSString *) url ManagedObjectContext:(NSManagedObjectContext *) context;
 
 @end

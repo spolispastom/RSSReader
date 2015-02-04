@@ -51,7 +51,12 @@
 
 - (void)addNewsFeed: (NSString *) newsFeed
 {
-    NewsFeed * item = [[NewsFeed alloc] initWithURL:newsFeed ManagedObjectContext:_context];
+    NewsFeed * item = [NewsFeed alloc];
+    item = [NSEntityDescription insertNewObjectForEntityForName:@"NewsFeed" inManagedObjectContext: _context];
+    
+    item.title = newsFeed;
+    item.url = newsFeed;
+    
     [self saveContext];
     
     NewsSourse * newsSourse = [[NewsSourse alloc] initWithURL:item

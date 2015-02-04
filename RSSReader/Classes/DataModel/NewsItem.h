@@ -21,13 +21,4 @@
 @property (nonatomic, retain) NSData * image;
 @property (nonatomic, retain) NewsFeed *newsFeed;
 
-
-- (NewsItem *) initWithTitle: (NSString * ) title andCreationDate: (NSDate *) creationDate andContent: (NSString *) content andLink: (NSString *) link
-                    andImage: (NSData *) image andContext:(NSManagedObjectContext *) context;
-- (NewsItem *) initWithTitle: (NSString * ) title andCreationDate: (NSDate *) creationDate andContent: (NSString *) content andLink: (NSString *) link
-                  andContext:(NSManagedObjectContext *) context;
-- (NewsItem *) initWithTitle: (NSString * ) title andCreationDate: (NSDate *) creationDate andContent: (NSString *) content
-                  andContext:(NSManagedObjectContext *) context;
-- (NewsItem *) initWithTitle: (NSString * ) title andCreationDate: (NSDate *) creationDate andContext:(NSManagedObjectContext *) context;
-
 @end

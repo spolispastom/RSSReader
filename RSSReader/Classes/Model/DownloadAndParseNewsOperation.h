@@ -8,9 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "NewsDownloaderDelegate.h"
+#import "NewsDownloader.h"
 
-@interface DownloadAndParseNewsOperation : NSOperation <NewsDownloaderDelegate>
+@interface DownloadAndParseNewsOperation : NSOperation <NewsDownloaderDelegate> {
+    BOOL        executing;
+    BOOL        finished;
+}
 
 @property (atomic, copy, readonly) NSArray * newsArray;
 

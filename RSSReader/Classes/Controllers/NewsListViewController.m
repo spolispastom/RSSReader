@@ -55,16 +55,26 @@
     self.newsList = newsItems;
 }
 
-- (void)newsSourse:(NewsSourse *) sourse didFilDownload:(NSError *) error
+- (void)newsSourse:(NewsSourse *) sourse didFailDownload:(NSError *) error
 {
     [_activityIndicator stopAnimating];
     [_activityIndicator setAlpha: 0];
     
-    UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle:@"Невозмо обновить ленту"
-                                                       message:@"Подключение к нтернету отсутствует"
-                                                      delegate:self
-                                             cancelButtonTitle:@"OK"
-                                             otherButtonTitles:nil];
+    NSString * message = @"Неизвестная ошибка.";
+    
+    if ([error.domain isEqualToString: NSURLErrorDomain])
+    {
+        if (error.code == NSURLErrorNetworkConnectionLost)
+            message = @"Соединение потеряно";
+        else
+            message = @"Подключение к нтернету отсутствует";
+    }
+    
+    UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle: @"Невозмо обновить ленту"
+                                                       message: message
+                                                      delegate: self
+                                             cancelButtonTitle: @"OK"
+                                             otherButtonTitles: nil];
     [theAlert show];
 }
 

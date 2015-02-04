@@ -53,12 +53,9 @@
 		CFD95B0B1A7768BC00A894B3 /* DownloadAndParseNewsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadAndParseNewsOperation.m; sourceTree = "<group>"; };
 		CFD95B0C1A7768BC00A894B3 /* NewsDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsDownloader.h; sourceTree = "<group>"; };
 		CFD95B0D1A7768BC00A894B3 /* NewsDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsDownloader.m; sourceTree = "<group>"; };
-		CFD95B0E1A7768BC00A894B3 /* NewsDownloaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsDownloaderDelegate.h; sourceTree = "<group>"; };
 		CFD95B111A7768BC00A894B3 /* NewsParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsParser.h; sourceTree = "<group>"; };
-		CFD95B121A7768BC00A894B3 /* NewsParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsParserDelegate.h; sourceTree = "<group>"; };
 		CFD95B131A7768BC00A894B3 /* NewsSourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsSourse.h; sourceTree = "<group>"; };
 		CFD95B141A7768BC00A894B3 /* NewsSourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsSourse.m; sourceTree = "<group>"; };
-		CFD95B151A7768BC00A894B3 /* NewsSourseDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsSourseDelegate.h; sourceTree = "<group>"; };
 		CFD95B161A7768BC00A894B3 /* RSSParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSParser.h; sourceTree = "<group>"; };
 		CFD95B171A7768BC00A894B3 /* RSSParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSParser.m; sourceTree = "<group>"; };
 		CFD95B1A1A7768BC00A894B3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -70,8 +67,6 @@
 		CFD95B331A776E4300A894B3 /* NewsFeedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsFeedTableViewController.m; sourceTree = "<group>"; };
 		CFD95B351A77757500A894B3 /* NewsFeedSourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsFeedSourse.h; sourceTree = "<group>"; };
 		CFD95B361A77757500A894B3 /* NewsFeedSourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsFeedSourse.m; sourceTree = "<group>"; };
-		CFD95B381A77758E00A894B3 /* NewsFeedSourseDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewsFeedSourseDelegate.h; sourceTree = "<group>"; };
-		CFD95B391A777BE100A894B3 /* NewsTitleDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewsTitleDelegate.h; sourceTree = "<group>"; };
 		CFD95B3A1A7784C900A894B3 /* AddNewsFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewsFeedViewController.h; sourceTree = "<group>"; };
 		CFD95B3B1A7784C900A894B3 /* AddNewsFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewsFeedViewController.m; sourceTree = "<group>"; };
 		CFD95B441A783E3300A894B3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -104,7 +99,6 @@
 		CF68EAE41A691A29009BF032 = {
 			isa = PBXGroup;
 			children = (
-				CFD95B441A783E3300A894B3 /* CoreData.framework */,
 				CF68EAEF1A691A29009BF032 /* RSSReader */,
 				CF68EB091A691A29009BF032 /* RSSReaderTests */,
 				CF68EAEE1A691A29009BF032 /* Products */,
@@ -123,6 +117,7 @@
 		CF68EAEF1A691A29009BF032 /* RSSReader */ = {
 			isa = PBXGroup;
 			children = (
+				CFDA2E941A8203170068A632 /* Frameworks */,
 				CFD95B001A7768BC00A894B3 /* Classes */,
 				CFD95B181A7768BC00A894B3 /* Resources */,
 				CFD95B1F1A7768BC00A894B3 /* Supporting Files */,
@@ -189,18 +184,13 @@
 				CFD95B0B1A7768BC00A894B3 /* DownloadAndParseNewsOperation.m */,
 				CFD95B0C1A7768BC00A894B3 /* NewsDownloader.h */,
 				CFD95B0D1A7768BC00A894B3 /* NewsDownloader.m */,
-				CFD95B0E1A7768BC00A894B3 /* NewsDownloaderDelegate.h */,
 				CFD95B111A7768BC00A894B3 /* NewsParser.h */,
-				CFD95B121A7768BC00A894B3 /* NewsParserDelegate.h */,
 				CFD95B161A7768BC00A894B3 /* RSSParser.h */,
 				CFD95B171A7768BC00A894B3 /* RSSParser.m */,
 				CFD95B131A7768BC00A894B3 /* NewsSourse.h */,
 				CFD95B141A7768BC00A894B3 /* NewsSourse.m */,
-				CFD95B151A7768BC00A894B3 /* NewsSourseDelegate.h */,
-				CFD95B391A777BE100A894B3 /* NewsTitleDelegate.h */,
 				CFD95B351A77757500A894B3 /* NewsFeedSourse.h */,
 				CFD95B361A77757500A894B3 /* NewsFeedSourse.m */,
-				CFD95B381A77758E00A894B3 /* NewsFeedSourseDelegate.h */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -268,6 +258,14 @@
 			name = DataModel;
 			sourceTree = "<group>";
 		};
+		CFDA2E941A8203170068A632 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CFD95B441A783E3300A894B3 /* CoreData.framework */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -317,6 +315,11 @@
 				TargetAttributes = {
 					CF68EAEC1A691A29009BF032 = {
 						CreatedOnToolsVersion = 6.1.1;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					CF68EB051A691A29009BF032 = {
 						CreatedOnToolsVersion = 6.1.1;

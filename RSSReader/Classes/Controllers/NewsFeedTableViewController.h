@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NewsFeedSourseDelegate.h"
+#import "NewsFeedSourse.h"
 
 @interface NewsFeedTableViewController : UITableViewController <NewsFeedSourseDelegate>
 
