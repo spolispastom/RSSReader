@@ -33,6 +33,7 @@
         [self.titleButton setTitle: _newsTitle forState: UIControlStateNormal];
     if (_newsCreationDate)
         self.dateLable.text = _newsCreationDate;
+    else self.dateLable.text = @"";
     if (_newsContent)
         [self.contentWebVew loadHTMLString:_newsContent baseURL:nil];
     
@@ -61,6 +62,7 @@
             [self.titleButton setTitle: _newsTitle forState: UIControlStateNormal];
         if (_newsCreationDate)
             self.dateLable.text = _newsCreationDate;
+        else self.dateLable.text = @"";
         if (_newsContent)
         {
             NSRange loc = [_newsContent rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch];

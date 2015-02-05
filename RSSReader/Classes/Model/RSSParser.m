@@ -65,6 +65,7 @@
 {
     _rssDateFormatter = [[NSDateFormatter alloc] init];
     [_rssDateFormatter setDateFormat:@"dd MMM yyyy HH:mm:ss Z:"];
+                                        //04 Feb 2015 09:15:56 +0300
     
     if (data && delegate)
     {
@@ -194,6 +195,22 @@
         else if ([_currentPropertyName  isEqual: @"pubDate"])
         {
             _creationDate = [_rssDateFormatter dateFromString: _currentValue];
+            if (!_creationDate)
+            {
+                NSInteger i = 0;
+                for (i = 0; i < _currentValue.length &&
+                     [_currentValue characterAtIndex:i] != '\n' &&
+                     [_currentValue characterAtIndex:i] != '\t' &&
+                     [_currentValue characterAtIndex:i] != ' '; i++);
+                while (i < _currentValue.length &&
+                      ([_currentValue characterAtIndex:i] == '\n' ||
+                       [_currentValue characterAtIndex:i] == '\t' ||
+                       [_currentValue characterAtIndex:i] == ' ')) {
+                        i++;
+                }
+                [_currentValue deleteCharactersInRange: NSMakeRange(0, i)];
+                _creationDate = [_rssDateFormatter dateFromString: _currentValue];
+            }
             [_currentValue deleteCharactersInRange: NSMakeRange(0, _currentValue.length)];
         }
         else if ([_currentPropertyName  isEqual: @"link"])
