@@ -27,6 +27,8 @@
     _refreshControl = [[UIRefreshControl alloc]init];
     [self.rssList addSubview:_refreshControl];
     [_refreshControl addTarget:self action: @selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+    
+    [self navigationItem].title = _newsFeedTitle;
 }
 
 - (void)refreshTable {
@@ -48,7 +50,7 @@
     
 }
 
-- (void)newsSourse:(NewsSourse *) sourse didParseNews:(NSArray *)newsItems
+- (void)newsSourse:(NewsSourse *) sourse didParseNews:(NSArray *)newsItems andTitle:(NSString *)title
 {
     if (!_sourse)
         _sourse = sourse;
@@ -56,6 +58,8 @@
     [_refreshControl endRefreshing];
     
     self.newsList = newsItems;
+    self.newsFeedTitle = title;
+    
 }
 
 - (void)newsSourse:(NewsSourse *) sourse didFailDownload:(NSError *) error
@@ -96,19 +100,74 @@
     return [_newsList count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView1:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell * cell = [ tableView dequeueReusableCellWithIdentifier: @"ListPrototypeCell" forIndexPath: indexPath ];
     
     NewsItem * newsItem = [ _newsList objectAtIndex: indexPath.row ];
-    cell.textLabel.text = newsItem.title;
-    cell.detailTextLabel.text = [self.defaultDateFormatter stringFromDate: newsItem.creationDate];
     
+    ((UILabel *)[cell viewWithTag:100]).text = newsItem.title;
+    
+   
+    ((UILabel *)[cell viewWithTag:101]).text = [self.defaultDateFormatter stringFromDate: newsItem.creationDate];
+
     if ([newsItem.isRead boolValue])
         [cell setBackgroundColor:[UIColor clearColor]];
     else [cell setBackgroundColor:[UIColor colorWithRed:0.9 green:0.9 blue:1 alpha:1]];
     
     return cell;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [self basicCellAtIndexPath:indexPath];
+}
+
+- (UITableViewCell *)basicCellAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [_rssList dequeueReusableCellWithIdentifier:@"ListPrototypeCell"
+                                                           forIndexPath:indexPath];
+    [self configureBasicCell:cell atIndexPath:indexPath];
+    return cell;
+}
+
+- (void)configureBasicCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    NewsItem * newsItem = [ _newsList objectAtIndex: indexPath.row ];
+    
+    ((UILabel *)[cell viewWithTag:100]).text = newsItem.title;
+    
+    
+    ((UILabel *)[cell viewWithTag:101]).text = [self.defaultDateFormatter stringFromDate: newsItem.creationDate];
+    
+    if ([newsItem.isRead boolValue])
+        [cell setBackgroundColor:[UIColor clearColor]];
+    else [cell setBackgroundColor:[UIColor colorWithRed:0.9 green:0.9 blue:1 alpha:1]];
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [self heightForBasicCellAtIndexPath:indexPath];
+}
+
+- (CGFloat)heightForBasicCellAtIndexPath:(NSIndexPath *)indexPath {
+    static UITableViewCell *sizingCell = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sizingCell = [_rssList dequeueReusableCellWithIdentifier:@"ListPrototypeCell"];
+    });
+    
+    [self configureBasicCell:sizingCell atIndexPath:indexPath];
+    return [self calculateHeightForConfiguredSizingCell:sizingCell];
+}
+
+- (CGFloat)calculateHeightForConfiguredSizingCell:(UITableViewCell *)sizingCell {
+    sizingCell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(_rssList.frame), CGRectGetHeight(sizingCell.bounds));
+    
+    [sizingCell setNeedsLayout];
+    [sizingCell layoutIfNeeded];
+    
+    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    if (size.height < 82)
+        return 82;
+    else return size.height + 1.0f; // Add 1.0f for the cell separator height
 }
 
 #pragma mark - Table view delegate

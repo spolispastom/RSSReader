@@ -16,7 +16,7 @@
 @class NewsSourse;
 @protocol NewsSourseDelegate <NSObject>
 
-- (void)newsSourse:(NewsSourse *) sourse didParseNews:(NSArray *)newsItems;
+- (void)newsSourse:(NewsSourse *) sourse didParseNews:(NSArray *)newsItems andTitle: (NSString *) title;
 - (void)newsSourse:(NewsSourse *) sourse;
 - (void)newsSourse:(NewsSourse *) sourse didFailDownload:(NSError *) error;
 @end

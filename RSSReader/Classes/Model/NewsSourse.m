@@ -87,7 +87,7 @@
             else if (item1.creationDate > item2.creationDate)
                 return NSOrderedAscending;
             else return NSOrderedSame;
-        }]];
+        }] andTitle: _newsFeed.title];
     else
         [ self downloadAgain];
 }
@@ -104,7 +104,6 @@
             numberOfNewNews++;
         }
     }
-    
     [self saveContext];
     [self update];
     [_titleDelegate newsSourse:self didParseTitle:title andImage:image];
@@ -115,7 +114,7 @@
         if (local)
         {
             local.fireDate = [NSDate dateWithTimeIntervalSinceNow:10];
-            local.alertBody = [NSString stringWithFormat:@"У вас %ld новых новостей в ленте %@", numberOfNewNews, _newsFeed.title];
+            local.alertBody = [NSString stringWithFormat:@"У вас %ld новых новостей в ленте %@", (long)numberOfNewNews, _newsFeed.title];
             local.timeZone = [NSTimeZone defaultTimeZone];
             [[UIApplication sharedApplication] scheduleLocalNotification:local];
             

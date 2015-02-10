@@ -13,6 +13,7 @@
 @interface NewsListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, NewsSourseDelegate>
 
 @property (nonatomic, setter=setNewsList:) NSArray * newsList;
+@property (nonatomic) NSString * newsFeedTitle;
 @property (nonatomic, getter=defaultDateFormatter) NSDateFormatter * defaultDateFormatter;
 
 @end

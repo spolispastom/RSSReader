@@ -5,10 +5,10 @@
 //  Created by Михаил Куренков on 16.01.15.
 //  Copyright (c) 2015 Михаил Куренков. All rights reserved.
 //
-
 #import "NewsContentViewController.h"
 
 @interface NewsContentViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *titleLable;
 @property (weak, nonatomic) IBOutlet UIButton *titleButton;
 @property (weak, nonatomic) IBOutlet UILabel *dateLable;
 @property (weak, nonatomic) IBOutlet UIWebView *contentWebVew;
@@ -30,7 +30,9 @@
     [self.titleButton setTitleColor: [UIColor blackColor] forState:(UIControlStateDisabled)];
     
     if (_newsTitle)
-        [self.titleButton setTitle: _newsTitle forState: UIControlStateNormal];
+    {
+        _titleLable.text = _newsTitle;
+    }
     if (_newsCreationDate)
         self.dateLable.text = _newsCreationDate;
     else self.dateLable.text = @"";
@@ -59,7 +61,9 @@
         _newsLinkString = news.url;
         
         if (_newsTitle)
-            [self.titleButton setTitle: _newsTitle forState: UIControlStateNormal];
+        {
+            _titleLable.text = _newsTitle;
+        }
         if (_newsCreationDate)
             self.dateLable.text = _newsCreationDate;
         else self.dateLable.text = @"";
@@ -73,8 +77,6 @@
             [self.contentWebVew loadHTMLString:_newsContent baseURL:nil];
         }
         _url = [NSURL URLWithString:_newsLinkString];
-        
-        
         
         if (_url && [[UIApplication sharedApplication] canOpenURL: _url])
             self.titleButton.enabled = YES;

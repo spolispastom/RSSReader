@@ -11,6 +11,7 @@
 #import "NewsListViewController.h"
 #import "NewsFeed.h"
 #import "NewsFeedSourse.h"
+#import "NewsFeedTableViewCell.h"
 
 @interface NewsFeedTableViewController ()
 
@@ -65,14 +66,20 @@
     }
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"newsFeedItem" forIndexPath:indexPath];
+    return [self basicCellAtIndexPath:indexPath];
+}
+
+- (NewsFeedTableViewCell *)basicCellAtIndexPath:(NSIndexPath *)indexPath {
+    NewsFeedTableViewCell* cell = [self.tableView dequeueReusableCellWithIdentifier:@"newsFeedItem" forIndexPath:indexPath];
+    [self configureNewsFeedCell:cell atIndexPath:indexPath];
+    return cell;
+}
+
+- (void)configureNewsFeedCell:(NewsFeedTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     
     NewsFeed * newsFeedItem = [ _newsFeedList objectAtIndex: indexPath.row ];
     
-    
-    UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
     if (newsFeedItem.image != nil && newsFeedItem.image.length > 0)
     {
         UIImage * image = [[UIImage alloc]initWithData:newsFeedItem.image];
@@ -84,34 +91,53 @@
         
         if (height < width)
         {
-            size.width = 44;
-            size.height = 44 * height / width;
+            size.width = 65;
+            size.height = 65 * height / width;
         }
         else
         {
-            size.width = 44 * width / height;
-            size.height = 44;
+            size.width = 65 * width / height;
+            size.height = 65;
         }
+        
         UIGraphicsBeginImageContext(size);
         [image drawInRect:CGRectMake(0.0, 0.0, size.width, size.height)];
         UIImage *imageCopy = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         
-        recipeImageView.image = imageCopy;
+        cell.image.image = imageCopy;
     }
     else
-        recipeImageView.image = [UIImage imageNamed: @"rss"];
+        cell.image.image = [UIImage imageNamed: @"rss"];
     
-    UILabel * titleLable = (UILabel *)[cell viewWithTag:101];
-    titleLable.text = newsFeedItem.title;
+    cell.titleLable.text = newsFeedItem.title;
     
     int numberOfUnreadNews = [[_sourse getNewsSourseFromNewsFeed:newsFeedItem] numberOfUnreadNews];
     
-    UILabel * newsCountLable = (UILabel *)[cell viewWithTag:102];
-    newsCountLable.text = [[NSString alloc] initWithFormat: @"%d", numberOfUnreadNews];
+    cell.numberOfUnreadNewsLable.text = [[NSString alloc] initWithFormat: @"%d", numberOfUnreadNews];
+}
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [self heightForBasicCellAtIndexPath:indexPath];
+}
+
+- (CGFloat)heightForBasicCellAtIndexPath:(NSIndexPath *)indexPath {
+    static NewsFeedTableViewCell *sizingCell = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sizingCell = [self.tableView dequeueReusableCellWithIdentifier:@"newsFeedItem"];
+    });
     
-    return cell;
+    [self configureNewsFeedCell:sizingCell atIndexPath:indexPath];
+    
+    [sizingCell setNeedsLayout];
+    [sizingCell layoutIfNeeded];
+    
+    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    CGFloat height = size.height + 1.0f; // Add 1.0f for the cell separator height
+    if (height < 82)
+        return 82;
+    else return height;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -122,8 +148,15 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
         NewsFeed * item = [_newsFeedList objectAtIndex: indexPath.row];
+    
+        [tableView beginUpdates];
+        [tableView deleteRowsAtIndexPaths:@[indexPath]
+                         withRowAnimation:UITableViewRowAnimationAutomatic];
         [_sourse removeNewsFeed: item];
+        [tableView endUpdates];
+        
         [self.tableView reloadData];
     }
 }
