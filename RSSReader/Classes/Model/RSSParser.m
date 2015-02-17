@@ -21,7 +21,6 @@
 @property (nonatomic) NSString * title;
 @property (nonatomic) NSDate * creationDate ;
 @property (nonatomic) NSString * content;
-@property (nonatomic) NSString * imageURL;
 @property (nonatomic) NSString * linkString;
 @property (nonatomic) NSString * channelTitle;
 @property (nonatomic) NSString * channelImageURL;
@@ -152,14 +151,6 @@
     }
     else if ([elementName  isEqual: @"item"])
     {
-        NSData * image = nil;
-        if (_imageURL)
-        {
-            NSURL * imageLink = [[NSURL alloc] initWithString:_imageURL];
-            if (imageLink != nil)
-                image = [[NSData alloc] initWithContentsOfURL: imageLink];
-        }
-        
         NewsItem * item = [NewsItem alloc];
         item = [NSEntityDescription insertNewObjectForEntityForName:@"NewsItem" inManagedObjectContext: _context];
         
@@ -167,7 +158,6 @@
         item.creationDate = _creationDate;
         item.content = _content;
         item.url = _linkString;
-        item.image = image;
         //[self setValue:NO forKey:@"isRead"];
         
         [_newsList addObject:item];
@@ -216,10 +206,6 @@
         else if ([_currentPropertyName  isEqual: @"link"])
         {
             _linkString =[_currentValue copy];
-            [_currentValue deleteCharactersInRange: NSMakeRange(0, _currentValue.length)];
-        }else if ([_currentPropertyName  isEqual: @"image"])
-        {
-            _imageURL =[_currentValue copy];
             [_currentValue deleteCharactersInRange: NSMakeRange(0, _currentValue.length)];
         }
         else

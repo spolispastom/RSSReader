@@ -9,8 +9,8 @@
 
 @interface NewsContentViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *titleLable;
-@property (weak, nonatomic) IBOutlet UIButton *titleButton;
 @property (weak, nonatomic) IBOutlet UILabel *dateLable;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *titleTab;
 @property (weak, nonatomic) IBOutlet UIWebView *contentWebVew;
 
 @property (nonatomic) NSString * newsTitle;
@@ -26,9 +26,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.titleButton setTitleColor: [UIColor blueColor] forState:(UIControlStateNormal)];
-    [self.titleButton setTitleColor: [UIColor blackColor] forState:(UIControlStateDisabled)];
-    
     if (_newsTitle)
     {
         _titleLable.text = _newsTitle;
@@ -39,11 +36,8 @@
     if (_newsContent)
         [self.contentWebVew loadHTMLString:_newsContent baseURL:nil];
     
-    if (_url && [[UIApplication sharedApplication] canOpenURL: _url])
-        self.titleButton.enabled = YES;
-    else self.titleButton.enabled = NO;
+    [self chackActiveLink];
 }
-
 
 - (void) setNewsItem: (NewsItem *) news;
 {
@@ -78,17 +72,25 @@
         }
         _url = [NSURL URLWithString:_newsLinkString];
         
-        if (_url && [[UIApplication sharedApplication] canOpenURL: _url])
-            self.titleButton.enabled = YES;
-        else self.titleButton.enabled = NO;
-        
+        [self chackActiveLink];
         [news setIsRead:[NSNumber numberWithBool:YES]];
         
         [self updateViewConstraints];
     }
 }
+
+-(void) chackActiveLink {
+    if (_url && [[UIApplication sharedApplication] canOpenURL: _url]) {
+        self.titleTab.enabled = YES;
+        [self.titleLable setTextColor: [UIColor blueColor]];
+    }
+    else {
+        self.titleTab.enabled = NO;
+        [self.titleLable setTextColor: [UIColor blackColor]];
+    }
+}
+
 - (IBAction)goLink:(id)sender {
-    
     if ([[UIApplication sharedApplication] canOpenURL: _url])
         [[UIApplication sharedApplication] openURL: _url];
 }

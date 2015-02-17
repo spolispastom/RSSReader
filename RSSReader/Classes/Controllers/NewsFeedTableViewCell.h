@@ -10,8 +10,8 @@
 
 @interface NewsFeedTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLable;
-@property (weak, nonatomic) IBOutlet UILabel *numberOfUnreadNewsLable;
-@property (weak, nonatomic) IBOutlet UIImageView *image;
+@property (nonatomic, setter=setTitle:) NSString *title;
+@property (nonatomic, setter=setNumberOfUnreadNews:) NSInteger numberOfUnreadNews;
+@property (nonatomic, setter=setImage:) NSData *image;
 
 @end

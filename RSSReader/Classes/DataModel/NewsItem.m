@@ -17,7 +17,6 @@
 @dynamic isRead;
 @dynamic title;
 @dynamic url;
-@dynamic image;
 @dynamic newsFeed;
 
 @end

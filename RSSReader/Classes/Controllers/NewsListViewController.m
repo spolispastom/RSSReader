@@ -9,11 +9,14 @@
 #import "NewsListViewController.h"
 #import "NewsContentViewController.h"
 #import "NewsSourse.h"
+#import "NewsTableViewCell.h"
 
 @interface NewsListViewController ()
+
 @property (weak, nonatomic) IBOutlet UITableView *rssList;
 @property (weak, nonatomic) NewsSourse * sourse;
 @property (nonatomic) UIRefreshControl * refreshControl;
+
 @end
 
 @implementation NewsListViewController
@@ -35,13 +38,7 @@
     [_sourse downloadAgain];
 }
 
-- (NSDateFormatter *)defaultDateFormatter {
-    if(_defaultDateFormatter == nil) {
-        _defaultDateFormatter = [[NSDateFormatter alloc] init];
-        [_defaultDateFormatter setDateFormat:@"dd MMMM yyyy HH:mm"];
-    }
-    return _defaultDateFormatter;
-}
+
 
 - (void) setNewsList: (NSArray *) newsItemList
 {
@@ -72,6 +69,8 @@
     {
         if (error.code == NSURLErrorNetworkConnectionLost)
             message = @"Соединение потеряно";
+        else if (error.code == kCFURLErrorUnsupportedURL )
+            message = @"Неверный адрес новостной ленты.";
         else
             message = @"Подключение к нтернету отсутствует";
     }
@@ -100,42 +99,22 @@
     return [_newsList count];
 }
 
-- (UITableViewCell *)tableView1:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    UITableViewCell * cell = [ tableView dequeueReusableCellWithIdentifier: @"ListPrototypeCell" forIndexPath: indexPath ];
-    
-    NewsItem * newsItem = [ _newsList objectAtIndex: indexPath.row ];
-    
-    ((UILabel *)[cell viewWithTag:100]).text = newsItem.title;
-    
-   
-    ((UILabel *)[cell viewWithTag:101]).text = [self.defaultDateFormatter stringFromDate: newsItem.creationDate];
-
-    if ([newsItem.isRead boolValue])
-        [cell setBackgroundColor:[UIColor clearColor]];
-    else [cell setBackgroundColor:[UIColor colorWithRed:0.9 green:0.9 blue:1 alpha:1]];
-    
-    return cell;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [self basicCellAtIndexPath:indexPath];
 }
 
 - (UITableViewCell *)basicCellAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [_rssList dequeueReusableCellWithIdentifier:@"ListPrototypeCell"
+    NewsTableViewCell *cell = [_rssList dequeueReusableCellWithIdentifier:@"NewsTableViewCell"
                                                            forIndexPath:indexPath];
     [self configureBasicCell:cell atIndexPath:indexPath];
     return cell;
 }
 
-- (void)configureBasicCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureBasicCell:(NewsTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     NewsItem * newsItem = [ _newsList objectAtIndex: indexPath.row ];
     
-    ((UILabel *)[cell viewWithTag:100]).text = newsItem.title;
-    
-    
-    ((UILabel *)[cell viewWithTag:101]).text = [self.defaultDateFormatter stringFromDate: newsItem.creationDate];
+    cell.title = newsItem.title;
+    cell.creationData = newsItem.creationDate;
     
     if ([newsItem.isRead boolValue])
         [cell setBackgroundColor:[UIColor clearColor]];
@@ -148,10 +127,10 @@
 }
 
 - (CGFloat)heightForBasicCellAtIndexPath:(NSIndexPath *)indexPath {
-    static UITableViewCell *sizingCell = nil;
+    static NewsTableViewCell *sizingCell = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sizingCell = [_rssList dequeueReusableCellWithIdentifier:@"ListPrototypeCell"];
+        sizingCell = [_rssList dequeueReusableCellWithIdentifier:@"NewsTableViewCell"];
     });
     
     [self configureBasicCell:sizingCell atIndexPath:indexPath];
@@ -165,9 +144,8 @@
     [sizingCell layoutIfNeeded];
     
     CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    if (size.height < 82)
-        return 82;
-    else return size.height + 1.0f; // Add 1.0f for the cell separator height
+    CGFloat height = MAX(size.height + 1.0f, 82.0);
+    return height; 
 }
 
 #pragma mark - Table view delegate

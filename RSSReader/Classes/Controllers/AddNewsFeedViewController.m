@@ -12,88 +12,96 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
 @property (weak, nonatomic) IBOutlet UITextField *urlTextFild;
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrolView;
-@property (nonatomic) NSInteger offsetOfKeyboard;
-@property (nonatomic) BOOL isViewMovedUp;
+@property (weak, nonatomic) IBOutlet UIView *scrolVewCintentView;
 
 @end
 
 @implementation AddNewsFeedViewController
 
+#pragma mark - viewLifeСycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    CGRect fs = _mainScrolView.frame;
+    _mainScrolView.contentSize = fs.size;
+    
     _itemURL = nil;
+}
+
+-(void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
-    _offsetOfKeyboard = 80;
-    _isViewMovedUp = false;
+   
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardDidShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(kyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification object:nil];
-    
+    [self addObserversOnKeyboardNotification];
     
     [_urlTextFild becomeFirstResponder];
 }
 
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [self removeObserverOnKeyboardNotification];
+}
 
+-(void)addObserversOnKeyboardNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(kyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+}
+
+-(void)removeObserverOnKeyboardNotification
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardDidShowNotification
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillHideNotification
+                                                  object:nil];
+    
+}
+
+
+
+#pragma mark - keybord
+//contentInset
+//convertRect...
 - (void)keyboardWillShow:(NSNotification*)aNotification
 {
-    if (!_isViewMovedUp)
-    {
-        if (self.view.frame.origin.y >= 0)
-        {
-            [self setViewMovedUp:YES];
-        }
-        else if (self.view.frame.origin.y < 0)
-        {
-            [self setViewMovedUp:NO];
-        }
-    }
+    CGRect kbRect = [self.view convertRect:
+                     [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue]
+                                  fromView:nil];
+
+    [UIView animateWithDuration:0.3 animations:^{
+        UIEdgeInsets contentInsets = UIEdgeInsetsMake(0, 0, kbRect.size.height, 0);
+        _mainScrolView.contentInset = contentInsets;
+        _mainScrolView.scrollIndicatorInsets = contentInsets;
+    }];
 }
 
 - (void)kyboardWillHide:(NSNotification*)aNotification
 {
-    if (_isViewMovedUp)
-    {
-        if (self.view.frame.origin.y >= 0)
-        {
-            [self setViewMovedUp:YES];
-        }
-        else if (self.view.frame.origin.y < 0)
-        {
-            [self setViewMovedUp:NO];
-        }
-    }
+    CGRect kbRect = [self.view convertRect:
+                     [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue]
+                                  fromView:nil];
+
+    [UIView animateWithDuration:0.3 animations:^{
+        UIEdgeInsets contentInsets = UIEdgeInsetsMake(kbRect.size.height, 0, 0, 0);
+        _mainScrolView.contentInset = contentInsets;
+        _mainScrolView.scrollIndicatorInsets = contentInsets;
+    }];
 }
 
 
--(void)setViewMovedUp:(BOOL)movedUp
-{
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3]; // if you want to slide up the view
-    
-    CGRect rect = self.view.frame;
-    
-    _isViewMovedUp = movedUp;
-    if (movedUp)
-    {
-        rect.origin.y -= _offsetOfKeyboard;
-        rect.size.height += _offsetOfKeyboard;
-    }
-    else
-    {
-        rect.origin.y += _offsetOfKeyboard;
-        rect.size.height -= _offsetOfKeyboard;
-    }
-    self.view.frame = rect;
-    
-    [UIView commitAnimations];
-}
-
+//через делегат
 - (IBAction)urlTextChanged:(id)sender {
     if (_urlTextFild.text.length > 0) {
         [_saveButton setEnabled: YES];
@@ -111,5 +119,7 @@
         _itemURL =  _urlTextFild.text;
     }
 }
+
+#pragma mark -
 
 @end

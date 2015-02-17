@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "NewsSourse.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, NewsSourseCompliteBackgroundDownloadDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

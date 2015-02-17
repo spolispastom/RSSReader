@@ -18,7 +18,6 @@
 @property (nonatomic, retain) NSNumber * isRead;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * url;
-@property (nonatomic, retain) NSData * image;
 @property (nonatomic, retain) NewsFeed *newsFeed;
 
 @end

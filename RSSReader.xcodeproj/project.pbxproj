@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CF0AC5941A8A7F7400A421B6 /* NewsFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF0AC5931A8A7F7400A421B6 /* NewsFeedTableViewCell.m */; };
-		CF0AC5971A8AACD400A421B6 /* TitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = CF0AC5961A8AACD400A421B6 /* TitleLabel.m */; };
+		CF47B1C01A8B3726008406B7 /* NewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF47B1BF1A8B3726008406B7 /* NewsTableViewCell.m */; };
 		CF68EB0D1A691A29009BF032 /* RSSReaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CF68EB0C1A691A29009BF032 /* RSSReaderTests.m */; };
 		CFD95B221A7768BC00A894B3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CFD95B031A7768BC00A894B3 /* AppDelegate.m */; };
 		CFD95B231A7768BC00A894B3 /* NewsContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFD95B061A7768BC00A894B3 /* NewsContentViewController.m */; };
@@ -44,8 +44,8 @@
 /* Begin PBXFileReference section */
 		CF0AC5921A8A7F7400A421B6 /* NewsFeedTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsFeedTableViewCell.h; sourceTree = "<group>"; };
 		CF0AC5931A8A7F7400A421B6 /* NewsFeedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsFeedTableViewCell.m; sourceTree = "<group>"; };
-		CF0AC5951A8AACD400A421B6 /* TitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleLabel.h; sourceTree = "<group>"; };
-		CF0AC5961A8AACD400A421B6 /* TitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleLabel.m; sourceTree = "<group>"; };
+		CF47B1BE1A8B3726008406B7 /* NewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsTableViewCell.h; sourceTree = "<group>"; };
+		CF47B1BF1A8B3726008406B7 /* NewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsTableViewCell.m; sourceTree = "<group>"; };
 		CF68EAED1A691A29009BF032 /* RSSReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSSReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF68EB061A691A29009BF032 /* RSSReaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSSReaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF68EB0B1A691A29009BF032 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -185,8 +185,8 @@
 				CFD95B3B1A7784C900A894B3 /* AddNewsFeedViewController.m */,
 				CF0AC5921A8A7F7400A421B6 /* NewsFeedTableViewCell.h */,
 				CF0AC5931A8A7F7400A421B6 /* NewsFeedTableViewCell.m */,
-				CF0AC5951A8AACD400A421B6 /* TitleLabel.h */,
-				CF0AC5961A8AACD400A421B6 /* TitleLabel.m */,
+				CF47B1BE1A8B3726008406B7 /* NewsTableViewCell.h */,
+				CF47B1BF1A8B3726008406B7 /* NewsTableViewCell.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -399,9 +399,9 @@
 				CFD95B251A7768BC00A894B3 /* DownloadAndParseNewsOperation.m in Sources */,
 				CFD95B2E1A7768BC00A894B3 /* main.m in Sources */,
 				CFD95B4B1A783E8600A894B3 /* NewsFeedsDataModel.xcdatamodeld in Sources */,
-				CF0AC5971A8AACD400A421B6 /* TitleLabel.m in Sources */,
 				CFD95B371A77757500A894B3 /* NewsFeedSourse.m in Sources */,
 				CFDA2E971A8226B60068A632 /* NewsBackgroundDownloader.m in Sources */,
+				CF47B1C01A8B3726008406B7 /* NewsTableViewCell.m in Sources */,
 				CFD95B241A7768BC00A894B3 /* NewsListViewController.m in Sources */,
 				CFD95B341A776E4300A894B3 /* NewsFeedTableViewController.m in Sources */,
 				CFD95B6D1A7B8E7D00A894B3 /* NewsFeed.m in Sources */,

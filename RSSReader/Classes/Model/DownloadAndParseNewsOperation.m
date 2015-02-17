@@ -65,14 +65,12 @@
 {
     if ([self isCancelled])
     {
-        // Must move the operation to the finished state if it is canceled.
         [self willChangeValueForKey:@"isFinished"];
         finished = YES;
         [self didChangeValueForKey:@"isFinished"];
         return;
     }
     
-    // If the operation is not canceled, begin executing the task.
     [self willChangeValueForKey:@"isExecuting"];
     [NSThread detachNewThreadSelector:@selector(main) toTarget:self withObject:nil];
     executing = YES;

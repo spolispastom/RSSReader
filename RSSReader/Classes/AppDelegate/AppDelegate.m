@@ -15,6 +15,11 @@
 
 @property (weak, nonatomic) NewsFeedTableViewController * newsFeedList;
 @property (nonatomic) NewsFeedSourse * sourse;
+@property (nonatomic) BOOL isCompleteBackgroundDownloadResultNewData;
+@property (nonatomic) BOOL isCompleteBackgroundDownloadResultError;
+@property (nonatomic) NSMutableArray* notCompletedDownloadNewsSourse;
+@property (copy, nonatomic) void(^ backgroundFetchCompletionHandler)(UIBackgroundFetchResult result);
+@property (nonatomic) UIBackgroundTaskIdentifier taskIdForBackgroundFetch;
 
 @end
 
@@ -36,6 +41,12 @@
     _newsFeedList = (NewsFeedTableViewController *)[navigation topViewController];
     
     _sourse = [[NewsFeedSourse alloc] initWithDelegate: _newsFeedList andContext:context];
+    
+    for (NewsFeed * newsFeed in _sourse.newsFeeds)
+    {
+        NewsSourse * newsSourseItem = [_sourse getNewsSourseFromNewsFeed:newsFeed];
+        [newsSourseItem downloadAgain];
+    }
     
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){
         [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
@@ -95,10 +106,65 @@
 - (void)application:(UIApplication *)application
 performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
 {
+    _backgroundFetchCompletionHandler = completionHandler;
+    
+    _taskIdForBackgroundFetch = [application beginBackgroundTaskWithExpirationHandler:^{
+        for (NewsSourse * newsSourseItem in _notCompletedDownloadNewsSourse) {
+            [newsSourseItem cancelDownload];
+            [_notCompletedDownloadNewsSourse removeObject:newsSourseItem];
+        }
+        [self causeСheckingСompletionHandler];
+    }];
+    
+    if (!_notCompletedDownloadNewsSourse){
+        _notCompletedDownloadNewsSourse = [[NSMutableArray alloc] init];
+    }
+    
+    _isCompleteBackgroundDownloadResultNewData = NO;
+    _isCompleteBackgroundDownloadResultError = NO;
     for (NewsFeed * newsFeed in _sourse.newsFeeds)
     {
         NewsSourse * newsSourseItem = [_sourse getNewsSourseFromNewsFeed:newsFeed];
-        [newsSourseItem backgroundDownloadAgain];
+        [newsSourseItem backgroundDownloadAgain: self];
+        [_notCompletedDownloadNewsSourse addObject:newsSourseItem];
+    }
+}
+
+- (void) completeBackgroundDownloadNewsSourse: (NewsSourse*) sourse withResult: (UIBackgroundFetchResult) result andTitle: (NSString *) title andNumberOfNewNews: (NSInteger) numberOfNewNews
+{
+    if (result == UIBackgroundFetchResultFailed) {
+        _isCompleteBackgroundDownloadResultError = YES;
+    }
+    if (result == UIBackgroundFetchResultNewData) {
+        _isCompleteBackgroundDownloadResultNewData = YES;
+        
+        UILocalNotification* local = [[UILocalNotification alloc]init];
+        if (local)
+        {
+            local.fireDate = [NSDate dateWithTimeIntervalSinceNow:10];
+            local.alertBody = [NSString stringWithFormat:@"У вас %ld новых новостей в ленте %@", numberOfNewNews, title];
+            local.timeZone = [NSTimeZone defaultTimeZone];
+            [[UIApplication sharedApplication] scheduleLocalNotification:local];
+        }
+    }
+    
+    [_notCompletedDownloadNewsSourse removeObject:sourse];
+    
+    [self causeСheckingСompletionHandler];
+}
+
+-(void)causeСheckingСompletionHandler
+{
+    if (_notCompletedDownloadNewsSourse.count == 0) {
+        [[UIApplication sharedApplication] endBackgroundTask:_taskIdForBackgroundFetch];
+        
+        if (_isCompleteBackgroundDownloadResultNewData) {
+            _backgroundFetchCompletionHandler(UIBackgroundFetchResultNewData);
+        } else if (_isCompleteBackgroundDownloadResultError) {
+            _backgroundFetchCompletionHandler(UIBackgroundFetchResultFailed);
+        } else {
+            _backgroundFetchCompletionHandler(UIBackgroundFetchResultNoData);
+        }
     }
 }
 

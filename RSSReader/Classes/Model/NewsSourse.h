@@ -13,7 +13,13 @@
 #import "NewsSourse.h"
 #import "NewsForegroundDownloader.h"
 
+
 @class NewsSourse;
+
+@protocol NewsSourseCompliteBackgroundDownloadDelegate
+- (void) completeBackgroundDownloadNewsSourse: (NewsSourse*) sourse withResult: (UIBackgroundFetchResult) result andTitle: (NSString *) title andNumberOfNewNews: (NSInteger) numberOfNewNews;
+@end
+
 @protocol NewsSourseDelegate <NSObject>
 
 - (void)newsSourse:(NewsSourse *) sourse didParseNews:(NSArray *)newsItems andTitle: (NSString *) title;
@@ -38,7 +44,9 @@
 
 - (void)downloadAgain;
 
-- (void)backgroundDownloadAgain;
+- (void)backgroundDownloadAgain: (id<NewsSourseCompliteBackgroundDownloadDelegate>) delegate;
+
+- (void)cancelDownload;
 
 - (int) numberOfUnreadNews;
 @end

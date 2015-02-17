@@ -80,41 +80,10 @@
     
     NewsFeed * newsFeedItem = [ _newsFeedList objectAtIndex: indexPath.row ];
     
-    if (newsFeedItem.image != nil && newsFeedItem.image.length > 0)
-    {
-        UIImage * image = [[UIImage alloc]initWithData:newsFeedItem.image];
-        
-        CGImageRef imgRef = [image CGImage];
-        CGFloat width = CGImageGetWidth(imgRef);
-        CGFloat height = CGImageGetHeight(imgRef);
-        CGSize size = CGSizeMake(width, height);
-        
-        if (height < width)
-        {
-            size.width = 65;
-            size.height = 65 * height / width;
-        }
-        else
-        {
-            size.width = 65 * width / height;
-            size.height = 65;
-        }
-        
-        UIGraphicsBeginImageContext(size);
-        [image drawInRect:CGRectMake(0.0, 0.0, size.width, size.height)];
-        UIImage *imageCopy = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        cell.image.image = imageCopy;
-    }
-    else
-        cell.image.image = [UIImage imageNamed: @"rss"];
+    cell.title = newsFeedItem.title;
+    cell.image = newsFeedItem.image;
     
-    cell.titleLable.text = newsFeedItem.title;
-    
-    int numberOfUnreadNews = [[_sourse getNewsSourseFromNewsFeed:newsFeedItem] numberOfUnreadNews];
-    
-    cell.numberOfUnreadNewsLable.text = [[NSString alloc] initWithFormat: @"%d", numberOfUnreadNews];
+    cell.numberOfUnreadNews = [[_sourse getNewsSourseFromNewsFeed:newsFeedItem] numberOfUnreadNews];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -134,10 +103,8 @@
     [sizingCell layoutIfNeeded];
     
     CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    CGFloat height = size.height + 1.0f; // Add 1.0f for the cell separator height
-    if (height < 82)
-        return 82;
-    else return height;
+    CGFloat height = MAX(size.height + 1.0f, 82.0f); // Add 1.0f for the cell separator height
+    return height;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
