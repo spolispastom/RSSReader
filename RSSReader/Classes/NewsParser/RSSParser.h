@@ -12,8 +12,7 @@
 
 @interface RSSParser : NSObject<NSXMLParserDelegate, NewsParser>
 
-- (RSSParser *) initWithData: (NSData *) data andContext: (NSManagedObjectContext *) context;
-- (RSSParser *) initWithContext: (NSManagedObjectContext *) context;
+- (RSSParser *) initWithData: (NSData *) data;
 
 - (BOOL) parse;
 

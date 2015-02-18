@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="NewsFeed" representedClassName="NewsFeed" syncable="YES">
-        <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
+    <entity name="EntityNewsFeed" representedClassName="EntityNewsFeed" syncable="YES">
+        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="url" attributeType="String" syncable="YES"/>
-        <relationship name="newsItems" toMany="YES" deletionRule="Cascade" destinationEntity="NewsItem" inverseName="newsFeed" inverseEntity="NewsItem" syncable="YES"/>
+        <relationship name="newsItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EntityNewsItem" inverseName="newsFeed" inverseEntity="EntityNewsItem" syncable="YES"/>
     </entity>
-    <entity name="NewsItem" representedClassName="NewsItem" syncable="YES">
+    <entity name="EntityNewsItem" representedClassName="EntityNewsItem" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="creationDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="isRead" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <attribute name="title" attributeType="String" syncable="YES"/>
-        <attribute name="url" attributeType="String" syncable="YES"/>
-        <relationship name="newsFeed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NewsFeed" inverseName="newsItems" inverseEntity="NewsFeed" syncable="YES"/>
+        <attribute name="isRead" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="newsFeed" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="EntityNewsFeed" inverseName="newsItems" inverseEntity="EntityNewsFeed" syncable="YES"/>
     </entity>
     <elements>
-        <element name="NewsFeed" positionX="-252" positionY="17" width="128" height="103"/>
-        <element name="NewsItem" positionX="-54" positionY="18" width="128" height="133"/>
+        <element name="EntityNewsFeed" positionX="43" positionY="54" width="128" height="30"/>
+        <element name="EntityNewsItem" positionX="-171" positionY="54" width="146" height="135"/>
     </elements>
 </model>

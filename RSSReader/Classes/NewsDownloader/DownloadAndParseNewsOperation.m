@@ -19,22 +19,20 @@
 @property RSSParser * parser;
 @property (weak) id<NewsDownloaderDelegate> delegate;
 
-@property (weak, nonatomic) NSManagedObjectContext * context;
 @property (nonatomic) BOOL isBackground;
 
 @end
 
 @implementation DownloadAndParseNewsOperation
 
-- (DownloadAndParseNewsOperation *) initWithURL: (NSURL *) url andDelegate: (id<NewsDownloaderDelegate>) delegate andContext: (NSManagedObjectContext *) context
+- (DownloadAndParseNewsOperation *) initWithURL: (NSURL *) url
+                                    andDelegate: (id<NewsDownloaderDelegate>) delegate
 {
     self = [self init];
     
     if (self) {
         executing = NO;
         finished = NO;
-    
-        _context = context;
     
         _url = [url copy];
         _delegate = delegate;
@@ -47,9 +45,8 @@
 
 - (DownloadAndParseNewsOperation *) initBackgroundDownloadAndParseNewsOperationWithURL: (NSURL *) url
                                                                            andDelegate: (id<NewsDownloaderDelegate>) delegate
-                                                                            andContext: (NSManagedObjectContext *) context
 {
-    self = [self initWithURL:url andDelegate:delegate andContext:context];
+    self = [self initWithURL:url andDelegate:delegate];
     
     _isBackground = YES;
     
@@ -60,7 +57,7 @@
 {
     return YES;
 }
-
+ 
 - (void)start
 {
     if ([self isCancelled])
@@ -83,13 +80,13 @@
     {
         _downloader = (id<NewsDownloader>)[[NewsBackgroundDownloader alloc] initWithDelegate: self
                                                          andURL: _url
-                                                      andParser: [[RSSParser alloc] initWithContext:_context]];
+                                                      andParser: [[RSSParser alloc] init]];
     }
     else
     {
         _downloader = (id<NewsDownloader>)[[NewsForegroundDownloader alloc] initWithDelegate: self
                                                    andURL: _url
-                                                andParser: [[RSSParser alloc] initWithContext:_context]];
+                                                andParser: [[RSSParser alloc] init]];
     }
     [_downloader download];
 }

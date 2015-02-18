@@ -15,19 +15,17 @@
 
 @property (weak, nonatomic) NewsFeedTableViewController * newsFeedList;
 @property (nonatomic) NewsFeedSourse * sourse;
+
 @property (nonatomic) BOOL isCompleteBackgroundDownloadResultNewData;
 @property (nonatomic) BOOL isCompleteBackgroundDownloadResultError;
 @property (nonatomic) NSMutableArray* notCompletedDownloadNewsSourse;
+
 @property (copy, nonatomic) void(^ backgroundFetchCompletionHandler)(UIBackgroundFetchResult result);
 @property (nonatomic) UIBackgroundTaskIdentifier taskIdForBackgroundFetch;
 
 @end
 
 @implementation AppDelegate
-
-@synthesize managedObjectContext = _managedObjectContext;
-@synthesize managedObjectModel = _managedObjectModel;
-@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
    
@@ -36,11 +34,9 @@
     
     UINavigationController * navigation = (UINavigationController *)self.window.rootViewController;
     
-    NSManagedObjectContext *context = [self managedObjectContext];
-    
     _newsFeedList = (NewsFeedTableViewController *)[navigation topViewController];
     
-    _sourse = [[NewsFeedSourse alloc] initWithDelegate: _newsFeedList andContext:context];
+    _sourse = [[NewsFeedSourse alloc] initWithDelegate: _newsFeedList];
     
     for (NewsFeed * newsFeed in _sourse.newsFeeds)
     {
@@ -51,57 +47,10 @@
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){
         [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
     }
+
     // Override point for customization after application launch.
     return YES;
 }
-
-
-- (NSManagedObjectModel *)managedObjectModel {
-    if (_managedObjectModel != nil){
-        return _managedObjectModel;
-    }
-    
-    NSURL * modelURL = [[NSBundle mainBundle] URLForResource:@"NewsFeedsDataModel" withExtension:@"momd"];
-    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL: modelURL];
-    
-    return _managedObjectModel;
-}
-
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
-    if(_persistentStoreCoordinator != nil){
-        return _persistentStoreCoordinator;
-    }
-    
-    NSURL *storeURL = [[self applicationsDocumentsDirectory] URLByAppendingPathComponent:@"RSSReader.sqlite"];
-    
-    NSError *error = nil;
-    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel: [self managedObjectModel]];
-    if(![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]){
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    
-    return _persistentStoreCoordinator;
-}
-
-- (NSManagedObjectContext *)managedObjectContext {
-    if(_managedObjectContext != nil){
-        return _managedObjectContext;
-    }
-    
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if(coordinator != nil){
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-    }
-    
-    return _managedObjectContext;
-}
-
-- (NSURL *)applicationsDocumentsDirectory{
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-}
-
 
 - (void)application:(UIApplication *)application
 performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
@@ -111,8 +60,8 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))comp
     _taskIdForBackgroundFetch = [application beginBackgroundTaskWithExpirationHandler:^{
         for (NewsSourse * newsSourseItem in _notCompletedDownloadNewsSourse) {
             [newsSourseItem cancelDownload];
-            [_notCompletedDownloadNewsSourse removeObject:newsSourseItem];
         }
+        [_notCompletedDownloadNewsSourse removeAllObjects];
         [self causeСheckingСompletionHandler];
     }];
     
@@ -125,7 +74,7 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))comp
     for (NewsFeed * newsFeed in _sourse.newsFeeds)
     {
         NewsSourse * newsSourseItem = [_sourse getNewsSourseFromNewsFeed:newsFeed];
-        [newsSourseItem backgroundDownloadAgain: self];
+        //[newsSourseItem backgroundDownloadAgain: self];
         [_notCompletedDownloadNewsSourse addObject:newsSourseItem];
     }
 }

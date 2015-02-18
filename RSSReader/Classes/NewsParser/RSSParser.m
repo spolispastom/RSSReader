@@ -13,8 +13,6 @@
 @property (nonatomic) NSDateFormatter * rssDateFormatter;
 @property (nonatomic) NSXMLParser * parser;
 
-@property (weak, nonatomic) NSManagedObjectContext * context;
-
 @property (nonatomic) NSString * currentPropertyName;
 @property (nonatomic) NSMutableString * currentValue;
 
@@ -39,26 +37,14 @@
 @synthesize data;
 @synthesize delegate;
 
-
-
-- (RSSParser *) initWithContext: (NSManagedObjectContext *) context
+- (RSSParser *) initWithData: (NSData *) newsData;
 {
-    self = [super init];
-    _context = context;
-    
-    return self;
-}
-
-- (RSSParser *) initWithData: (NSData *) newsData andContext: (NSManagedObjectContext *) context
-{
-    self = [self initWithContext:context];
+    self = [self init];
     
     data = newsData;
     
     return self;
 }
-
-
 
 - (BOOL) parse
 {
@@ -151,15 +137,10 @@
     }
     else if ([elementName  isEqual: @"item"])
     {
-        NewsItem * item = [NewsItem alloc];
-        item = [NSEntityDescription insertNewObjectForEntityForName:@"NewsItem" inManagedObjectContext: _context];
-        
-        item.title = _title;
-        item.creationDate = _creationDate;
-        item.content = _content;
-        item.url = _linkString;
-        //[self setValue:NO forKey:@"isRead"];
-        
+        NewsItem * item = [[NewsItem alloc] initWithTitle:_title
+                                          andCreationDate:_creationDate
+                                               andContent:_content
+                                                   andUrl:[NSURL URLWithString:_linkString]];
         [_newsList addObject:item];
         
         _title = @"";

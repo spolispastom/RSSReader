@@ -38,6 +38,10 @@
     return self;
 }
 
+-(NSURL *) url {
+    return _rssURL;
+}
+
 - (void) download
 {
     __weak id<NewsParser> parser = _rssParser;
@@ -76,4 +80,5 @@
     }
     [_rssDelegate newsDownloader: (id<NewsDownloader>)self didDownloadNews: newsItems andTitle: title andImage: imageData];
 }
+
 @end

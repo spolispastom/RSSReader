@@ -53,7 +53,10 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_newsFeedList count];
+    if (_newsFeedList) {
+        return [_newsFeedList count];
+    }
+    else return 0;
 }
 
 - (IBAction)unwindToNewsFeedTable:(UIStoryboardSegue *)segue
@@ -81,7 +84,7 @@
     NewsFeed * newsFeedItem = [ _newsFeedList objectAtIndex: indexPath.row ];
     
     cell.title = newsFeedItem.title;
-    cell.image = newsFeedItem.image;
+    cell.image = newsFeedItem.imageData;
     
     cell.numberOfUnreadNews = [[_sourse getNewsSourseFromNewsFeed:newsFeedItem] numberOfUnreadNews];
 }
@@ -138,12 +141,12 @@
         NewsFeed * item = [_newsFeedList objectAtIndex: [self.tableView indexPathForCell:sender].row];
         NewsSourse * sourse = [_sourse getNewsSourseFromNewsFeed:item];
         sourse.sourseDelegate = newsContent;
+        //[sourse update];
     }
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [_sourse saveContext];
     [self.tableView reloadData];
 }
 

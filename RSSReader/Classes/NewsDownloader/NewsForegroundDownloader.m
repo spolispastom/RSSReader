@@ -41,6 +41,10 @@
     return self;
 }
 
+-(NSURL *) url {
+    return _rssURL;
+}
+
 - (void) download
 {
     __weak id<NewsParser> parser = _rssParser;
@@ -62,7 +66,7 @@
 
 - (void) cancel
 {
-    if (_task && _task.state == NSURLSessionTaskStateRunning)
+    if (_task)
         [_task cancel];
 }
 

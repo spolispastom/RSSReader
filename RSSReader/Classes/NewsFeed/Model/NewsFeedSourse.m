@@ -11,18 +11,18 @@
 @interface NewsFeedSourse()
 
 @property (nonatomic) NSMutableDictionary * newsSourses;
-@property (weak, nonatomic) NSManagedObjectContext * context;
+@property (weak, nonatomic) ProviderDataMedel * provider;
 
 @end
 
 @implementation NewsFeedSourse
 
-- (NewsFeedSourse *) initWithDelegate: (id<NewsFeedSourseDelegate>) delegate andContext: (NSManagedObjectContext *) context
+- (NewsFeedSourse *) initWithDelegate: (id<NewsFeedSourseDelegate>) delegate
 {
     self = [super init];
     
-    _context = context;
-    
+    _provider = [ProviderDataMedel instance];
+    [_provider setDelegate: self];
     
     _delegate = delegate;
     [_delegate newsSourse: self didGetNewsFeed: [self newsFeeds]];
@@ -34,14 +34,10 @@
 
 - (NSArray *) newsFeeds
 {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"NewsFeed" inManagedObjectContext:_context];
-    [request setEntity:entity];
-    
-    return [[_context executeFetchRequest:request error:nil] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+    return [[_provider getNewsFeeds] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         NewsFeed * item1 = (NewsFeed *)obj1;
         NewsFeed * item2 = (NewsFeed *)obj2;
-        if (item1.title > item2.title)
+        if ([item1.title compare: item2.title])
             return NSOrderedDescending;
         else if (item1.title < item2.title)
             return NSOrderedAscending;
@@ -49,30 +45,24 @@
     }];
 }
 
+- (void)providerDataMedelDelegate:(ProviderDataMedel*) provider didNewsFeedCollectionChanget:(NSArray *) newsFeeds{
+    [_delegate newsSourse:self didGetNewsFeed: [self newsFeeds]];
+}
+
+
 - (void)addNewsFeed: (NSString *) newsFeed
 {
-    NewsFeed * item = [NewsFeed alloc];
-    item = [NSEntityDescription insertNewObjectForEntityForName:@"NewsFeed" inManagedObjectContext: _context];
-    
-    item.title = newsFeed;
-    item.url = newsFeed;
-    
-    [self saveContext];
-    
-    NewsSourse * newsSourse = [[NewsSourse alloc] initWithURL:item
-                                            andSourseDelegate:nil
-                                             andTitleDelegate:self
-                                                   andContext:_context];
-    [_newsSourses setObject:newsSourse forKey: item.url];
-    
-    [_delegate newsSourse:self didGetNewsFeed: [self newsFeeds]];
+    NewsFeed * item = [[NewsFeed alloc]initWithTitle:newsFeed
+                                              andURL:[NSURL URLWithString:newsFeed]
+                                            andImage:nil];
+    [_provider addNewsFeed:item];
 }
 
 - (void)removeNewsFeed: (NewsFeed *) newsFeed
 {
     [_newsSourses removeObjectForKey:newsFeed.url];
-    [_context deleteObject: newsFeed];
-    [self saveContext];
+    
+    [_provider removeNewsFeed:newsFeed];
     
     [_delegate newsSourse:self didGetNewsFeed:[self newsFeeds]];
 }
@@ -85,8 +75,7 @@
     {
         sourse = [[NewsSourse alloc] initWithURL:newsFeed
                                andSourseDelegate:nil
-                                andTitleDelegate:self
-                                      andContext:_context];
+                                andTitleDelegate:self];
         [_newsSourses setObject: sourse forKey: newsFeed.url];
         
     }
@@ -95,33 +84,8 @@
 
 - (void)newsSourse:(NewsSourse *) sourse didParseTitle: (NSString *) title andImage:(NSData *)image
 {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"NewsFeed" inManagedObjectContext:_context];
-    [request setEntity:entity];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"url contains %@", sourse.url];
-    [request setPredicate:predicate];
-    
-    NSArray * resultNewsFeeds = [_context executeFetchRequest:request error:nil];
-    
-    for (NewsFeed * newsFeed in resultNewsFeeds) {
-        newsFeed.title = title;
-        newsFeed.image = image;
-    }
-    
+    [_provider changeNewsFeedFromURL:sourse.url ofTitle:title andImage:image];
     [_delegate newsSourse:self didGetNewsFeed:[self newsFeeds]];
-}
-
-- (void)saveContext {
-    NSError *error = nil;
-  
-    if(_context != nil) {
-        if([_context hasChanges] && ![_context save:&error]){
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-    }
 }
 
 @end

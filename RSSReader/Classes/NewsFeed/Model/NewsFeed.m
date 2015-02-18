@@ -12,9 +12,15 @@
 
 @implementation NewsFeed
 
-@dynamic title;
-@dynamic url;
-@dynamic image;
-@dynamic newsItems;
-
+- (NewsFeed *) initWithTitle: (NSString *) title andURL: (NSURL*) url andImage: (NSData *) imageData
+{
+    self = [super init];
+    
+    _title = title;
+    _url = url;
+    _imageData = imageData;
+    _newsItems = nil;
+    
+    return self;
+}
 @end

@@ -38,7 +38,7 @@
 @property (weak, nonatomic, setter=setSourseDelegate:) id<NewsSourseDelegate> sourseDelegate;
 @property (weak, nonatomic) id<NewsTitleDelegate> titleDelegate;
 
-- (NewsSourse *) initWithURL: (NewsFeed *) newsFeed andSourseDelegate: (id<NewsSourseDelegate>) sourseDelegate andTitleDelegate: (id<NewsTitleDelegate>) titleDelegate andContext: (NSManagedObjectContext *) context;
+- (NewsSourse *) initWithURL: (NewsFeed *) newsFeed andSourseDelegate: (id<NewsSourseDelegate>) sourseDelegate andTitleDelegate: (id<NewsTitleDelegate>) titleDelegate;
 
 - (void)update;
 

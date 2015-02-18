@@ -16,9 +16,8 @@
 @property (nonatomic) NSString * newsTitle;
 @property (nonatomic) NSString * newsCreationDate;
 @property (nonatomic) NSString * newsContent;
-@property (nonatomic) NSString * newsLinkString;
+@property (nonatomic) NSURL * newsURL;
 @property (nonatomic) NSDateFormatter * defaultDateFormatter;
-@property (nonatomic) NSURL * url;
 
 @end
 
@@ -52,7 +51,7 @@
         _newsTitle = news.title;
         _newsCreationDate = [_defaultDateFormatter stringFromDate: news.creationDate];
         _newsContent = news.content;
-        _newsLinkString = news.url;
+        _newsURL = news.url;
         
         if (_newsTitle)
         {
@@ -70,17 +69,15 @@
             }
             [self.contentWebVew loadHTMLString:_newsContent baseURL:nil];
         }
-        _url = [NSURL URLWithString:_newsLinkString];
         
         [self chackActiveLink];
-        [news setIsRead:[NSNumber numberWithBool:YES]];
-        
+        news.isRead = YES;
         [self updateViewConstraints];
     }
 }
 
 -(void) chackActiveLink {
-    if (_url && [[UIApplication sharedApplication] canOpenURL: _url]) {
+    if (_newsURL && [[UIApplication sharedApplication] canOpenURL: _newsURL]) {
         self.titleTab.enabled = YES;
         [self.titleLable setTextColor: [UIColor blueColor]];
     }
@@ -91,8 +88,8 @@
 }
 
 - (IBAction)goLink:(id)sender {
-    if ([[UIApplication sharedApplication] canOpenURL: _url])
-        [[UIApplication sharedApplication] openURL: _url];
+    if ([[UIApplication sharedApplication] canOpenURL: _newsURL])
+        [[UIApplication sharedApplication] openURL: _newsURL];
 }
 
 @end

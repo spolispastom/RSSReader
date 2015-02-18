@@ -18,11 +18,9 @@
 @property (atomic, copy, readonly) NSArray * newsArray;
 
 - (DownloadAndParseNewsOperation *) initWithURL: (NSURL *) url
-                                    andDelegate: (id<NewsDownloaderDelegate>) delegate
-                                     andContext: (NSManagedObjectContext *) context;
+                                    andDelegate: (id<NewsDownloaderDelegate>) delegate;
 
 - (DownloadAndParseNewsOperation *) initBackgroundDownloadAndParseNewsOperationWithURL: (NSURL *) url
-                                                                           andDelegate: (id<NewsDownloaderDelegate>) delegate
-                                                                            andContext: (NSManagedObjectContext *) context;
+                                                                           andDelegate: (id<NewsDownloaderDelegate>) delegate;
 
 @end

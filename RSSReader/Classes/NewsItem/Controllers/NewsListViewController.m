@@ -116,7 +116,7 @@
     cell.title = newsItem.title;
     cell.creationData = newsItem.creationDate;
     
-    if ([newsItem.isRead boolValue])
+    if (newsItem.isRead)
         [cell setBackgroundColor:[UIColor clearColor]];
     else [cell setBackgroundColor:[UIColor colorWithRed:0.9 green:0.9 blue:1 alpha:1]];
     
