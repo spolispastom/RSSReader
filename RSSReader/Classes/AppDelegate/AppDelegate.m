@@ -74,7 +74,7 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))comp
     for (NewsFeed * newsFeed in _sourse.newsFeeds)
     {
         NewsSourse * newsSourseItem = [_sourse getNewsSourseFromNewsFeed:newsFeed];
-        //[newsSourseItem backgroundDownloadAgain: self];
+        [newsSourseItem backgroundDownloadAgain: self];
         [_notCompletedDownloadNewsSourse addObject:newsSourseItem];
     }
 }

@@ -213,9 +213,9 @@ static ProviderDataMedel *sharedProviderDataMedel_ = nil;
     [self saveContext];*/
 }
 
-- (NSInteger) updateNewsFeedFromURL: (NSURL*) url ofTitle: (NSString*) title andImage: (NSData*) image andNewNewsItems: (NSArray *) newsItems
+- (NewsFeed *) updateNewsFeedFromURL: (NSURL*) url ofTitle: (NSString*) title andImage: (NSData*) image andNewNewsItems: (NSArray *) newsItems
 {
-    __block NSInteger numberOfNewNews = 0;
+    __block NewsFeed * retNewsFeed = [[NewsFeed alloc]init];
     __block NSError *error = nil;
     NSManagedObjectContext * context = [self managedObjectContext];
     [ context performBlockAndWait:^{
@@ -229,7 +229,9 @@ static ProviderDataMedel *sharedProviderDataMedel_ = nil;
     
         NSArray * resultNewsFeeds = [context executeFetchRequest:request error:nil];
     
-        for (EntityNewsFeed * entityNewsFeed in resultNewsFeeds) {
+        if (resultNewsFeeds.count != 0)
+        {
+            EntityNewsFeed * entityNewsFeed = resultNewsFeeds.firstObject;
             entityNewsFeed.title = title;
             entityNewsFeed.image = image;
         
@@ -249,14 +251,42 @@ static ProviderDataMedel *sharedProviderDataMedel_ = nil;
                         
                         [entityNewsItem setValue: entityNewsFeed forKey:@"newsFeed"];
                         [entityNewsFeed addNewsItemsObject:entityNewsItem];
-                        numberOfNewNews++;
+                    }
+                    else 
+                    {
+                        EntityNewsItem * eNewsItem = [oldItems anyObject];
+                        eNewsItem.title = item.title;
+                        eNewsItem.link = item.url.absoluteString;
+                        eNewsItem.creationDate = item.creationDate;
+                        eNewsItem.content = item.content;
+                        if (item.isRead){
+                            eNewsItem.isRead = [NSNumber numberWithBool: item.isRead];
+                        }
                     }
                 }
             }
+            
+            
+            [context save:&error];
+            
+            retNewsFeed.title = entityNewsFeed.title;
+            retNewsFeed.url = url;
+            retNewsFeed.imageData = entityNewsFeed.image;
+            NSMutableArray * retNewsItems = [NSMutableArray new];
+            for (EntityNewsItem * eNewsItem in entityNewsFeed.newsItems) {
+                NewsItem * item = [[NewsItem alloc]initWithTitle:eNewsItem.title
+                                                 andCreationDate:eNewsItem.creationDate
+                                                      andContent:eNewsItem.content
+                                                          andUrl:[NSURL URLWithString: eNewsItem.link]];
+                BOOL isread = [eNewsItem.isRead boolValue];
+                item.isRead = isread;
+                
+                [retNewsItems addObject:item];
+            }
+            retNewsFeed.newsItems = retNewsItems;
         }
-        [context save:&error];
     }];
-    return  numberOfNewNews;
+    return  retNewsFeed;
 }
 
 

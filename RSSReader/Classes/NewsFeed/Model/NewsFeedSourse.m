@@ -55,6 +55,8 @@
     NewsFeed * item = [[NewsFeed alloc]initWithTitle:newsFeed
                                               andURL:[NSURL URLWithString:newsFeed]
                                             andImage:nil];
+    
+    [[self getNewsSourseFromNewsFeed:item] update];
     [_provider addNewsFeed:item];
 }
 

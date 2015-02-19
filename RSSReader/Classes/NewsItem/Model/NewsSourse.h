@@ -48,5 +48,5 @@
 
 - (void)cancelDownload;
 
-- (int) numberOfUnreadNews;
+- (NSInteger) numberOfUnreadNews;
 @end

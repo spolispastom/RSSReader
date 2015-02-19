@@ -20,6 +20,7 @@
 @property (nonatomic) BOOL isBackground;
 @property (weak, nonatomic) id<NewsSourseCompliteBackgroundDownloadDelegate> delegate;
 @property (weak, nonatomic) ProviderDataMedel * provider;
+@property (nonatomic) NSInteger oldNumberOfUnreadNews;
 
 @property (nonatomic) NewsFeed * newsFeed;
 
@@ -39,6 +40,8 @@
     
     self.queue = [[NSOperationQueue alloc] init];
     assert(self->_queue != nil);
+    
+    _oldNumberOfUnreadNews = -1;
     
     [_sourseDelegate newsSourse:self];
     
@@ -100,14 +103,14 @@
               andImage: (NSData *) image
 {
     NSURL * url = [downloader url];
-    _newsFeed.newsItems = newsItems;
-    NSInteger numberOfNewNews = [_provider updateNewsFeedFromURL:url ofTitle:title andImage:image andNewNewsItems:newsItems];
+    _newsFeed = [_provider updateNewsFeedFromURL:url ofTitle:title andImage:image andNewNewsItems:newsItems];
     
     [self update];
     [_titleDelegate newsSourse:self didParseTitle:title andImage:image];
     
     if (_isBackground && _delegate)
     {
+        NSInteger numberOfNewNews = _newsFeed.newsItems.count - newsItems.count;
         if (numberOfNewNews > 0) {
             [_delegate completeBackgroundDownloadNewsSourse:self withResult:UIBackgroundFetchResultNewData andTitle:title andNumberOfNewNews:numberOfNewNews];
         } else {
@@ -124,16 +127,24 @@
     }
 }
 
-- (int) numberOfUnreadNews
+- (NSInteger) numberOfUnreadNews
 {
-    int count = 0;
+    NSMutableArray * changetNewsItems = [NSMutableArray new];
     
     for (NewsItem * item in _newsFeed.newsItems) {
-        BOOL num = item.isRead;
-        if (!num) count++;
+        if (item.isRead) {
+            [changetNewsItems addObject:item];
+        }
     }
     
-    return count;
+    NSInteger numberOfUnreadNews = _newsFeed.newsItems.count - changetNewsItems.count;
+    
+    if (_oldNumberOfUnreadNews != numberOfUnreadNews && _oldNumberOfUnreadNews != -1){
+        _newsFeed = [_provider updateNewsFeedFromURL:_newsFeed.url ofTitle:_newsFeed.title andImage:_newsFeed.imageData andNewNewsItems:changetNewsItems];
+    }
+    
+    _oldNumberOfUnreadNews = numberOfUnreadNews;
+    return numberOfUnreadNews;
 }
 
 /*- (void)saveContext {
