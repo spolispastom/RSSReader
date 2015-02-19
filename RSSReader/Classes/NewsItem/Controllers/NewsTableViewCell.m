@@ -9,6 +9,7 @@
 #import "NewsTableViewCell.h"
 
 @interface NewsTableViewCell ()
+
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *creationDataLabel;
 

@@ -19,7 +19,6 @@
 @implementation NewsFeedTableViewCell
 
 
-
 - (void)layoutSubviews {
     [super layoutSubviews];
     
@@ -32,26 +31,20 @@
         needsLayout = YES;
     }
     
-    CGFloat numberOfUnreadNewsLable = CGRectGetWidth(self.numberOfUnreadNewsLable.bounds);
-    if (self.numberOfUnreadNewsLable.preferredMaxLayoutWidth != numberOfUnreadNewsLable) {
-        self.numberOfUnreadNewsLable.preferredMaxLayoutWidth = numberOfUnreadNewsLable;
-        
-        needsLayout = YES;
-    }
     
+
     if (needsLayout) {
         [super layoutSubviews];
         
     }
 }
 
-
 -(void) setTitle: (NSString*) title {
-    _titleLable.text = title;
+    _titleLable.text =  [NSString stringWithFormat:@"%@, %@", title, title];
 }
 
 -(void) setNumberOfUnreadNews: (NSInteger) numberOfUnreadNews {
-    _numberOfUnreadNewsLable.text = [[NSString alloc] initWithFormat: @"%ld", (long)numberOfUnreadNews];
+    _numberOfUnreadNewsLable.text = [NSString stringWithFormat: @"%ld", (long)numberOfUnreadNews];
 }
 
 -(void) setImage: (NSData*) image {

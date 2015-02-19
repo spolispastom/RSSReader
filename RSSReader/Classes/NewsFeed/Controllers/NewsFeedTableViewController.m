@@ -93,7 +93,7 @@
     return [self heightForBasicCellAtIndexPath:indexPath];
 }
 
-- (CGFloat)heightForBasicCellAtIndexPath:(NSIndexPath *)indexPath {
+/*- (CGFloat)heightForBasicCellAtIndexPath:(NSIndexPath *)indexPath {
     static NewsFeedTableViewCell *sizingCell = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -107,6 +107,28 @@
     
     CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     CGFloat height = MAX(size.height + 1.0f, 82.0f); // Add 1.0f for the cell separator height
+    return height;
+}*/
+
+- (CGFloat)heightForBasicCellAtIndexPath:(NSIndexPath *)indexPath {
+    static NewsFeedTableViewCell *sizingCell = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sizingCell = [self.tableView dequeueReusableCellWithIdentifier:@"newsFeedItem"];
+    });
+    
+    [self configureNewsFeedCell:sizingCell atIndexPath:indexPath];
+    return [self calculateHeightForConfiguredSizingCell:sizingCell];
+}
+
+- (CGFloat)calculateHeightForConfiguredSizingCell:(UITableViewCell *)sizingCell {
+    sizingCell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth([self tableView].frame), CGRectGetHeight(sizingCell.bounds));
+    
+    [sizingCell setNeedsLayout];
+    [sizingCell layoutIfNeeded];
+    
+    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    CGFloat height = MAX(size.height + 1.0f, 82.0);
     return height;
 }
 
