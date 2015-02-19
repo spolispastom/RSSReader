@@ -231,11 +231,12 @@
                                         <constraint firstAttribute="centerY" secondItem="Ht5-s9-U2N" secondAttribute="centerY" id="2br-HB-iB2"/>
                                         <constraint firstItem="Ls0-xF-zjk" firstAttribute="bottom" secondItem="Fuf-cx-ni1" secondAttribute="bottomMargin" priority="750" id="476-bO-ikn"/>
                                         <constraint firstItem="FY1-Yc-Jce" firstAttribute="leading" secondItem="Fuf-cx-ni1" secondAttribute="leading" constant="16" id="47o-o9-J5a"/>
-                                        <constraint firstItem="Ls0-xF-zjk" firstAttribute="top" secondItem="Fuf-cx-ni1" secondAttribute="topMargin" id="5GH-7s-2XP"/>
+                                        <constraint firstItem="Ls0-xF-zjk" firstAttribute="top" secondItem="Fuf-cx-ni1" secondAttribute="topMargin" priority="900" id="5GH-7s-2XP"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="Ht5-s9-U2N" secondAttribute="trailing" constant="8" id="Mq7-dt-nmW"/>
                                         <constraint firstAttribute="centerY" secondItem="FY1-Yc-Jce" secondAttribute="centerY" id="Zwb-8b-qaj"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="Ls0-xF-zjk" secondAttribute="trailing" priority="800" constant="56" id="cXu-o5-ztB"/>
                                         <constraint firstItem="Ls0-xF-zjk" firstAttribute="leading" secondItem="FY1-Yc-Jce" secondAttribute="trailing" constant="16" id="h3h-bU-bVS"/>
+                                        <constraint firstAttribute="centerY" secondItem="Ls0-xF-zjk" secondAttribute="centerY" id="mGA-b1-CN0"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>

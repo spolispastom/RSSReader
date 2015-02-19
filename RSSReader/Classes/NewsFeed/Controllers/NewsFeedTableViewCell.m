@@ -40,7 +40,7 @@
 }
 
 -(void) setTitle: (NSString*) title {
-    _titleLable.text =  [NSString stringWithFormat:@"%@, %@", title, title];
+    _titleLable.text = title;
 }
 
 -(void) setNumberOfUnreadNews: (NSInteger) numberOfUnreadNews {
