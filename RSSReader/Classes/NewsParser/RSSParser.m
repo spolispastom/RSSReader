@@ -22,8 +22,6 @@
 @property (nonatomic) NSString * linkString;
 @property (nonatomic) NSString * channelTitle;
 @property (nonatomic) NSString * channelImageURL;
-@property (nonatomic) NSString * nextPageURL;
-
 
 @property (nonatomic) NSMutableArray * newsList;
 

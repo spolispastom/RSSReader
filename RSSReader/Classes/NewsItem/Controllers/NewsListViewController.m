@@ -144,7 +144,7 @@
     [sizingCell layoutIfNeeded];
     
     CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    CGFloat height = MAX(size.height + 1.0f, 82.0);
+    CGFloat height = MAX(size.height + 1.0f, 70.0);
     return height; 
 }
 

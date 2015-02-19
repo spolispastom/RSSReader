@@ -92,7 +92,9 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))comp
         {
             local.fireDate = [NSDate dateWithTimeIntervalSinceNow:10];
             local.alertBody = [NSString stringWithFormat:@"У вас %ld новых новостей в ленте %@", numberOfNewNews, title];
+            local.alertAction = sourse.url.absoluteString;
             local.timeZone = [NSTimeZone defaultTimeZone];
+            
             [[UIApplication sharedApplication] scheduleLocalNotification:local];
         }
     }
@@ -115,6 +117,11 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))comp
             _backgroundFetchCompletionHandler(UIBackgroundFetchResultNoData);
         }
     }
+}
+- (void)application:(UIApplication *)application
+didReceiveLocalNotification:(UILocalNotification *)notification{
+    NSURL * url = [NSURL URLWithString: notification.alertAction];
+    [_newsFeedList showNewsItemFromURL:url];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

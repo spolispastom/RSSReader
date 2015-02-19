@@ -14,5 +14,6 @@
 @property (nonatomic) NSArray * newsFeedList;
 
 - (IBAction)unwindToNewsFeedTable:(UIStoryboardSegue *)segue;
+- (void) showNewsItemFromURL: (NSURL*) url;
 
 @end

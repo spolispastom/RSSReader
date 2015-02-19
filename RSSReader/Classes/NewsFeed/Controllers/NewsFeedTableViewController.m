@@ -93,23 +93,6 @@
     return [self heightForBasicCellAtIndexPath:indexPath];
 }
 
-/*- (CGFloat)heightForBasicCellAtIndexPath:(NSIndexPath *)indexPath {
-    static NewsFeedTableViewCell *sizingCell = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sizingCell = [self.tableView dequeueReusableCellWithIdentifier:@"newsFeedItem"];
-    });
-    
-    [self configureNewsFeedCell:sizingCell atIndexPath:indexPath];
-    
-    [sizingCell setNeedsLayout];
-    [sizingCell layoutIfNeeded];
-    
-    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    CGFloat height = MAX(size.height + 1.0f, 82.0f); // Add 1.0f for the cell separator height
-    return height;
-}*/
-
 - (CGFloat)heightForBasicCellAtIndexPath:(NSIndexPath *)indexPath {
     static NewsFeedTableViewCell *sizingCell = nil;
     static dispatch_once_t onceToken;
@@ -165,6 +148,30 @@
         sourse.sourseDelegate = newsContent;
         //[sourse update];
     }
+}
+
+- (void) showNewsItemFromURL: (NSURL*) url
+{
+    
+    UIViewController * controller  = [[self storyboard] instantiateViewControllerWithIdentifier: @"NewsListViewController"];
+    
+    if ([controller isKindOfClass:[NewsListViewController class]])
+    {
+        NewsListViewController * newsContent = (NewsListViewController *)controller;
+        
+        
+        for (NewsFeed * newsFeed in _newsFeedList) {
+            if ([newsFeed.url isEqual:url]){
+                
+                NewsSourse * sourse = [_sourse getNewsSourseFromNewsFeed:newsFeed];
+                sourse.sourseDelegate = newsContent;
+                
+                [self.navigationController pushViewController:newsContent animated:YES];
+                return;
+            }
+        }
+    }
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated

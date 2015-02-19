@@ -73,7 +73,7 @@
         <!--News List View Controller-->
         <scene sceneID="wd4-n4-yqL">
             <objects>
-                <viewController id="1x9-y5-MEm" customClass="NewsListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewsListViewController" id="1x9-y5-MEm" customClass="NewsListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Qg7-hq-Amq"/>
                         <viewControllerLayoutGuide type="bottom" id="RA3-VW-yQl"/>
@@ -92,13 +92,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" placeholderIntrinsicWidth="584" placeholderIntrinsicHeight="21" text="Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Li6-HR-n84">
-                                                    <rect key="frame" x="8" y="12" width="584" height="21"/>
+                                                    <rect key="frame" x="12" y="8" width="580" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" placeholderIntrinsicWidth="584" placeholderIntrinsicHeight="17" text="CreationData" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kqT-OE-prv">
-                                                    <rect key="frame" x="8" y="37" width="584" height="17"/>
+                                                    <rect key="frame" x="12" y="33" width="584" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="17" id="bJd-qh-Rgb"/>
                                                     </constraints>
@@ -114,12 +114,12 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="Li6-HR-n84" secondAttribute="trailing" priority="900" id="IFn-BI-SGW"/>
-                                                <constraint firstItem="kqT-OE-prv" firstAttribute="leading" secondItem="cyh-f6-T5u" secondAttribute="leadingMargin" id="J7j-hU-U9G"/>
-                                                <constraint firstItem="Li6-HR-n84" firstAttribute="top" secondItem="cyh-f6-T5u" secondAttribute="topMargin" constant="4" id="TjG-nd-Yec"/>
-                                                <constraint firstItem="Li6-HR-n84" firstAttribute="leading" secondItem="cyh-f6-T5u" secondAttribute="leadingMargin" id="dGt-Te-gO6"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="kqT-OE-prv" secondAttribute="bottom" priority="750" constant="4" id="h5K-Dy-oK6"/>
+                                                <constraint firstItem="kqT-OE-prv" firstAttribute="leading" secondItem="cyh-f6-T5u" secondAttribute="leadingMargin" constant="4" id="J7j-hU-U9G"/>
+                                                <constraint firstItem="Li6-HR-n84" firstAttribute="top" secondItem="cyh-f6-T5u" secondAttribute="topMargin" id="TjG-nd-Yec"/>
+                                                <constraint firstItem="Li6-HR-n84" firstAttribute="leading" secondItem="cyh-f6-T5u" secondAttribute="leadingMargin" constant="4" id="dGt-Te-gO6"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="kqT-OE-prv" secondAttribute="bottom" id="h5K-Dy-oK6"/>
                                                 <constraint firstItem="kqT-OE-prv" firstAttribute="trailing" secondItem="cyh-f6-T5u" secondAttribute="trailingMargin" priority="750" id="iDo-Ll-oLn"/>
-                                                <constraint firstItem="kqT-OE-prv" firstAttribute="top" secondItem="Li6-HR-n84" secondAttribute="bottom" constant="4" id="vvF-eE-oGZ"/>
+                                                <constraint firstItem="kqT-OE-prv" firstAttribute="top" secondItem="Li6-HR-n84" secondAttribute="bottom" priority="900" constant="4" id="vvF-eE-oGZ"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -180,7 +180,7 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" tableViewCell="1Q6-tG-fHw" id="Fuf-cx-ni1">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" placeholderIntrinsicWidth="65" placeholderIntrinsicHeight="65" translatesAutoresizingMaskIntoConstraints="NO" id="FY1-Yc-Jce">
+                                        <imageView opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" placeholderIntrinsicWidth="65" placeholderIntrinsicHeight="65" translatesAutoresizingMaskIntoConstraints="NO" id="FY1-Yc-Jce">
                                             <rect key="frame" x="16" y="8" width="65" height="65"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="65" id="FKa-hS-PTd"/>
