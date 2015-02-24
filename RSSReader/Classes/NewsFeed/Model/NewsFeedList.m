@@ -53,7 +53,7 @@
             [_delegate newsFeedList:self didGetNewsFeed:_newsFeeds];
         }
         
-        [updateItem update];
+        [updateItem downloadAgain];
     }];
 }
 

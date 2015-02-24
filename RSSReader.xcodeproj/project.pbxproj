@@ -51,7 +51,7 @@
 		CF21E2121A934689006CEACB /* NewsBackgroundDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsBackgroundDownloader.m; sourceTree = "<group>"; };
 		CF21E2131A934689006CEACB /* NewsDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsDownloader.h; sourceTree = "<group>"; };
 		CF21E2141A934689006CEACB /* NewsForegroundDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsForegroundDownloader.h; sourceTree = "<group>"; };
-		CF21E2151A934689006CEACB /* NewsForegroundDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsForegroundDownloader.m; sourceTree = "<group>"; };
+		CF21E2151A934689006CEACB /* NewsForegroundDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewsForegroundDownloader.m; path = ../../NewsDownloader/NewsForegroundDownloader.m; sourceTree = "<group>"; };
 		CF21E2181A934689006CEACB /* AddNewsFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewsFeedViewController.h; sourceTree = "<group>"; };
 		CF21E2191A934689006CEACB /* AddNewsFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewsFeedViewController.m; sourceTree = "<group>"; };
 		CF21E21A1A934689006CEACB /* NewsFeedTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsFeedTableViewCell.h; sourceTree = "<group>"; };
@@ -125,7 +125,6 @@
 				CF21E2111A934689006CEACB /* NewsBackgroundDownloader.h */,
 				CF21E2121A934689006CEACB /* NewsBackgroundDownloader.m */,
 				CF21E2141A934689006CEACB /* NewsForegroundDownloader.h */,
-				CF21E2151A934689006CEACB /* NewsForegroundDownloader.m */,
 			);
 			path = NewsDownloader;
 			sourceTree = "<group>";
@@ -177,6 +176,7 @@
 		CF21E2241A934689006CEACB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CF21E2151A934689006CEACB /* NewsForegroundDownloader.m */,
 				CF21E2251A934689006CEACB /* NewsContentViewController.h */,
 				CF21E2261A934689006CEACB /* NewsContentViewController.m */,
 				CF21E2271A934689006CEACB /* NewsListViewController.h */,

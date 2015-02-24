@@ -88,7 +88,7 @@
                             return  [item2.creationDate compare:item1.creationDate];
                         }]];
     else
-        [ self downloadAgain];
+        [self downloadAgain];
 }
 
 - (void)newsDownloader:(id<NewsDownloader>) downloader
