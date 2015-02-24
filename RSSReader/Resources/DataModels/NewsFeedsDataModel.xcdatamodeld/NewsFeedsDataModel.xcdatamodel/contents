@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="EntityNewsFeed" representedClassName="EntityNewsFeed" syncable="YES">
-        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+    <entity name="NewsFeedPersistence" representedClassName="NewsFeedPersistence" syncable="YES">
+        <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="newsItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="EntityNewsItem" inverseName="newsFeed" inverseEntity="EntityNewsItem" syncable="YES"/>
+        <relationship name="newsItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NewsItemPersistence" inverseName="newsFeed" inverseEntity="NewsItemPersistence" syncable="YES"/>
     </entity>
-    <entity name="EntityNewsItem" representedClassName="EntityNewsItem" syncable="YES">
+    <entity name="NewsItemPersistence" representedClassName="NewsItemPersistence" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="creationDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="isRead" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="newsFeed" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="EntityNewsFeed" inverseName="newsItems" inverseEntity="EntityNewsFeed" syncable="YES"/>
+        <relationship name="newsFeed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NewsFeedPersistence" inverseName="newsItems" inverseEntity="NewsFeedPersistence" syncable="YES"/>
     </entity>
     <elements>
-        <element name="EntityNewsFeed" positionX="43" positionY="54" width="128" height="30"/>
-        <element name="EntityNewsItem" positionX="-171" positionY="54" width="146" height="135"/>
+        <element name="NewsItemPersistence" positionX="-405" positionY="182" width="128" height="133"/>
+        <element name="NewsFeedPersistence" positionX="-189" positionY="212" width="128" height="103"/>
     </elements>
 </model>

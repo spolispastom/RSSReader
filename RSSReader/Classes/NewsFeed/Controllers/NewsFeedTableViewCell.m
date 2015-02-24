@@ -18,9 +18,10 @@
 
 @implementation NewsFeedTableViewCell
 
-
 - (void)layoutSubviews {
     [super layoutSubviews];
+    
+    _numberOfUnreadNewsLable.adjustsFontSizeToFitWidth = YES;
     
     BOOL needsLayout = NO;
     
@@ -30,8 +31,6 @@
         
         needsLayout = YES;
     }
-    
-    
 
     if (needsLayout) {
         [super layoutSubviews];

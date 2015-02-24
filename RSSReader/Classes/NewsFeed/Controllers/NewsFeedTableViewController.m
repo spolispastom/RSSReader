@@ -9,14 +9,13 @@
 #import "NewsFeedTableViewController.h"
 #import "AddNewsFeedViewController.h"
 #import "NewsListViewController.h"
-#import "NewsFeed.h"
-#import "NewsFeedSourse.h"
+#import "NewsFeedList.h"
 #import "NewsFeedTableViewCell.h"
 
 @interface NewsFeedTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
-@property (weak, nonatomic) NewsFeedSourse* sourse;
+@property (weak, nonatomic) NewsFeedList* sourse;
 
 @end
 
@@ -31,20 +30,19 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)newsSourse:(NewsFeedSourse *) sourse didGetNewsFeed:(NSArray *)newsFeeds
+- (void)newsFeedList:(NewsFeedList *)list didGetNewsFeed:(NSArray *)newsFeeds
 {
     if (!_sourse)
-        _sourse = sourse;
+        _sourse = list;
     _newsFeedList = newsFeeds;
     
     [self.tableView reloadData];
 }
 
-- (void)newsSourse:(NewsFeedSourse *) sourse
+- (void)newsFeedList:(NewsFeedList *)sourse
 {
     _sourse = sourse;
 }
-
 
 #pragma mark - Table view data source
 
@@ -86,7 +84,7 @@
     cell.title = newsFeedItem.title;
     cell.image = newsFeedItem.imageData;
     
-    cell.numberOfUnreadNews = [[_sourse getNewsSourseFromNewsFeed:newsFeedItem] numberOfUnreadNews];
+    cell.numberOfUnreadNews = [newsFeedItem numberOfUnreadNews];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -123,13 +121,16 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        [tableView deselectRowAtIndexPath:indexPath animated:NO];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
         NewsFeed * item = [_newsFeedList objectAtIndex: indexPath.row];
-    
         [tableView beginUpdates];
         [tableView deleteRowsAtIndexPaths:@[indexPath]
                          withRowAnimation:UITableViewRowAnimationAutomatic];
         [_sourse removeNewsFeed: item];
+        NSMutableArray * buff = [NSMutableArray arrayWithArray:_newsFeedList];
+        [buff removeObject:item];
+        _newsFeedList = buff;
         [tableView endUpdates];
         
         [self.tableView reloadData];
@@ -144,15 +145,13 @@
         NewsListViewController * newsContent = (NewsListViewController *)[navigation topViewController];
         
         NewsFeed * item = [_newsFeedList objectAtIndex: [self.tableView indexPathForCell:sender].row];
-        NewsSourse * sourse = [_sourse getNewsSourseFromNewsFeed:item];
-        sourse.sourseDelegate = newsContent;
+        item.newsFeedDelegate = newsContent;
         //[sourse update];
     }
 }
 
 - (void) showNewsItemFromURL: (NSURL*) url
 {
-    
     UIViewController * controller  = [[self storyboard] instantiateViewControllerWithIdentifier: @"NewsListViewController"];
     
     if ([controller isKindOfClass:[NewsListViewController class]])
@@ -163,8 +162,7 @@
         for (NewsFeed * newsFeed in _newsFeedList) {
             if ([newsFeed.url isEqual:url]){
                 
-                NewsSourse * sourse = [_sourse getNewsSourseFromNewsFeed:newsFeed];
-                sourse.sourseDelegate = newsContent;
+                newsFeed.newsFeedDelegate = newsContent;
                 
                 [self.navigationController pushViewController:newsContent animated:YES];
                 return;

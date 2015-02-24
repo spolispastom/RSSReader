@@ -36,7 +36,7 @@
 @synthesize data;
 @synthesize delegate;
 
-- (RSSParser *) initWithData: (NSData *) newsData;
+- (instancetype) initWithData: (NSData *) newsData;
 {
     self = [self init];
     

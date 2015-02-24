@@ -19,5 +19,5 @@
 @property (nonatomic) NSString * title;
 @property (nonatomic) NSURL * url;
 
-- (NewsItem*) initWithTitle: (NSString*) title andCreationDate: (NSDate*) creationDate andContent: (NSString *) content andUrl: (NSURL*) url;
+- (instancetype) initWithTitle: (NSString*) title andCreationDate: (NSDate*) creationDate andContent: (NSString *) content andUrl: (NSURL*) url;
 @end

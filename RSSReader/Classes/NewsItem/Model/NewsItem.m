@@ -12,7 +12,7 @@
 
 @implementation NewsItem
 
-- (NewsItem*) initWithTitle: (NSString*) title andCreationDate: (NSDate*) creationDate andContent: (NSString *) content andUrl: (NSURL*) url
+- (instancetype) initWithTitle: (NSString*) title andCreationDate: (NSDate*) creationDate andContent: (NSString *) content andUrl: (NSURL*) url
 {
     self = [super init];
     

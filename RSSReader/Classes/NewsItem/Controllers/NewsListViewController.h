@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "NewsItem.h"
-#import "NewsSourse.h"
+#import "NewsFeed.h"
 
-@interface NewsListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, NewsSourseDelegate>
+@interface NewsListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, NewsFeedDelegate>
 
 @property (nonatomic, setter=setNewsList:) NSArray * newsList;
 @property (nonatomic) NSString * newsFeedTitle;

@@ -8,13 +8,13 @@
 
 #import "NewsListViewController.h"
 #import "NewsContentViewController.h"
-#import "NewsSourse.h"
+#import "NewsFeed.h"
 #import "NewsTableViewCell.h"
 
 @interface NewsListViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *rssList;
-@property (weak, nonatomic) NewsSourse * sourse;
+@property (weak, nonatomic) NewsFeed * sourse;
 @property (nonatomic) UIRefreshControl * refreshControl;
 
 @end
@@ -47,19 +47,19 @@
     
 }
 
-- (void)newsSourse:(NewsSourse *) sourse didParseNews:(NSArray *)newsItems andTitle:(NSString *)title
+- (void)NewsFeed:(NewsFeed *)newsFeed didUpdateNews:(NSArray *)newsItems
 {
     if (!_sourse)
-        _sourse = sourse;
+        _sourse = newsFeed;
     
     [_refreshControl endRefreshing];
     
     self.newsList = newsItems;
-    self.newsFeedTitle = title;
+    self.newsFeedTitle = _sourse.title;
     
 }
 
-- (void)newsSourse:(NewsSourse *) sourse didFailDownload:(NSError *) error
+- (void)NewsFeed:(NewsFeed *)newsFeed didFailDownload:(NSError *)error
 {
     [_refreshControl endRefreshing];
     
@@ -83,9 +83,8 @@
     [theAlert show];
 }
 
-- (void)newsSourse:(NewsSourse *) sourse
-{
-    _sourse = sourse;
+- (void)NewsFeed:(NewsFeed *)newsFeed {
+    _sourse = newsFeed;
     [_sourse update];
 }
 
@@ -164,6 +163,7 @@
     
         NewsItem * item = [_newsList objectAtIndex: [_rssList indexPathForCell:sender].row];
         [newsContent setNewsItem: item];
+        [_sourse readNewsItem:item];
     }
 }
 

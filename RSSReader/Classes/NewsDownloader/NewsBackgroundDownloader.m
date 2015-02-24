@@ -22,7 +22,7 @@
 
 @implementation NewsBackgroundDownloader
 
-- (NewsBackgroundDownloader *)initWithDelegate: (id<NewsDownloaderDelegate>) delegate
+- (instancetype)initWithDelegate: (id<NewsDownloaderDelegate>) delegate
                               andURL: (NSURL *) url
                            andParser: (id<NewsParser>) parser{
     self = [super init];

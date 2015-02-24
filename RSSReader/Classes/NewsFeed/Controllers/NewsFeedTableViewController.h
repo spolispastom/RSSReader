@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NewsFeedSourse.h"
+#import "NewsFeedList.h"
 
-@interface NewsFeedTableViewController : UITableViewController <NewsFeedSourseDelegate>
+@interface NewsFeedTableViewController : UITableViewController <NewsFeedListDelegate>
 
 @property (nonatomic) NSArray * newsFeedList;
 

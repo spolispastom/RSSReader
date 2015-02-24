@@ -13,18 +13,18 @@
 		CF21E2371A934689006CEACB /* AddNewsFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2191A934689006CEACB /* AddNewsFeedViewController.m */; };
 		CF21E2381A934689006CEACB /* NewsFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF21E21B1A934689006CEACB /* NewsFeedTableViewCell.m */; };
 		CF21E2391A934689006CEACB /* NewsFeedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF21E21D1A934689006CEACB /* NewsFeedTableViewController.m */; };
-		CF21E23B1A934689006CEACB /* NewsFeedSourse.m in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2221A934689006CEACB /* NewsFeedSourse.m */; };
+		CF21E23B1A934689006CEACB /* NewsFeedList.m in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2221A934689006CEACB /* NewsFeedList.m */; };
 		CF21E23C1A934689006CEACB /* NewsContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2261A934689006CEACB /* NewsContentViewController.m */; };
 		CF21E23D1A934689006CEACB /* NewsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2281A934689006CEACB /* NewsListViewController.m */; };
 		CF21E23E1A934689006CEACB /* NewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF21E22A1A934689006CEACB /* NewsTableViewCell.m */; };
-		CF21E2401A934689006CEACB /* NewsSourse.m in Sources */ = {isa = PBXBuildFile; fileRef = CF21E22F1A934689006CEACB /* NewsSourse.m */; };
 		CF21E2411A934689006CEACB /* RSSParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2331A934689006CEACB /* RSSParser.m */; };
 		CF21E24A1A934F9F006CEACB /* NewsFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2491A934F9F006CEACB /* NewsFeed.m */; };
 		CF21E24D1A934FB2006CEACB /* NewsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CF21E24C1A934FB2006CEACB /* NewsItem.m */; };
-		CF21E2561A9351E0006CEACB /* EntityNewsFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2551A9351E0006CEACB /* EntityNewsFeed.m */; };
-		CF21E2591A9351E1006CEACB /* EntityNewsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2581A9351E1006CEACB /* EntityNewsItem.m */; };
-		CF21E2601A9357E1006CEACB /* ProviderDataMedel.m in Sources */ = {isa = PBXBuildFile; fileRef = CF21E25F1A9357E1006CEACB /* ProviderDataMedel.m */; };
+		CF21E2601A9357E1006CEACB /* DataModelProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = CF21E25F1A9357E1006CEACB /* DataModelProvider.m */; };
 		CF68EB0D1A691A29009BF032 /* RSSReaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CF68EB0C1A691A29009BF032 /* RSSReaderTests.m */; };
+		CFB751101A9C61D20029987C /* NewsFeedSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB7510F1A9C61D20029987C /* NewsFeedSerializer.m */; };
+		CFB751131A9CAF030029987C /* NewsFeedPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB751121A9CAF030029987C /* NewsFeedPersistence.m */; };
+		CFB751161A9CAF030029987C /* NewsItemPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = CFB751151A9CAF030029987C /* NewsItemPersistence.m */; };
 		CFD95B221A7768BC00A894B3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CFD95B031A7768BC00A894B3 /* AppDelegate.m */; };
 		CFD95B2A1A7768BC00A894B3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFD95B1A1A7768BC00A894B3 /* Images.xcassets */; };
 		CFD95B2B1A7768BC00A894B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CFD95B1C1A7768BC00A894B3 /* Main.storyboard */; };
@@ -58,16 +58,14 @@
 		CF21E21B1A934689006CEACB /* NewsFeedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsFeedTableViewCell.m; sourceTree = "<group>"; };
 		CF21E21C1A934689006CEACB /* NewsFeedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsFeedTableViewController.h; sourceTree = "<group>"; };
 		CF21E21D1A934689006CEACB /* NewsFeedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsFeedTableViewController.m; sourceTree = "<group>"; };
-		CF21E2211A934689006CEACB /* NewsFeedSourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsFeedSourse.h; sourceTree = "<group>"; };
-		CF21E2221A934689006CEACB /* NewsFeedSourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsFeedSourse.m; sourceTree = "<group>"; };
+		CF21E2211A934689006CEACB /* NewsFeedList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsFeedList.h; sourceTree = "<group>"; };
+		CF21E2221A934689006CEACB /* NewsFeedList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsFeedList.m; sourceTree = "<group>"; };
 		CF21E2251A934689006CEACB /* NewsContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsContentViewController.h; sourceTree = "<group>"; };
 		CF21E2261A934689006CEACB /* NewsContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsContentViewController.m; sourceTree = "<group>"; };
 		CF21E2271A934689006CEACB /* NewsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsListViewController.h; sourceTree = "<group>"; };
 		CF21E2281A934689006CEACB /* NewsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsListViewController.m; sourceTree = "<group>"; };
 		CF21E2291A934689006CEACB /* NewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsTableViewCell.h; sourceTree = "<group>"; };
 		CF21E22A1A934689006CEACB /* NewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsTableViewCell.m; sourceTree = "<group>"; };
-		CF21E22E1A934689006CEACB /* NewsSourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsSourse.h; sourceTree = "<group>"; };
-		CF21E22F1A934689006CEACB /* NewsSourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsSourse.m; sourceTree = "<group>"; };
 		CF21E2311A934689006CEACB /* NewsParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsParser.h; sourceTree = "<group>"; };
 		CF21E2321A934689006CEACB /* RSSParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSParser.h; sourceTree = "<group>"; };
 		CF21E2331A934689006CEACB /* RSSParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSParser.m; sourceTree = "<group>"; };
@@ -75,16 +73,19 @@
 		CF21E2491A934F9F006CEACB /* NewsFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsFeed.m; sourceTree = "<group>"; };
 		CF21E24B1A934FB2006CEACB /* NewsItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsItem.h; sourceTree = "<group>"; };
 		CF21E24C1A934FB2006CEACB /* NewsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsItem.m; sourceTree = "<group>"; };
-		CF21E2541A9351E0006CEACB /* EntityNewsFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EntityNewsFeed.h; path = DataModel/EntityNewsFeed.h; sourceTree = "<group>"; };
-		CF21E2551A9351E0006CEACB /* EntityNewsFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EntityNewsFeed.m; path = DataModel/EntityNewsFeed.m; sourceTree = "<group>"; };
-		CF21E2571A9351E1006CEACB /* EntityNewsItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EntityNewsItem.h; path = DataModel/EntityNewsItem.h; sourceTree = "<group>"; };
-		CF21E2581A9351E1006CEACB /* EntityNewsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EntityNewsItem.m; path = DataModel/EntityNewsItem.m; sourceTree = "<group>"; };
-		CF21E25E1A9357E1006CEACB /* ProviderDataMedel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProviderDataMedel.h; sourceTree = "<group>"; };
-		CF21E25F1A9357E1006CEACB /* ProviderDataMedel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProviderDataMedel.m; sourceTree = "<group>"; };
+		CF21E25E1A9357E1006CEACB /* DataModelProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModelProvider.h; sourceTree = "<group>"; };
+		CF21E25F1A9357E1006CEACB /* DataModelProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataModelProvider.m; sourceTree = "<group>"; };
 		CF68EAED1A691A29009BF032 /* RSSReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSSReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF68EB061A691A29009BF032 /* RSSReaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSSReaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF68EB0B1A691A29009BF032 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF68EB0C1A691A29009BF032 /* RSSReaderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSSReaderTests.m; sourceTree = "<group>"; };
+		CFB7510D1A9C5C4C0029987C /* NewsFeedSerializerPersistence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewsFeedSerializerPersistence.h; sourceTree = "<group>"; };
+		CFB7510E1A9C61D20029987C /* NewsFeedSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsFeedSerializer.h; sourceTree = "<group>"; };
+		CFB7510F1A9C61D20029987C /* NewsFeedSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsFeedSerializer.m; sourceTree = "<group>"; };
+		CFB751111A9CAF030029987C /* NewsFeedPersistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewsFeedPersistence.h; path = DataModel/NewsFeedPersistence.h; sourceTree = "<group>"; };
+		CFB751121A9CAF030029987C /* NewsFeedPersistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewsFeedPersistence.m; path = DataModel/NewsFeedPersistence.m; sourceTree = "<group>"; };
+		CFB751141A9CAF030029987C /* NewsItemPersistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewsItemPersistence.h; path = DataModel/NewsItemPersistence.h; sourceTree = "<group>"; };
+		CFB751151A9CAF030029987C /* NewsItemPersistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewsItemPersistence.m; path = DataModel/NewsItemPersistence.m; sourceTree = "<group>"; };
 		CFD95B021A7768BC00A894B3 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CFD95B031A7768BC00A894B3 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		CFD95B1A1A7768BC00A894B3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -156,8 +157,10 @@
 			children = (
 				CF21E2481A934F9F006CEACB /* NewsFeed.h */,
 				CF21E2491A934F9F006CEACB /* NewsFeed.m */,
-				CF21E2211A934689006CEACB /* NewsFeedSourse.h */,
-				CF21E2221A934689006CEACB /* NewsFeedSourse.m */,
+				CF21E2211A934689006CEACB /* NewsFeedList.h */,
+				CF21E2221A934689006CEACB /* NewsFeedList.m */,
+				CFB7510E1A9C61D20029987C /* NewsFeedSerializer.h */,
+				CFB7510F1A9C61D20029987C /* NewsFeedSerializer.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -189,8 +192,6 @@
 			children = (
 				CF21E24B1A934FB2006CEACB /* NewsItem.h */,
 				CF21E24C1A934FB2006CEACB /* NewsItem.m */,
-				CF21E22E1A934689006CEACB /* NewsSourse.h */,
-				CF21E22F1A934689006CEACB /* NewsSourse.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -208,8 +209,9 @@
 		CF21E25D1A9357E1006CEACB /* ProviderDataMedel */ = {
 			isa = PBXGroup;
 			children = (
-				CF21E25E1A9357E1006CEACB /* ProviderDataMedel.h */,
-				CF21E25F1A9357E1006CEACB /* ProviderDataMedel.m */,
+				CF21E25E1A9357E1006CEACB /* DataModelProvider.h */,
+				CF21E25F1A9357E1006CEACB /* DataModelProvider.m */,
+				CFB7510D1A9C5C4C0029987C /* NewsFeedSerializerPersistence.h */,
 			);
 			path = ProviderDataMedel;
 			sourceTree = "<group>";
@@ -338,10 +340,10 @@
 		CFD95B521A78499300A894B3 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
-				CF21E2571A9351E1006CEACB /* EntityNewsItem.h */,
-				CF21E2581A9351E1006CEACB /* EntityNewsItem.m */,
-				CF21E2541A9351E0006CEACB /* EntityNewsFeed.h */,
-				CF21E2551A9351E0006CEACB /* EntityNewsFeed.m */,
+				CFB751141A9CAF030029987C /* NewsItemPersistence.h */,
+				CFB751151A9CAF030029987C /* NewsItemPersistence.m */,
+				CFB751111A9CAF030029987C /* NewsFeedPersistence.h */,
+				CFB751121A9CAF030029987C /* NewsFeedPersistence.m */,
 			);
 			name = DataModel;
 			sourceTree = "<group>";
@@ -459,21 +461,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFB751131A9CAF030029987C /* NewsFeedPersistence.m in Sources */,
 				CFD95B221A7768BC00A894B3 /* AppDelegate.m in Sources */,
 				CF21E24D1A934FB2006CEACB /* NewsItem.m in Sources */,
+				CFB751101A9C61D20029987C /* NewsFeedSerializer.m in Sources */,
+				CFB751161A9CAF030029987C /* NewsItemPersistence.m in Sources */,
 				CF21E23C1A934689006CEACB /* NewsContentViewController.m in Sources */,
-				CF21E23B1A934689006CEACB /* NewsFeedSourse.m in Sources */,
-				CF21E2591A9351E1006CEACB /* EntityNewsItem.m in Sources */,
+				CF21E23B1A934689006CEACB /* NewsFeedList.m in Sources */,
 				CF21E2351A934689006CEACB /* NewsBackgroundDownloader.m in Sources */,
-				CF21E2561A9351E0006CEACB /* EntityNewsFeed.m in Sources */,
 				CF21E2381A934689006CEACB /* NewsFeedTableViewCell.m in Sources */,
-				CF21E2401A934689006CEACB /* NewsSourse.m in Sources */,
 				CF21E24A1A934F9F006CEACB /* NewsFeed.m in Sources */,
 				CF21E2341A934689006CEACB /* DownloadAndParseNewsOperation.m in Sources */,
 				CF21E2361A934689006CEACB /* NewsForegroundDownloader.m in Sources */,
 				CFD95B2E1A7768BC00A894B3 /* main.m in Sources */,
 				CF21E2371A934689006CEACB /* AddNewsFeedViewController.m in Sources */,
-				CF21E2601A9357E1006CEACB /* ProviderDataMedel.m in Sources */,
+				CF21E2601A9357E1006CEACB /* DataModelProvider.m in Sources */,
 				CFD95B4B1A783E8600A894B3 /* NewsFeedsDataModel.xcdatamodeld in Sources */,
 				CF21E2411A934689006CEACB /* RSSParser.m in Sources */,
 				CF21E2391A934689006CEACB /* NewsFeedTableViewController.m in Sources */,

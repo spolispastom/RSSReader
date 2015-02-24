@@ -25,7 +25,7 @@
 
 @implementation DownloadAndParseNewsOperation
 
-- (DownloadAndParseNewsOperation *) initWithURL: (NSURL *) url
+- (instancetype) initWithURL: (NSURL *) url
                                     andDelegate: (id<NewsDownloaderDelegate>) delegate
 {
     self = [self init];
@@ -43,7 +43,7 @@
 }
 
 
-- (DownloadAndParseNewsOperation *) initBackgroundDownloadAndParseNewsOperationWithURL: (NSURL *) url
+- (instancetype) initBackgroundDownloadAndParseNewsOperationWithURL: (NSURL *) url
                                                                            andDelegate: (id<NewsDownloaderDelegate>) delegate
 {
     self = [self initWithURL:url andDelegate:delegate];
