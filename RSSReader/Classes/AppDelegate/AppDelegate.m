@@ -72,7 +72,35 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))comp
     _isCompleteBackgroundDownloadResultError = NO;
     for (NewsFeed * newsFeed in _sourse.newsFeeds)
     {
-        [newsFeed backgroundDownloadAgain: self];
+         __block id<NSObject> newsFeedChangeObserver = [[NSNotificationCenter defaultCenter]addObserverForName:(NSString*)NewsFeedDidChangeNotification object:newsFeed queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+             NSError * error = [note.userInfo objectForKey:(NSString*)NewsFeedDidChangeNotificationErrorKey];
+             NSNumber * numberOfNewNews = [note.userInfo objectForKey:(NSString*)NewsFeedDidChangeNotificationNumberOfNewNewsKey];
+             
+             if (error == nil){
+                 _isCompleteBackgroundDownloadResultError = YES;
+             } else if (numberOfNewNews > 0){
+                 _isCompleteBackgroundDownloadResultNewData = YES;
+             
+                 UILocalNotification* local = [[UILocalNotification alloc]init];
+                 if (local){
+                     local.fireDate = [NSDate dateWithTimeIntervalSinceNow:10];
+                     local.alertBody = [NSString stringWithFormat:@"У вас %ld новых новостей в ленте %@",
+                                       (long)newsFeed.numberOfUnreadNews,
+                                       newsFeed.title];
+                     local.alertAction = newsFeed.url.absoluteString;
+                     local.timeZone = [NSTimeZone defaultTimeZone];
+                    
+                     [[UIApplication sharedApplication] scheduleLocalNotification:local];
+                 }
+             }
+            
+             [_notCompletedDownloadNewsSourse removeObject:newsFeed];
+            
+             [self causeСheckingСompletionHandler];
+             
+             [[NSNotificationCenter defaultCenter] removeObserver: newsFeedChangeObserver];
+        }];
+        [newsFeed backgroundDownloadAgain];
         [_notCompletedDownloadNewsSourse addObject:newsFeed];
     }
 }
@@ -82,33 +110,6 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))comp
         [newsSourseItem cancelDownload];
     }
     [_notCompletedDownloadNewsSourse removeAllObjects];
-    [self causeСheckingСompletionHandler];
-}
-
-- (void) completeBackgroundDownloadNewsFeed:(NewsFeed *)newsFeed withResult:(UIBackgroundFetchResult)result
-{
-    if (result == UIBackgroundFetchResultFailed) {
-        _isCompleteBackgroundDownloadResultError = YES;
-    }
-    if (result == UIBackgroundFetchResultNewData) {
-        _isCompleteBackgroundDownloadResultNewData = YES;
-        
-        UILocalNotification* local = [[UILocalNotification alloc]init];
-        if (local)
-        {
-            local.fireDate = [NSDate dateWithTimeIntervalSinceNow:10];
-            local.alertBody = [NSString stringWithFormat:@"У вас %ld новых новостей в ленте %@",
-                               (long)newsFeed.numberOfUnreadNews,
-                               newsFeed.title];
-            local.alertAction = newsFeed.url.absoluteString;
-            local.timeZone = [NSTimeZone defaultTimeZone];
-            
-            [[UIApplication sharedApplication] scheduleLocalNotification:local];
-        }
-    }
-    
-    [_notCompletedDownloadNewsSourse removeObject:newsFeed];
-    
     [self causeСheckingСompletionHandler];
 }
 

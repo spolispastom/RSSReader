@@ -114,9 +114,12 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if (sender != self.saveButton) return;
     
-    if (_urlTextFild.text.length > 0) {
-        
-        _itemURL =  _urlTextFild.text;
+    if (_urlTextFild.text.length > 0){
+        NSURL* url = [NSURL URLWithString:_urlTextFild.text];
+        if (url != nil && [[UIApplication sharedApplication] canOpenURL:url]){
+
+            _itemURL =  url;
+        }
     }
 }
 

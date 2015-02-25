@@ -13,6 +13,7 @@
 
 NSString const * NewsFeedDidChangeNotification = @"NewsFeedDidChangeNotification";
 NSString const * NewsFeedDidChangeNotificationErrorKey = @"NewsFeedDidChangeNotificationErrorKey";
+NSString const * NewsFeedDidChangeNotificationNumberOfNewNewsKey = @"NewsFeedDidChangeNotificationNumberOfNewNewsKey";
 
 @interface NewsFeed()
 
@@ -20,7 +21,6 @@ NSString const * NewsFeedDidChangeNotificationErrorKey = @"NewsFeedDidChangeNoti
 @property (nonatomic, assign, readwrite) BOOL recalculating;
 @property (nonatomic, strong, readwrite) DownloadAndParseNewsOperation *   gettingNews;
 @property (nonatomic) BOOL isBackground;
-@property (weak, nonatomic) id<NewsFeedCompliteBackgroundDownloadDelegate> delegate;
 @property (weak, nonatomic) DataModelProvider * provider;
 @property (nonatomic) NSInteger oldNumberOfUnreadNews;
 @end
@@ -63,9 +63,8 @@ NSString const * NewsFeedDidChangeNotificationErrorKey = @"NewsFeedDidChangeNoti
 }
 
 
-- (void)backgroundDownloadAgain: (id<NewsFeedCompliteBackgroundDownloadDelegate>) delegate
+- (void)backgroundDownloadAgain
 {
-    _delegate = delegate;
     _isBackground = YES;
     if (!_gettingNews.isFinished)
         [_gettingNews cancel];
@@ -110,30 +109,21 @@ NSString const * NewsFeedDidChangeNotificationErrorKey = @"NewsFeedDidChangeNoti
     }
 
     [_provider updateNewsFeed:self completionBlock:^(NSError *error) {
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:(NSString*) NewsFeedDidChangeNotification object:self];
-        
-        if (_isBackground && _delegate)
-        {
-            NSInteger numberOfNewNews = _newsItems.count - newsItems.count;
-            if (numberOfNewNews > 0) {
-            [_delegate completeBackgroundDownloadNewsFeed:self withResult: UIBackgroundFetchResultNewData];
-            } else {
-                [_delegate completeBackgroundDownloadNewsFeed:self withResult:UIBackgroundFetchResultNoData];
-            }
+        NSMutableDictionary * userInfo = [NSMutableDictionary new];
+        [userInfo setObject:[NSNumber numberWithLong:_newsItems.count - newsItems.count] forKey:(NSString*)NewsFeedDidChangeNotificationNumberOfNewNewsKey];
+        if (error != nil){
+        [userInfo setObject:error forKey:(NSString*)NewsFeedDidChangeNotificationErrorKey];
         }
+        [[NSNotificationCenter defaultCenter] postNotificationName:(NSString*) NewsFeedDidChangeNotification object:self userInfo:userInfo];
     }];
 }
 
 - (void)newsDownloader:(id<NewsDownloader>) downloader didFailDownload:(NSError *) error
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:(NSString*) NewsFeedDidChangeNotification
-                                                        object:self
-                                                      userInfo:@{(NSString*)NewsFeedDidChangeNotificationErrorKey:error}];
-    
-    if (_isBackground && _delegate) {
-        [_delegate completeBackgroundDownloadNewsFeed:self withResult:UIBackgroundFetchResultFailed];
-    }
+    NSMutableDictionary * userInfo = [NSMutableDictionary new];
+    [userInfo setObject:error forKey:(NSString*)NewsFeedDidChangeNotificationErrorKey];
+        
+    [[NSNotificationCenter defaultCenter] postNotificationName:(NSString*) NewsFeedDidChangeNotification object:self userInfo:userInfo];
 }
 
 - (NSInteger) numberOfUnreadNews

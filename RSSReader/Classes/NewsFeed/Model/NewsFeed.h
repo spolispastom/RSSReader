@@ -16,30 +16,21 @@
 
 extern NSString const * NewsFeedDidChangeNotification;
 extern NSString const * NewsFeedDidChangeNotificationErrorKey;
+extern NSString const * NewsFeedDidChangeNotificationNumberOfNewNewsKey;
 
-@protocol NewsFeedDelegate <NSObject>
-- (void)NewsFeed:(NewsFeed *) newsFeed;
-- (void)NewsFeed:(NewsFeed *) newsFeed didUpdateNews:(NSArray *)newsItems;
-- (void)NewsFeed:(NewsFeed *) newsFeed didFailDownload:(NSError *) error;
-@end
-
-@protocol NewsFeedCompliteBackgroundDownloadDelegate
-- (void) completeBackgroundDownloadNewsFeed: (NewsFeed*) newsFeed
-                                 withResult: (UIBackgroundFetchResult) result;
-@end
-
-@interface NewsFeed : NSObject <NewsDownloaderDelegate>
+@interface NewsFeed : NSObject<NewsDownloaderDelegate>
 
 @property (nonatomic) NSString * title;
 @property (nonatomic) NSURL * url;
 @property (nonatomic) UIImage * image;
 @property (nonatomic, setter=setNewsItems:) NSArray *newsItems;
+@property (nonatomic, copy) NSString *persistenceId;
 
 - (instancetype) initWithTitle: (NSString *) title andURL: (NSURL*) url andImage: (NSData *) imageData;
 
 - (void)downloadAgain;
 
-- (void)backgroundDownloadAgain: (id<NewsFeedCompliteBackgroundDownloadDelegate>) delegate;
+- (void)backgroundDownloadAgain;
 
 - (void)cancelDownload;
 

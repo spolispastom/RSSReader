@@ -38,7 +38,24 @@
     _newsFeedList = sourse;
     
     [[NSNotificationCenter defaultCenter] addObserverForName: (NSString*)NewsFeedListDidChangeNotification object:_newsFeedList queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        
+        NSNumber * notificationType = [note.userInfo objectForKey:(NSString*)NewsFeedListChangeType];
+        if (notificationType != nil){
+            if (notificationType == [NSNumber numberWithInt: NewsFeedListChangeTypeAddNewsFeedFail]){
+               
+                NSString * ondNewsFeedTitle = [note.userInfo objectForKey:@"title"];
+                NSString * message = @"Новостная лента уже существует.";
+                if (ondNewsFeedTitle != nil){
+                    message = [NSString stringWithFormat:@"Новостная лента %@ уже существует.", ondNewsFeedTitle];
+                }
+                
+                UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle: @"Невозможно добавить новостную ленту"
+                                                                   message: message
+                                                                  delegate: self
+                                                         cancelButtonTitle: @"OK"
+                                                         otherButtonTitles: nil];
+                [theAlert show];
+            }
+        }
         
         [self updateNewsFeeds];
     }];
@@ -60,11 +77,8 @@
 - (IBAction)unwindToNewsFeedTable:(UIStoryboardSegue *)segue
 {
     AddNewsFeedViewController *addNewsSource = [segue sourceViewController];
-    NSString * itemURL = addNewsSource.itemURL;
-    if (itemURL != nil)
-    {
-        [_newsFeedList addNewsFeed: addNewsSource.itemURL];
-    }
+  
+    [_newsFeedList addNewsFeed: addNewsSource.itemURL];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

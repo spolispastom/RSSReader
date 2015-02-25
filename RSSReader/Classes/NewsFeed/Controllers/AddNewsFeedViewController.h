@@ -11,6 +11,6 @@
 
 @interface AddNewsFeedViewController : UIViewController
 
-@property NSString * itemURL;
+@property NSURL * itemURL;
 
 @end

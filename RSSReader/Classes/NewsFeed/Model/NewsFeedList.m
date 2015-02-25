@@ -34,7 +34,7 @@ NSString const * NewsFeedListChangeType = @"NewsFeedListChangeType";
             [self addObserverNewsFeed:newsFeed];
         }
         
-        [self postNotification:NewsFeedListChangeTypeAddNewsFeeds];
+        [self postNotification:NewsFeedListChangeTypeAddNewsFeed];
     }];
 
     return  self;
@@ -45,21 +45,36 @@ NSString const * NewsFeedListChangeType = @"NewsFeedListChangeType";
     return _newsFeeds;
 }
 
-- (void)addNewsFeed: (NSString *) newsFeed
+- (void)addNewsFeed: (NSURL *) newsFeedurl
 {
-    NewsFeed * item = [[NewsFeed alloc]initWithTitle:newsFeed
-                                              andURL:[NSURL URLWithString:newsFeed]
+    BOOL isConteins = NO;
+    NewsFeed * item;
+    for (NewsFeed * newsFeed in _newsFeeds) {
+        if ([newsFeed.url.absoluteString isEqualToString: newsFeedurl.absoluteString]){
+            isConteins = YES;
+            item = newsFeed;
+        }
+    }
+    if (!isConteins)
+    {
+        item = [[NewsFeed alloc]initWithTitle:newsFeedurl.absoluteString
+                                              andURL:newsFeedurl
                                             andImage:nil];
     
-    __block NewsFeed * updateItem = item;
-    [_provider addNewsFeed:updateItem completionBlock:^(NSError *error) {
-        if (error == nil){
-            [_newsFeeds addObject: updateItem];
-            [updateItem downloadAgain];
-            [self postNotification:NewsFeedListChangeTypeAddNewsFeeds];
-            [self addObserverNewsFeed:updateItem];
-        }
-    }];
+        __block NewsFeed * updateItem = item;
+        [_provider addNewsFeed:updateItem completionBlock:^(NSError *error) {
+            if (error == nil){
+                [_newsFeeds addObject: updateItem];
+                [updateItem downloadAgain];
+                [self postNotification:NewsFeedListChangeTypeAddNewsFeed];
+                [self addObserverNewsFeed:updateItem];
+            }
+        }];
+    } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:(NSString*)NewsFeedListDidChangeNotification
+                                                                 object:self
+                                                               userInfo:@{NewsFeedListChangeType : [NSNumber numberWithInt:NewsFeedListChangeTypeAddNewsFeedFail], @"title":item.title}];
+    }
 }
 
 - (void)removeNewsFeed: (NewsFeed *) newsFeed{
@@ -85,7 +100,7 @@ NSString const * NewsFeedListChangeType = @"NewsFeedListChangeType";
     [[NSNotificationCenter defaultCenter] addObserverForName:(NSString*)NewsFeedDidChangeNotification
                                                       object:newsFeed
                                                        queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-                                                           [self postNotification:NewsFeedListChangeTypeAddNewsFeeds];
+                                                           [self postNotification:NewsFeedListChangeTypeAddNewsFeed];
                                                        }];
 }
 - (void) removeObserverNewsFeed: (NewsFeed *) newsFeed{

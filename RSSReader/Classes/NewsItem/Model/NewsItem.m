@@ -9,6 +9,7 @@
 #import "NewsItem.h"
 #import "NewsFeed.h"
 
+NSString const * NewsItemDidReadNotification = @"NewsItemDidReadNotification";
 
 @implementation NewsItem
 
@@ -26,7 +27,8 @@
 }
 
 - (void) setIsRead: (BOOL) isRead{
-    _isRead = isRead;  // Кинуть нотификейшн о том что меея прочитали
+    _isRead = isRead;
+    [[NSNotificationCenter defaultCenter] postNotificationName:(NSString*)NewsItemDidReadNotification object:self];
 }
 
 @end

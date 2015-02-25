@@ -105,16 +105,16 @@ static DataModelProvider *sharedProviderDataMedel_ = nil;
 #pragma mark - the provider functions
 
 - (void) getNewsFeedsWithCompletionBlock: (void (^)(NSArray *newsFeeds ,NSError *error))completionBlock{
+    NSParameterAssert(completionBlock);
+    
     NSManagedObjectContext * context = [self managedObjectContext];
     [context performBlockAndWait:^{
-        
-        if (completionBlock == nil) return;
         
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"NewsFeedPersistence" inManagedObjectContext:[self managedObjectContext]];
         [request setEntity:entity];
         
-        NSArray * entityNewsFeeds = [[self managedObjectContext] executeFetchRequest:request error:nil];
+        NSArray * entityNewsFeeds = [context executeFetchRequest:request error:nil];
     
         NSMutableArray * newsFeeds = [[NSMutableArray alloc]init];
         
@@ -123,12 +123,17 @@ static DataModelProvider *sharedProviderDataMedel_ = nil;
                                                           andURL:[NSURL URLWithString: entityNewsFeed.link]
                                                         andImage:entityNewsFeed.image];
             
+            newsFeed.persistenceId = entityNewsFeed.objectID.URIRepresentation.absoluteString;
+            
             NSMutableSet * newsItems = [[NSMutableSet alloc]init];
             for (NewsItemPersistence * entityItem in entityNewsFeed.newsItems) {
                 NewsItem * newsItem = [[NewsItem alloc]initWithTitle:entityItem.title
                                                      andCreationDate:entityItem.creationDate
                                                           andContent:entityItem.content
                                                               andUrl:[NSURL URLWithString:entityItem.link]];
+                
+                newsItem.persistenceId = entityItem.objectID.URIRepresentation.absoluteString;
+                
                 newsItem.isRead = [entityItem.isRead boolValue];
                 [newsItems addObject:newsItem];
             }
@@ -170,6 +175,8 @@ static DataModelProvider *sharedProviderDataMedel_ = nil;
             
         [context save:&error];
         
+        [self updateObjectIdInNewsFeed:newsFeed fromNewsFeedPersistence:item];
+        
         if (completionBlock != nil)
         {
             if (error){
@@ -192,39 +199,37 @@ static DataModelProvider *sharedProviderDataMedel_ = nil;
     NSManagedObjectContext * context = [self managedObjectContext];
     [ context performBlock:^{
         NSError *error = nil;
-        NSFetchRequest * request = [[NSFetchRequest alloc] init];
         
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"NewsFeedPersistence" inManagedObjectContext:context];
-        [request setEntity:entity];
-        
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"link contains %@", newsFeed.url.absoluteString];
-        [request setPredicate:predicate];
-        
-        NSArray * resultNewsFeeds = [context executeFetchRequest:request error:nil];
-        
-        for (NewsFeedPersistence * item in resultNewsFeeds) {
-            [context deleteObject: item];
-        }
-        
-        [context save:&error];
-        
-        if (completionBlock != nil)
-        {
-            if (error){
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completionBlock([[NSError alloc]initWithDomain:@"DataModelProviderError"
-                                                              code:DataModelProviderErrorSaving
-                                                          userInfo:error.userInfo]);
-                });
-            } else {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completionBlock(nil);
-                });
+        NSURL *persistentUTI = [NSURL URLWithString:newsFeed.persistenceId];
+        if (persistentUTI != nil){
+            NSManagedObjectID *objectId = [_persistentStoreCoordinator managedObjectIDForURIRepresentation:persistentUTI];
+            if(objectId != nil) {
+                NewsFeedPersistence * item = (NewsFeedPersistence*)[context objectWithID:objectId];
+                if (item != nil){
+                    [context deleteObject: item];
+                    
+                    [context save:&error];
+                    
+                    [self updateObjectIdInNewsFeed:newsFeed fromNewsFeedPersistence:item];
+                    
+                    if (completionBlock != nil)
+                    {
+                        if (error){
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                completionBlock([[NSError alloc]initWithDomain:@"DataModelProviderError"
+                                                                          code:DataModelProviderErrorSaving
+                                                                      userInfo:error.userInfo]);
+                            });
+                        } else {
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                completionBlock(nil);
+                            });
+                        }
+                    }
+                }
             }
         }
-
     } ];
-
 }
 
 - (void) updateNewsFeed: (NewsFeed*) newsFeed
@@ -232,69 +237,64 @@ static DataModelProvider *sharedProviderDataMedel_ = nil;
     NSManagedObjectContext * context = [self managedObjectContext];
     [ context performBlockAndWait:^{
         NSError *error = nil;
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
         
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"NewsFeedPersistence" inManagedObjectContext:context];
-        [request setEntity:entity];
-        
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"link contains %@", newsFeed.url.absoluteString];
-        [request setPredicate:predicate];
-        
-        NSArray * resultNewsFeeds = [context executeFetchRequest:request error:nil];
-        
-        if (resultNewsFeeds.count != 0)
-        {
-            NewsFeedPersistence *persistenceNewsFeed = resultNewsFeeds.firstObject;
-            persistenceNewsFeed.title = newsFeed.title;
-            NSData * image = UIImagePNGRepresentation(newsFeed.image);
-            persistenceNewsFeed.image = image;
-            if (newsFeed.newsItems != nil) {
+        NSURL *persistentUTI = [NSURL URLWithString:newsFeed.persistenceId];
+        if (persistentUTI != nil){
+            NSManagedObjectID *objectId = [_persistentStoreCoordinator managedObjectIDForURIRepresentation:persistentUTI];
+            if(objectId != nil) {
+                NewsFeedPersistence * persistenceNewsFeed = (NewsFeedPersistence*)[context objectWithID:objectId];
                 
-                [persistenceNewsFeed removeNewsItems:persistenceNewsFeed.newsItems];
+                persistenceNewsFeed.title = newsFeed.title;
+                NSData * image = UIImagePNGRepresentation(newsFeed.image);
+                persistenceNewsFeed.image = image;
                 
-                for (NewsItem * item in newsFeed.newsItems) {
-                    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title contains %@", item.title];
-                    NSSet * oldItems = [persistenceNewsFeed.newsItems filteredSetUsingPredicate:predicate];
-                    if ([oldItems count] == 0)
-                    {
-                        NewsItemPersistence * entityNewsItem = [NSEntityDescription insertNewObjectForEntityForName:@"NewsItemPersistence" inManagedObjectContext: context];
+                if (newsFeed.newsItems != nil) {
+                    
+                    for (NewsItem * item in newsFeed.newsItems) {
+                        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title contains %@", item.title];
+                        NSSet * oldItems = [persistenceNewsFeed.newsItems filteredSetUsingPredicate:predicate];
+                        if ([oldItems count] == 0)
+                        {
+                            NewsItemPersistence * entityNewsItem = [NSEntityDescription insertNewObjectForEntityForName:@"NewsItemPersistence" inManagedObjectContext: context];
                         
-                        entityNewsItem.title = item.title;
-                        entityNewsItem.link = item.url.absoluteString;
-                        entityNewsItem.creationDate = item.creationDate;
-                        entityNewsItem.content = item.content;
-                        entityNewsItem.isRead = [NSNumber numberWithBool:item.isRead];
+                            entityNewsItem.title = item.title;
+                            entityNewsItem.link = item.url.absoluteString;
+                            entityNewsItem.creationDate = item.creationDate;
+                            entityNewsItem.content = item.content;
+                            entityNewsItem.isRead = [NSNumber numberWithBool:item.isRead];
                         
-                        [entityNewsItem setValue: persistenceNewsFeed forKey:@"newsFeed"];
-                        [persistenceNewsFeed addNewsItemsObject:entityNewsItem];
+                            [entityNewsItem setValue: persistenceNewsFeed forKey:@"newsFeed"];
+                            [persistenceNewsFeed addNewsItemsObject:entityNewsItem];
+                        }
                     }
-                }
-            }
-        
-            [context save:&error];
-        
-            if (completionBlock != nil){
-                if (error){
+                   
+                    [context save:&error];
+                    
+                    [self updateObjectIdInNewsFeed:newsFeed fromNewsFeedPersistence:persistenceNewsFeed];
+                    
+                    if (completionBlock != nil){
+                        if (error){
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                completionBlock([[NSError alloc]initWithDomain:@"DataModelProviderError"
+                                                                          code:DataModelProviderErrorSaving
+                                                                      userInfo:error.userInfo]);
+                            });
+                        } else {
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                completionBlock(nil);
+                            });
+                        }
+                    }
+                } else if (completionBlock != nil) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         completionBlock([[NSError alloc]initWithDomain:@"DataModelProviderError"
-                                                                  code:DataModelProviderErrorSaving
-                                                              userInfo:error.userInfo]);
-                    });
-                } else {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        completionBlock(nil);
+                                                                  code:DataModelProviderErrorNewsFeedNotFound
+                                                              userInfo:nil]);
                     });
                 }
             }
-        } else if (completionBlock != nil) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionBlock([[NSError alloc]initWithDomain:@"DataModelProviderError"
-                                                          code:DataModelProviderErrorNewsFeedNotFound
-                                                      userInfo:nil]);
-            });
         }
     } ];
-
 }
 
 -(void) readNewsItem: (NewsItem *) newsItem
@@ -302,46 +302,51 @@ static DataModelProvider *sharedProviderDataMedel_ = nil;
     NSManagedObjectContext * context = [self managedObjectContext];
     [ context performBlockAndWait:^{
         NSError *error = nil;
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
         
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"NewsItemPersistence" inManagedObjectContext:context];
-        [request setEntity:entity];
+        NSURL *persistentUTI = [NSURL URLWithString:newsItem.persistenceId];
+        if (persistentUTI != nil){
+            NSManagedObjectID *objectId = [_persistentStoreCoordinator managedObjectIDForURIRepresentation:persistentUTI];
+            if(objectId != nil) {
+                NewsItemPersistence * persistenceNewsItem = (NewsItemPersistence*)[context objectWithID:objectId];
+                persistenceNewsItem.isRead = [NSNumber numberWithBool:YES];
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"link contains %@", newsItem.url.absoluteString];
-        [request setPredicate:predicate];
-        
-        NSArray * resultNewsItems = [context executeFetchRequest:request error:nil];
-        
-        if (resultNewsItems.count != 0)
-        {
-            for (NewsItemPersistence *item in resultNewsItems) {
-                item.isRead = [NSNumber numberWithBool:YES];
-            }
-        
-            [context save:&error];
-        
-            if (completionBlock != nil){
-                if (error){
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        completionBlock([[NSError alloc]initWithDomain:@"DataModelProviderError"
-                                                                  code:DataModelProviderErrorSaving
-                                                              userInfo:error.userInfo]);
-                    });
-                } else {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        completionBlock(nil);
-                    });
+                [context save:&error];
+                
+                newsItem.persistenceId = persistenceNewsItem.objectID.URIRepresentation.absoluteString;
+                
+                if (completionBlock != nil){
+                    if (error){
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            completionBlock([[NSError alloc]initWithDomain:@"DataModelProviderError"
+                                                                      code:DataModelProviderErrorSaving
+                                                                  userInfo:error.userInfo]);
+                        });
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            completionBlock(nil);
+                        });
+                    }
                 }
+            } else if (completionBlock != nil) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completionBlock([[NSError alloc]initWithDomain:@"DataModelProviderError"
+                                                              code:DataModelProviderErrorNewsFeedNotFound
+                                                          userInfo:nil]);
+                });
             }
-        } else if (completionBlock != nil) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionBlock([[NSError alloc]initWithDomain:@"DataModelProviderError"
-                                                          code:DataModelProviderErrorNewsFeedNotFound
-                                                      userInfo:nil]);
-            });
         }
     }];
 
+}
+
+-(void) updateObjectIdInNewsFeed: (NewsFeed*) newsFeed fromNewsFeedPersistence: (NewsFeedPersistence*) newsFeedPersistence{
+    newsFeed.persistenceId = newsFeedPersistence.objectID.URIRepresentation.absoluteString;
+    
+    for (NewsItem * newsItem in newsFeed.newsItems) {
+        for (NewsItemPersistence * newsItemPersistence in newsFeedPersistence.newsItems) {
+            newsItem.persistenceId = newsItemPersistence.objectID.URIRepresentation.absoluteString;
+        }
+    }
 }
 
 #pragma mark -

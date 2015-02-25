@@ -17,7 +17,8 @@ extern NSString const * NewsFeedListDidChangeNotification;
 extern NSString const * NewsFeedListChangeType;
 
 enum NewsFeedListChangeType{
-    NewsFeedListChangeTypeAddNewsFeeds,
+    NewsFeedListChangeTypeAddNewsFeed,
+    NewsFeedListChangeTypeAddNewsFeedFail,
     NewsFeedListChangeTypeRemoveNewsFeed,
 };
 
@@ -27,7 +28,7 @@ enum NewsFeedListChangeType{
 
 - (NSArray *) newsFeeds;
 
-- (void)addNewsFeed: (NSString *) newsURL;
+- (void)addNewsFeed: (NSURL *) newsURL;
 
 - (void)removeNewsFeed: (NewsFeed *) newsFeed;
 

@@ -11,6 +11,8 @@
 
 @class NewsFeed;
 
+extern NSString const * NewsItemDidReadNotification;
+
 @interface NewsItem : NSObject 
 
 @property (nonatomic) NSString * content;
@@ -18,6 +20,7 @@
 @property (nonatomic, setter=setIsRead:) BOOL isRead;
 @property (nonatomic) NSString * title;
 @property (nonatomic) NSURL * url;
+@property (nonatomic, copy) NSString *persistenceId;
 
 - (instancetype) initWithTitle: (NSString*) title andCreationDate: (NSDate*) creationDate andContent: (NSString *) content andUrl: (NSURL*) url;
 

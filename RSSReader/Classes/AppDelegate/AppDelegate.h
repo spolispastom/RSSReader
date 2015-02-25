@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "NewsFeed.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, NewsFeedCompliteBackgroundDownloadDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
