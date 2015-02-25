@@ -9,36 +9,33 @@
 #import <Foundation/Foundation.h>
 #import "NewsFeedPersistence.h"
 #import "NewsFeed.h"
-#import "NewsFeedSerializerPersistence.h"
+#import "NewsItem.h"
 
-enum
-{
+extern NSString const * DataModelProviderError;
+
+enum {
     DataModelProviderErrorAttemptAddExistingNewsFeed,
     DataModelProviderErrorSaving,
+    DataModelProviderErrorNewsFeedNotFound,
+    DataModelProviderErrorNewsItemNotFound,
 };
 
 @interface DataModelProvider : NSObject
 
 + (instancetype) instance;
 
-- (void) getNewsFeedsWithSerializer: (id<NewsFeedSerializerPersistence>) serializer
-                    completionBlock: (void (^)(NSArray *newsFeeds ,NSError *error))completionBlock;
+- (void) getNewsFeedsWithCompletionBlock: (void (^)(NSArray *newsFeeds ,NSError *error))completionBlock;
 
-- (void)addNewsFeedWithURL: (NSString *) url
-                  NewsFeed: (NSObject *) newsFeed
-            withSerializer: (id<NewsFeedSerializerPersistence>) serializer
-           completionBlock: (void (^)(NSArray *newsFeeds ,NSError *error))completionBlock;
+- (void)addNewsFeed: (NewsFeed *) newsFeed
+    completionBlock: (void (^)(NSError *error))completionBlock;
 
-- (void) removeNewsFeedWithURL: (NSString*) newsFeedURL
-                withSerializer: (id<NewsFeedSerializerPersistence>) serializer
-               completionBlock: (void (^)(NSArray *newsFeeds ,NSError *error))completionBlock;
+- (void) removeNewsFeed: (NewsFeed*) newsFeed
+        completionBlock: (void (^)(NSError *error))completionBlock;
 
-- (void) updateNewsFeedFromURL: (NSString*) url
-                    ofNewsFeed: (NSObject*) NewsFeed
-                withSerializer: (id<NewsFeedSerializerPersistence>) serializer
-               completionBlock: (void (^)(NSObject *newsFeed ,NSError *error))completionBlock;
+- (void) updateNewsFeed: (NewsFeed*) NewsFeed
+        completionBlock: (void (^)(NSError *error))completionBlock;
 
--(void) readNewsItemWithURL: (NSString *) url
+-(void) readNewsItem: (NewsItem *) newsItem
             completionBlock: (void (^)(NSError *error))completionBlock;
 
 @end

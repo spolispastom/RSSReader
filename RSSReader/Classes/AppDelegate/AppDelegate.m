@@ -35,7 +35,9 @@
     
     _newsFeedList = (NewsFeedTableViewController *)[navigation topViewController];
     
-    _sourse = [[NewsFeedList alloc] initWithDelegate: _newsFeedList];
+    _sourse = [[NewsFeedList alloc] init];
+    
+    _newsFeedList.newsFeedList = _sourse;
     
     for (NewsFeed * newsFeed in _sourse.newsFeeds)
     {

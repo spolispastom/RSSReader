@@ -15,7 +15,6 @@
 @interface NewsFeedTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
-@property (weak, nonatomic) NewsFeedList* sourse;
 
 @end
 
@@ -30,18 +29,19 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)newsFeedList:(NewsFeedList *)list didGetNewsFeed:(NSArray *)newsFeeds
-{
-    if (!_sourse)
-        _sourse = list;
-    _newsFeedList = newsFeeds;
-    
+- (void) updateNewsFeeds{
     [self.tableView reloadData];
 }
 
-- (void)newsFeedList:(NewsFeedList *)sourse
+- (void)setNewsFeedList:(NewsFeedList *)sourse
 {
-    _sourse = sourse;
+    _newsFeedList = sourse;
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName: (NSString*)NewsFeedListDidChangeNotification object:_newsFeedList queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        
+        
+        [self updateNewsFeeds];
+    }];
 }
 
 #pragma mark - Table view data source
@@ -52,7 +52,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (_newsFeedList) {
-        return [_newsFeedList count];
+        return [_newsFeedList.newsFeeds count];
     }
     else return 0;
 }
@@ -63,7 +63,7 @@
     NSString * itemURL = addNewsSource.itemURL;
     if (itemURL != nil)
     {
-        [_sourse addNewsFeed: addNewsSource.itemURL];
+        [_newsFeedList addNewsFeed: addNewsSource.itemURL];
     }
 }
 
@@ -79,10 +79,10 @@
 
 - (void)configureNewsFeedCell:(NewsFeedTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     
-    NewsFeed * newsFeedItem = [ _newsFeedList objectAtIndex: indexPath.row ];
+    NewsFeed * newsFeedItem = [ _newsFeedList.newsFeeds objectAtIndex: indexPath.row ];
     
     cell.title = newsFeedItem.title;
-    cell.image = newsFeedItem.imageData;
+    cell.image = newsFeedItem.image;
     
     cell.numberOfUnreadNews = [newsFeedItem numberOfUnreadNews];
 }
@@ -123,14 +123,11 @@
     {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
-        NewsFeed * item = [_newsFeedList objectAtIndex: indexPath.row];
+        NewsFeed * item = [_newsFeedList.newsFeeds objectAtIndex: indexPath.row];
         [tableView beginUpdates];
         [tableView deleteRowsAtIndexPaths:@[indexPath]
                          withRowAnimation:UITableViewRowAnimationAutomatic];
-        [_sourse removeNewsFeed: item];
-        NSMutableArray * buff = [NSMutableArray arrayWithArray:_newsFeedList];
-        [buff removeObject:item];
-        _newsFeedList = buff;
+        [_newsFeedList removeNewsFeed: item];
         [tableView endUpdates];
         
         [self.tableView reloadData];
@@ -144,8 +141,8 @@
     {
         NewsListViewController * newsContent = (NewsListViewController *)[navigation topViewController];
         
-        NewsFeed * item = [_newsFeedList objectAtIndex: [self.tableView indexPathForCell:sender].row];
-        item.newsFeedDelegate = newsContent;
+        NewsFeed * item = [_newsFeedList.newsFeeds objectAtIndex: [self.tableView indexPathForCell:sender].row];
+        newsContent.newsFeed = item;
         //[sourse update];
     }
 }
@@ -159,10 +156,10 @@
         NewsListViewController * newsContent = (NewsListViewController *)controller;
         
         
-        for (NewsFeed * newsFeed in _newsFeedList) {
+        for (NewsFeed * newsFeed in _newsFeedList.newsFeeds) {
             if ([newsFeed.url isEqual:url]){
                 
-                newsFeed.newsFeedDelegate = newsContent;
+                newsContent.newsFeed = newsFeed;
                 
                 [self.navigationController pushViewController:newsContent animated:YES];
                 return;

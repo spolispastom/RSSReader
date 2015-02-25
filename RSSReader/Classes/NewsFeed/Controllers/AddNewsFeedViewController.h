@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "NewsFeed.h"
+
 @interface AddNewsFeedViewController : UIViewController
 
 @property NSString * itemURL;

@@ -14,8 +14,8 @@
 @interface NewsListViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *rssList;
-@property (weak, nonatomic) NewsFeed * sourse;
 @property (nonatomic) UIRefreshControl * refreshControl;
+@property (nonatomic) id<NSObject> newsFeedChangeObserver;
 
 @end
 
@@ -31,61 +31,59 @@
     [self.rssList addSubview:_refreshControl];
     [_refreshControl addTarget:self action: @selector(refreshTable) forControlEvents:UIControlEventValueChanged];
     
-    [self navigationItem].title = _newsFeedTitle;
+    [self navigationItem].title = _newsFeed.title;
 }
 
 - (void)refreshTable {
-    [_sourse downloadAgain];
+    _newsFeedChangeObserver = [[NSNotificationCenter defaultCenter] addObserverForName:(NSString*)NewsFeedDidChangeNotification object:_newsFeed queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        
+        if (_newsFeedChangeObserver != nil){
+            [[NSNotificationCenter defaultCenter] removeObserver: _newsFeedChangeObserver];
+        }
+        
+        [_refreshControl endRefreshing];
+        
+        if (note.userInfo == nil){
+            [_rssList reloadData];
+        } else {
+            NSError * error = [note.userInfo objectForKey:(NSString*)NewsFeedDidChangeNotificationErrorKey];
+            if (error != nil){
+                NSString * message = @"Неизвестная ошибка.";
+                
+                if ([error.domain isEqualToString: NSURLErrorDomain])
+                {
+                    if (error.code == NSURLErrorNetworkConnectionLost)
+                        message = @"Соединение потеряно";
+                    else if (error.code == kCFURLErrorUnsupportedURL )
+                        message = @"Неверный адрес новостной ленты.";
+                    else
+                        message = @"Подключение к нтернету отсутствует";
+                }
+                
+                UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle: @"Невозмо обновить ленту"
+                                                                   message: message
+                                                                  delegate: self
+                                                         cancelButtonTitle: @"OK"
+                                                         otherButtonTitles: nil];
+                [theAlert show];
+            }
+        }
+    }];
+    
+    [_newsFeed downloadAgain];
 }
 
-
-
-- (void) setNewsList: (NSArray *) newsItemList
-{
-    _newsList = newsItemList;
-    [_rssList reloadData];
-    
-}
-
-- (void)NewsFeed:(NewsFeed *)newsFeed didUpdateNews:(NSArray *)newsItems
-{
-    if (!_sourse)
-        _sourse = newsFeed;
-    
-    [_refreshControl endRefreshing];
-    
-    self.newsList = newsItems;
-    self.newsFeedTitle = _sourse.title;
-    
-}
-
-- (void)NewsFeed:(NewsFeed *)newsFeed didFailDownload:(NSError *)error
-{
-    [_refreshControl endRefreshing];
-    
-    NSString * message = @"Неизвестная ошибка.";
-    
-    if ([error.domain isEqualToString: NSURLErrorDomain])
-    {
-        if (error.code == NSURLErrorNetworkConnectionLost)
-            message = @"Соединение потеряно";
-        else if (error.code == kCFURLErrorUnsupportedURL )
-            message = @"Неверный адрес новостной ленты.";
-        else
-            message = @"Подключение к нтернету отсутствует";
+- (void)viewDidDisappear:(BOOL)animated{
+    if (_newsFeedChangeObserver != nil){
+        [[NSNotificationCenter defaultCenter] removeObserver: _newsFeedChangeObserver];
     }
-    
-    UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle: @"Невозмо обновить ленту"
-                                                       message: message
-                                                      delegate: self
-                                             cancelButtonTitle: @"OK"
-                                             otherButtonTitles: nil];
-    [theAlert show];
 }
 
-- (void)NewsFeed:(NewsFeed *)newsFeed {
-    _sourse = newsFeed;
-    [_sourse update];
+- (void) setNewsFeed: (NewsFeed *) newsFeed
+{
+    _newsFeed = newsFeed;
+    
+    [_rssList reloadData];
 }
 
 #pragma mark - Table view data source
@@ -95,7 +93,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_newsList count];
+    return [_newsFeed.newsItems count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -110,7 +108,7 @@
 }
 
 - (void)configureBasicCell:(NewsTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    NewsItem * newsItem = [ _newsList objectAtIndex: indexPath.row ];
+    NewsItem * newsItem = [_newsFeed.newsItems objectAtIndex: indexPath.row ];
     
     cell.title = newsItem.title;
     cell.creationData = newsItem.creationDate;
@@ -161,9 +159,9 @@
     {
         NewsContentViewController * newsContent = (NewsContentViewController *)[navigation topViewController];
     
-        NewsItem * item = [_newsList objectAtIndex: [_rssList indexPathForCell:sender].row];
+        NewsItem * item = [_newsFeed.newsItems objectAtIndex: [_rssList indexPathForCell:sender].row];
         [newsContent setNewsItem: item];
-        [_sourse readNewsItem:item];
+        [_newsFeed readNewsItem:item];
     }
 }
 

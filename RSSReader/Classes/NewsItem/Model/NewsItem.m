@@ -25,4 +25,8 @@
     return self;
 }
 
+- (void) setIsRead: (BOOL) isRead{
+    _isRead = isRead;  // Кинуть нотификейшн о том что меея прочитали
+}
+
 @end

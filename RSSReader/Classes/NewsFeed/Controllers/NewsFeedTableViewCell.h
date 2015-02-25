@@ -12,6 +12,6 @@
 
 @property (nonatomic, setter=setTitle:) NSString *title;
 @property (nonatomic, setter=setNumberOfUnreadNews:) NSInteger numberOfUnreadNews;
-@property (nonatomic, setter=setImage:) NSData *image;
+@property (nonatomic, setter=setImage:) UIImage *image;
 
 @end

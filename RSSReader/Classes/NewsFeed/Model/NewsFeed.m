@@ -10,7 +10,9 @@
 #import "NewsItem.h"
 #import "DownloadAndParseNewsOperation.h"
 #import "DataModelProvider.h"
-#import "NewsFeedSerializer.h"
+
+NSString const * NewsFeedDidChangeNotification = @"NewsFeedDidChangeNotification";
+NSString const * NewsFeedDidChangeNotificationErrorKey = @"NewsFeedDidChangeNotificationErrorKey";
 
 @interface NewsFeed()
 
@@ -21,7 +23,6 @@
 @property (weak, nonatomic) id<NewsFeedCompliteBackgroundDownloadDelegate> delegate;
 @property (weak, nonatomic) DataModelProvider * provider;
 @property (nonatomic) NSInteger oldNumberOfUnreadNews;
-@property (nonatomic) id<NewsFeedSerializerPersistence> serializer;
 @end
 
 @implementation NewsFeed
@@ -32,7 +33,7 @@
     
     _title = title;
     _url = url;
-    _imageData = imageData;
+    _image = [UIImage imageWithData: imageData];
     _newsItems = nil;
     
     _provider = [DataModelProvider instance];
@@ -42,10 +43,12 @@
     return self;
 }
 
-- (void) setNewsFeedDelegate: (id<NewsFeedDelegate>) newsFeedDelegate
-{
-    _newsFeedDelegate = newsFeedDelegate;
-    [_newsFeedDelegate NewsFeed:self];
+- (void) setNewsItems: (NSArray *) newsItems {
+    _newsItems = [newsItems sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NewsItem * item1 = (NewsItem *)obj1;
+        NewsItem * item2 = (NewsItem *)obj2;
+        return [item2.creationDate compare:item1.creationDate];
+    }];
 }
 
 - (void)downloadAgain
@@ -78,18 +81,6 @@
         [_gettingNews cancel];
 }
 
-- (void)update
-{
-    if (_newsItems && [_newsItems count] > 0)
-        [_newsFeedDelegate NewsFeed:self
-                      didUpdateNews:[_newsItems sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-                            NewsItem * item1 = (NewsItem *)obj1;
-                            NewsItem * item2 = (NewsItem *)obj2;
-                            return  [item2.creationDate compare:item1.creationDate];
-                        }]];
-    else
-        [self downloadAgain];
-}
 
 - (void)newsDownloader:(id<NewsDownloader>) downloader
        didDownloadNews:(NSArray *)newsItems
@@ -97,39 +88,49 @@
               andImage: (NSData *) image
 {
     _url = [downloader url];
-    _newsItems = newsItems;
     _title = title;
-    _imageData = image;
+    _image = [UIImage imageWithData: image];
     
-    [_provider updateNewsFeedFromURL:_url.absoluteString
-                          ofNewsFeed:self
-                      withSerializer:[self serializer]
-                     completionBlock:^(NSObject *newsFeed, NSError *error) {
-                         __weak NewsFeed * newData = (NewsFeed *)newsFeed;
-                         _url = newData.url;
-                         _newsItems = newData.newsItems;
-                         _title = newData.title;
-                         _imageData = newData.imageData;
-                         
-                         [self update];
-                         [_titleDelegate NewsFeed:self didParseTitle:_title andImage:_imageData];
-                         
-                         if (_isBackground && _delegate)
-                         {
-                             NSInteger numberOfNewNews = _newsItems.count - newsItems.count;
-                             if (numberOfNewNews > 0) {
-                                 [_delegate completeBackgroundDownloadNewsFeed:self withResult: UIBackgroundFetchResultNewData];
-                             } else {
-                                 [_delegate completeBackgroundDownloadNewsFeed:self withResult:UIBackgroundFetchResultNoData];
-                             }
-                         }
+    if (newsItems != nil) {
+        NSMutableArray * readingNews = [NSMutableArray new];
+        
+        for (NewsItem * item in _newsItems) {
+            if (item.isRead){
+                [readingNews addObject:item.url];
+            }
+        }
+        
+        for (NewsItem * item in newsItems) {
+            if ([readingNews containsObject:item.url]){
+                item.isRead = YES;
+            }
+        }
+        
+        [self setNewsItems: newsItems];
+    }
 
+    [_provider updateNewsFeed:self completionBlock:^(NSError *error) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:(NSString*) NewsFeedDidChangeNotification object:self];
+        
+        if (_isBackground && _delegate)
+        {
+            NSInteger numberOfNewNews = _newsItems.count - newsItems.count;
+            if (numberOfNewNews > 0) {
+            [_delegate completeBackgroundDownloadNewsFeed:self withResult: UIBackgroundFetchResultNewData];
+            } else {
+                [_delegate completeBackgroundDownloadNewsFeed:self withResult:UIBackgroundFetchResultNoData];
+            }
+        }
     }];
 }
 
 - (void)newsDownloader:(id<NewsDownloader>) downloader didFailDownload:(NSError *) error
 {
-    [_newsFeedDelegate NewsFeed:self didFailDownload: error];
+    [[NSNotificationCenter defaultCenter] postNotificationName:(NSString*) NewsFeedDidChangeNotification
+                                                        object:self
+                                                      userInfo:@{(NSString*)NewsFeedDidChangeNotificationErrorKey:error}];
+    
     if (_isBackground && _delegate) {
         [_delegate completeBackgroundDownloadNewsFeed:self withResult:UIBackgroundFetchResultFailed];
     }
@@ -157,15 +158,12 @@
 }
 
 - (void) readNewsItem: (NewsItem*) newsItem{
-    [_provider readNewsItemWithURL: newsItem.url.absoluteString completionBlock:^(NSError *error) {
+    __block NewsItem * blockNewsItem = newsItem;
+    [_provider readNewsItem:newsItem completionBlock:^(NSError *error) {
+        if (error == nil){
+        blockNewsItem.isRead = YES;
+        }
     }];
-}
-
--(id<NewsFeedSerializerPersistence>) serializer{
-    if (_serializer == nil){
-        _serializer = [[NewsFeedSerializer alloc] init];
-    }
-    return _serializer;
 }
 
 @end

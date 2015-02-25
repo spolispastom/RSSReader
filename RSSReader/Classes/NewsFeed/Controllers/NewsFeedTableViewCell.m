@@ -46,13 +46,12 @@
     _numberOfUnreadNewsLable.text = [NSString stringWithFormat: @"%ld", (long)numberOfUnreadNews];
 }
 
--(void) setImage: (NSData*) image {
-    UIImage * uiImage = nil;
+-(void) setImage: (UIImage*) image {
+    UIImage * uiImage = image;
     
-    if (image != nil && image.length > 0) {
-        uiImage = [[UIImage alloc]initWithData: image];
+    if (image == nil){
+        uiImage = [UIImage imageNamed:@"rss"];
     }
-    else uiImage = [UIImage imageNamed:@"rss"];
     
     CGImageRef imgRef = [uiImage CGImage];
     CGFloat width = CGImageGetWidth(imgRef);

@@ -13,19 +13,19 @@
 
 @class NewsFeedList;
 
-@protocol NewsFeedListDelegate <NSObject>
+extern NSString const * NewsFeedListDidChangeNotification;
+extern NSString const * NewsFeedListChangeType;
 
-- (void)newsFeedList:(NewsFeedList *) list didGetNewsFeed:(NSArray *)newsFeeds;
-- (void)newsFeedList:(NewsFeedList *) sourse;
-@end
+enum NewsFeedListChangeType{
+    NewsFeedListChangeTypeAddNewsFeeds,
+    NewsFeedListChangeTypeRemoveNewsFeed,
+};
 
-@interface NewsFeedList : NSObject<NewsTitleDelegate>
+@interface NewsFeedList : NSObject
 
-@property (weak, nonatomic) id<NewsFeedListDelegate> delegate;
+- (instancetype) init;
 
 - (NSArray *) newsFeeds;
-
-- (instancetype) initWithDelegate: (id<NewsFeedListDelegate>) delegate;
 
 - (void)addNewsFeed: (NSString *) newsURL;
 

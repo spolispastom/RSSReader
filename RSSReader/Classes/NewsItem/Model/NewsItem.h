@@ -15,9 +15,10 @@
 
 @property (nonatomic) NSString * content;
 @property (nonatomic) NSDate * creationDate;
-@property (nonatomic) BOOL isRead;
+@property (nonatomic, setter=setIsRead:) BOOL isRead;
 @property (nonatomic) NSString * title;
 @property (nonatomic) NSURL * url;
 
 - (instancetype) initWithTitle: (NSString*) title andCreationDate: (NSDate*) creationDate andContent: (NSString *) content andUrl: (NSURL*) url;
+
 @end

@@ -7,29 +7,34 @@
 //
 
 #import "NewsFeedList.h"
-#import "NewsFeedSerializer.h"
+
+NSString const * NewsFeedListDidChangeNotification = @"NewsFeedListDidChangeNotification";
+NSString const * NewsFeedListChangeType = @"NewsFeedListChangeType";
 
 @interface NewsFeedList()
 
 @property (weak, nonatomic) DataModelProvider * provider;
-@property (nonatomic) id<NewsFeedSerializerPersistence> serializer;
-@property (nonatomic) NSArray * newsFeeds;
+@property (nonatomic) NSMutableArray * newsFeeds;
 
 @end
 
 @implementation NewsFeedList
 
-- (instancetype) initWithDelegate: (id<NewsFeedListDelegate>) delegate
+- (instancetype) init
 {
     self = [super init];
     
     _provider = [DataModelProvider instance];
     
-    _delegate = delegate;
-
-    [_provider getNewsFeedsWithSerializer:[self serializer] completionBlock:^(NSArray *newsFeeds, NSError *error) {
-        _newsFeeds = newsFeeds;
-        [_delegate newsFeedList: self didGetNewsFeed: _newsFeeds];
+    _newsFeeds = [NSMutableArray new];
+    [_provider getNewsFeedsWithCompletionBlock:^(NSArray *newsFeeds, NSError *error) {
+        
+        [_newsFeeds addObjectsFromArray: newsFeeds];
+        for (NewsFeed * newsFeed in _newsFeeds) {
+            [self addObserverNewsFeed:newsFeed];
+        }
+        
+        [self postNotification:NewsFeedListChangeTypeAddNewsFeeds];
     }];
 
     return  self;
@@ -47,38 +52,44 @@
                                             andImage:nil];
     
     __block NewsFeed * updateItem = item;
-    [_provider addNewsFeedWithURL: item.url.absoluteString NewsFeed:item withSerializer:[self serializer] completionBlock:^(NSArray *newsFeeds, NSError *error) {
+    [_provider addNewsFeed:updateItem completionBlock:^(NSError *error) {
         if (error == nil){
-            _newsFeeds = newsFeeds;
-            [_delegate newsFeedList:self didGetNewsFeed:_newsFeeds];
+            [_newsFeeds addObject: updateItem];
+            [updateItem downloadAgain];
+            [self postNotification:NewsFeedListChangeTypeAddNewsFeeds];
+            [self addObserverNewsFeed:updateItem];
         }
-        
-        [updateItem downloadAgain];
     }];
 }
 
-- (void)removeNewsFeed: (NewsFeed *) newsFeed
-{
-    [_provider removeNewsFeedWithURL:newsFeed.url.absoluteString withSerializer:[self serializer] completionBlock:^(NSArray *newsFeeds, NSError *error) {
+- (void)removeNewsFeed: (NewsFeed *) newsFeed{
+    __block NewsFeed * updateNewsFeed = newsFeed;
+    
+    [_newsFeeds removeObject:updateNewsFeed];
+    [_provider removeNewsFeed:updateNewsFeed completionBlock:^(NSError *error) {
         if (error != nil){
-            _newsFeeds = newsFeeds;
-            [_delegate newsFeedList:self didGetNewsFeed: _newsFeeds];
+            [self removeObserverNewsFeed:updateNewsFeed];
+            [self postNotification:NewsFeedListChangeTypeRemoveNewsFeed];
         }
     }];
     
 }
 
-- (void)NewsFeed:(NewsFeed *)sourse didParseTitle:(NSString *)title andImage:(NSData *)image
-{
-    [_delegate newsFeedList:self didGetNewsFeed:_newsFeeds];
+- (void) postNotification: (int) newsFeedListChangeType{
+    [[NSNotificationCenter defaultCenter] postNotificationName:(NSString*)NewsFeedListDidChangeNotification
+                                                        object:self
+                                                      userInfo:@{NewsFeedListChangeType : [NSNumber numberWithInt:newsFeedListChangeType]}];
 }
 
-
--(id<NewsFeedSerializerPersistence>) serializer{
-    if (_serializer == nil){
-        _serializer = [[NewsFeedSerializer alloc] init];
-    }
-    return _serializer;
+- (void) addObserverNewsFeed: (NewsFeed *) newsFeed{
+    [[NSNotificationCenter defaultCenter] addObserverForName:(NSString*)NewsFeedDidChangeNotification
+                                                      object:newsFeed
+                                                       queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+                                                           [self postNotification:NewsFeedListChangeTypeAddNewsFeeds];
+                                                       }];
+}
+- (void) removeObserverNewsFeed: (NewsFeed *) newsFeed{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:(NSString*)NewsFeedDidChangeNotification object:newsFeed];
 }
 
 @end

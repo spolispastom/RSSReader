@@ -14,9 +14,8 @@
 @class NewsItem;
 @class NewsFeed;
 
-@protocol NewsTitleDelegate <NSObject>
-- (void)NewsFeed:(NewsFeed *) sourse didParseTitle: (NSString *) title andImage: (NSData *) image;
-@end
+extern NSString const * NewsFeedDidChangeNotification;
+extern NSString const * NewsFeedDidChangeNotificationErrorKey;
 
 @protocol NewsFeedDelegate <NSObject>
 - (void)NewsFeed:(NewsFeed *) newsFeed;
@@ -33,15 +32,10 @@
 
 @property (nonatomic) NSString * title;
 @property (nonatomic) NSURL * url;
-@property (nonatomic) NSData * imageData;
-@property (nonatomic) NSArray *newsItems;
-
-@property (weak, nonatomic, setter=setNewsFeedDelegate:) id<NewsFeedDelegate> newsFeedDelegate;
-@property (weak, nonatomic) id<NewsTitleDelegate> titleDelegate;
+@property (nonatomic) UIImage * image;
+@property (nonatomic, setter=setNewsItems:) NSArray *newsItems;
 
 - (instancetype) initWithTitle: (NSString *) title andURL: (NSURL*) url andImage: (NSData *) imageData;
-
-- (void)update;
 
 - (void)downloadAgain;
 

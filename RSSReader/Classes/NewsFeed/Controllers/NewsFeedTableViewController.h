@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "NewsFeedList.h"
 
-@interface NewsFeedTableViewController : UITableViewController <NewsFeedListDelegate>
+@interface NewsFeedTableViewController : UITableViewController 
 
-@property (nonatomic) NSArray * newsFeedList;
+@property (nonatomic, setter=setNewsFeedList:) NewsFeedList * newsFeedList;
 
 - (IBAction)unwindToNewsFeedTable:(UIStoryboardSegue *)segue;
 - (void) showNewsItemFromURL: (NSURL*) url;
