@@ -8,6 +8,8 @@
 
 #import "AddNewsFeedViewController.h"
 
+NSString const * AddNewsFeedViewControllerCompliteNotification = @"AddNewsFeedViewControllerCompliteNotification";
+
 @interface AddNewsFeedViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
 @property (weak, nonatomic) IBOutlet UITextField *urlTextFild;
@@ -101,26 +103,28 @@
 }
 
 
-//через делегат
 - (IBAction)urlTextChanged:(id)sender {
-    if (_urlTextFild.text.length > 0) {
-        [_saveButton setEnabled: YES];
-    }
-    else {
-        [_saveButton setEnabled: NO];
-    }
+    [_saveButton setEnabled: [self validatingURL] != nil];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if (sender != self.saveButton) return;
     
-    if (_urlTextFild.text.length > 0){
-        NSURL* url = [NSURL URLWithString:_urlTextFild.text];
-        if (url != nil && [[UIApplication sharedApplication] canOpenURL:url]){
+    _itemURL =  [self validatingURL];
+    [[NSNotificationCenter defaultCenter] postNotificationName:(NSString*)AddNewsFeedViewControllerCompliteNotification object:self];
+}
 
-            _itemURL =  url;
+- (NSURL *) validatingURL {
+    if (_urlTextFild.text.length > 0){
+        NSString * tempUrlString = _urlTextFild.text;
+#warning сделай касивую проверку и коррекцию урла
+
+        NSURL* url = [NSURL URLWithString:tempUrlString];
+        if (url != nil && [[UIApplication sharedApplication] canOpenURL:url]){
+            return url;
         }
     }
+    return nil;
 }
 
 #pragma mark -

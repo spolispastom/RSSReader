@@ -62,10 +62,13 @@
         else self.dateLable.text = @"";
         if (_newsContent)
         {
-            NSRange loc = [_newsContent rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch];
-            if (loc.length <= 0)
+#warning Возможно имеет смысл все HTML содержимое оборачивать в эти теги для того что бы текс выглядел единобразно, если автор новости сам не установит другой шрифт
+            //NSRange loc = [_newsContent rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch];
+            if (YES)//loc.length <= 0)
             {
-                _newsContent = [NSString stringWithFormat:@"<p style=\"font-size: 16px; font-family: Arial; text-align: justify; margin: 0px 8px;\">%@<p>", _newsContent];
+                _newsContent = [NSString stringWithFormat:@"<p style=\"font-size: 16px; font-family: Arial; text-align: justify; margin: 0px;\">%@<p>", _newsContent];
+                
+                //_newsContent = [NSString stringWithFormat:@"<p style=\"font-size: 16px; font-family: Arial; text-align: justify; margin: 0px 8px;\">%@ %@ %@ %@ %@<p>", _newsContent, _newsContent, _newsContent, _newsContent, _newsContent];
             }
             [self.contentWebVew loadHTMLString:_newsContent baseURL:nil];
         }

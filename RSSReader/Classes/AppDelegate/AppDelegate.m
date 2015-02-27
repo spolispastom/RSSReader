@@ -41,13 +41,15 @@
     
     for (NewsFeed * newsFeed in _sourse.newsFeeds)
     {
-        [newsFeed downloadAgain];
+        [newsFeed update];
     }
     
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){
         [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
     }
-
+    
+    _window.tintColor = [UIColor blueColor];
+    
     return YES;
 }
 
@@ -76,7 +78,7 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))comp
              NSError * error = [note.userInfo objectForKey:(NSString*)NewsFeedDidChangeNotificationErrorKey];
              NSNumber * numberOfNewNews = [note.userInfo objectForKey:(NSString*)NewsFeedDidChangeNotificationNumberOfNewNewsKey];
              
-             if (error == nil){
+             if (error != nil){
                  _isCompleteBackgroundDownloadResultError = YES;
              } else if (numberOfNewNews > 0){
                  _isCompleteBackgroundDownloadResultNewData = YES;
@@ -100,14 +102,14 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))comp
              
              [[NSNotificationCenter defaultCenter] removeObserver: newsFeedChangeObserver];
         }];
-        [newsFeed backgroundDownloadAgain];
+        [newsFeed update];
         [_notCompletedDownloadNewsSourse addObject:newsFeed];
     }
 }
 
 -(void)stopBackgroundFetch{
     for (NewsFeed * newsSourseItem in _notCompletedDownloadNewsSourse) {
-        [newsSourseItem cancelDownload];
+        [newsSourseItem cancelUpdate];
     }
     [_notCompletedDownloadNewsSourse removeAllObjects];
     [self causeСheckingСompletionHandler];

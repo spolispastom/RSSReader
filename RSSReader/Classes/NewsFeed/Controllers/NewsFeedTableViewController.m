@@ -15,6 +15,9 @@
 @interface NewsFeedTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
+@property (strong, nonatomic) id<NSObject> newsFeedDidChangeObserver;
+@property (strong, nonatomic) id<NSObject> addNewsFeedObserver;
+@property (nonatomic) NSArray * newsFeeds;
 
 @end
 
@@ -35,12 +38,20 @@
 
 - (void)setNewsFeedList:(NewsFeedList *)sourse
 {
+    if (_newsFeedDidChangeObserver != nil){
+        [[NSNotificationCenter defaultCenter] removeObserver:_newsFeedDidChangeObserver];
+    }
+    
     _newsFeedList = sourse;
     
-    [[NSNotificationCenter defaultCenter] addObserverForName: (NSString*)NewsFeedListDidChangeNotification object:_newsFeedList queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+    _newsFeedDidChangeObserver = [[NSNotificationCenter defaultCenter] addObserverForName: (NSString*)NewsFeedListDidChangeNotification object:sourse queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         NSNumber * notificationType = [note.userInfo objectForKey:(NSString*)NewsFeedListChangeType];
+        
         if (notificationType != nil){
-            if (notificationType == [NSNumber numberWithInt: NewsFeedListChangeTypeAddNewsFeedFail]){
+            NSMutableArray * oldItemsIndex = [NSMutableArray new];
+            
+            if ([notificationType isEqual:
+                 [NSNumber numberWithInt: NewsFeedListChangeTypeAddNewsFeedFail]]){
                
                 NSString * ondNewsFeedTitle = [note.userInfo objectForKey:@"title"];
                 NSString * message = @"Новостная лента уже существует.";
@@ -54,10 +65,42 @@
                                                          cancelButtonTitle: @"OK"
                                                          otherButtonTitles: nil];
                 [theAlert show];
+            } else if ([notificationType isEqual:
+                        [NSNumber numberWithInt: NewsFeedListChangeTypeAddNewsFeed]]){
+                
+            } else if ([notificationType isEqual:
+                    [NSNumber numberWithInt: NewsFeedListChangeTypeRemoveNewsFeed]]){
+                if (_newsFeeds != nil){
+                    BOOL isRemove = YES;
+                   
+                    for (int i = 0; i < _newsFeeds.count; i++) {
+                        isRemove = YES;
+                        NewsFeed * oldNewsFeed = [_newsFeeds objectAtIndex:i];
+                        for (NewsFeed * newNewsFeed in _newsFeedList.newsFeeds) {
+                            if ([newNewsFeed.url isEqual:oldNewsFeed.url]){
+                                isRemove = NO;
+                            }
+                        }
+                        if (isRemove){
+                            [oldItemsIndex addObject:[NSNumber numberWithInt:i]];
+                        }
+                    }
+                }
+            }
+        
+            _newsFeeds = _newsFeedList.newsFeeds.copy;
+            if (oldItemsIndex.count > 0){
+                [[self tableView]beginUpdates];
+                for (NSNumber * index in oldItemsIndex) {
+                    [[self tableView] deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:index.longValue inSection:0]]
+                                            withRowAnimation:UITableViewRowAnimationAutomatic];
+                }
+                [[self tableView]endUpdates];
+            }
+            else{
+                [[self tableView] reloadData];
             }
         }
-        
-        [self updateNewsFeeds];
     }];
 }
 
@@ -69,16 +112,18 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (_newsFeedList) {
-        return [_newsFeedList.newsFeeds count];
+        return [_newsFeeds count];
     }
     else return 0;
 }
 
+
 - (IBAction)unwindToNewsFeedTable:(UIStoryboardSegue *)segue
 {
-    AddNewsFeedViewController *addNewsSource = [segue sourceViewController];
-  
-    [_newsFeedList addNewsFeed: addNewsSource.itemURL];
+    if (_addNewsFeedObserver != nil){
+        [[NSNotificationCenter defaultCenter] removeObserver:_addNewsFeedObserver];
+    }
+    _addNewsFeedObserver = nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -93,7 +138,7 @@
 
 - (void)configureNewsFeedCell:(NewsFeedTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     
-    NewsFeed * newsFeedItem = [ _newsFeedList.newsFeeds objectAtIndex: indexPath.row ];
+    NewsFeed * newsFeedItem = [ _newsFeeds objectAtIndex: indexPath.row ];
     
     cell.title = newsFeedItem.title;
     cell.image = newsFeedItem.image;
@@ -137,14 +182,8 @@
     {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
-        NewsFeed * item = [_newsFeedList.newsFeeds objectAtIndex: indexPath.row];
-        [tableView beginUpdates];
-        [tableView deleteRowsAtIndexPaths:@[indexPath]
-                         withRowAnimation:UITableViewRowAnimationAutomatic];
+        NewsFeed * item = [_newsFeeds objectAtIndex: indexPath.row];
         [_newsFeedList removeNewsFeed: item];
-        [tableView endUpdates];
-        
-        [self.tableView reloadData];
     }
 }
 
@@ -155,9 +194,16 @@
     {
         NewsListViewController * newsContent = (NewsListViewController *)[navigation topViewController];
         
-        NewsFeed * item = [_newsFeedList.newsFeeds objectAtIndex: [self.tableView indexPathForCell:sender].row];
+        NewsFeed * item = [_newsFeeds objectAtIndex: [self.tableView indexPathForCell:sender].row];
         newsContent.newsFeed = item;
         //[sourse update];
+    } else if ([[navigation topViewController] isKindOfClass:[AddNewsFeedViewController class]]){
+        AddNewsFeedViewController * addNewsSource = (AddNewsFeedViewController *)[navigation topViewController];
+        _addNewsFeedObserver = [[NSNotificationCenter defaultCenter] addObserverForName:(NSString*)AddNewsFeedViewControllerCompliteNotification object:addNewsSource queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+            if (addNewsSource.itemURL!= nil){
+                [_newsFeedList addNewsFeed: addNewsSource.itemURL];
+            }
+        }];
     }
 }
 
@@ -170,7 +216,7 @@
         NewsListViewController * newsContent = (NewsListViewController *)controller;
         
         
-        for (NewsFeed * newsFeed in _newsFeedList.newsFeeds) {
+        for (NewsFeed * newsFeed in _newsFeeds) {
             if ([newsFeed.url isEqual:url]){
                 
                 newsContent.newsFeed = newsFeed;

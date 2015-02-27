@@ -20,6 +20,7 @@ enum NewsFeedListChangeType{
     NewsFeedListChangeTypeAddNewsFeed,
     NewsFeedListChangeTypeAddNewsFeedFail,
     NewsFeedListChangeTypeRemoveNewsFeed,
+    NewsFeedListChangeTypeRemoveNewsFeedFail,
 };
 
 @interface NewsFeedList : NSObject

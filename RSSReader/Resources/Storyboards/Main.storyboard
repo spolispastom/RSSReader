@@ -23,10 +23,6 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <webView contentMode="scaleToFill" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" keyboardDisplayRequiresUserAction="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wsj-hU-K2h" userLabel="contentWebView">
-                                <rect key="frame" x="0.0" y="130" width="600" height="470"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </webView>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="755" verticalHuggingPriority="755" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ie-Hy-Zvr">
                                 <rect key="frame" x="16" y="72" width="568" height="21"/>
                                 <gestureRecognizers/>
@@ -37,13 +33,17 @@
                                     <outletCollection property="gestureRecognizers" destination="w7E-jx-uIB" appends="YES" id="8M0-oe-Ot2"/>
                                 </connections>
                             </label>
+                            <webView contentMode="scaleToFill" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" keyboardDisplayRequiresUserAction="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wsj-hU-K2h" userLabel="contentWebView">
+                                <rect key="frame" x="8" y="130" width="584" height="470"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="6Ie-Hy-Zvr" firstAttribute="leading" secondItem="SHU-yy-RF5" secondAttribute="leadingMargin" id="4lL-WU-X0h"/>
-                            <constraint firstItem="wsj-hU-K2h" firstAttribute="leading" secondItem="SHU-yy-RF5" secondAttribute="leadingMargin" constant="-16" id="6Yn-HE-Og4"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="wsj-hU-K2h" secondAttribute="trailing" constant="-16" id="8Is-h4-Ksr"/>
+                            <constraint firstItem="wsj-hU-K2h" firstAttribute="leading" secondItem="SHU-yy-RF5" secondAttribute="leading" constant="8" id="6Yn-HE-Og4"/>
+                            <constraint firstAttribute="trailing" secondItem="wsj-hU-K2h" secondAttribute="trailing" constant="8" id="8Is-h4-Ksr"/>
                             <constraint firstItem="wZn-kQ-toF" firstAttribute="top" secondItem="6Ie-Hy-Zvr" secondAttribute="bottom" constant="8" id="B2Z-i8-u6L"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6Ie-Hy-Zvr" secondAttribute="trailing" id="Lie-V6-0oM"/>
                             <constraint firstItem="wsj-hU-K2h" firstAttribute="top" secondItem="wZn-kQ-toF" secondAttribute="bottom" constant="8" id="M88-5y-WRO"/>
@@ -82,7 +82,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ewu-gx-HDr">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ewu-gx-HDr">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -91,14 +91,8 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KZc-z5-oZ1" id="cyh-f6-T5u">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" placeholderIntrinsicWidth="584" placeholderIntrinsicHeight="21" text="Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Li6-HR-n84">
-                                                    <rect key="frame" x="12" y="8" width="580" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" placeholderIntrinsicWidth="584" placeholderIntrinsicHeight="17" text="CreationData" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kqT-OE-prv">
-                                                    <rect key="frame" x="12" y="33" width="584" height="28"/>
+                                                    <rect key="frame" x="16" y="33" width="584" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="17" id="bJd-qh-Rgb"/>
                                                     </constraints>
@@ -111,12 +105,18 @@
                                                         </mask>
                                                     </variation>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" placeholderIntrinsicWidth="584" placeholderIntrinsicHeight="21" text="Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Li6-HR-n84">
+                                                    <rect key="frame" x="16" y="8" width="568" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Li6-HR-n84" secondAttribute="trailing" priority="900" id="IFn-BI-SGW"/>
-                                                <constraint firstItem="kqT-OE-prv" firstAttribute="leading" secondItem="cyh-f6-T5u" secondAttribute="leadingMargin" constant="4" id="J7j-hU-U9G"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Li6-HR-n84" secondAttribute="trailing" priority="900" constant="8" id="IFn-BI-SGW"/>
+                                                <constraint firstItem="kqT-OE-prv" firstAttribute="leading" secondItem="cyh-f6-T5u" secondAttribute="leadingMargin" constant="8" id="J7j-hU-U9G"/>
                                                 <constraint firstItem="Li6-HR-n84" firstAttribute="top" secondItem="cyh-f6-T5u" secondAttribute="topMargin" id="TjG-nd-Yec"/>
-                                                <constraint firstItem="Li6-HR-n84" firstAttribute="leading" secondItem="cyh-f6-T5u" secondAttribute="leadingMargin" constant="4" id="dGt-Te-gO6"/>
+                                                <constraint firstItem="Li6-HR-n84" firstAttribute="leading" secondItem="cyh-f6-T5u" secondAttribute="leadingMargin" constant="8" id="dGt-Te-gO6"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="kqT-OE-prv" secondAttribute="bottom" id="h5K-Dy-oK6"/>
                                                 <constraint firstItem="kqT-OE-prv" firstAttribute="trailing" secondItem="cyh-f6-T5u" secondAttribute="trailingMargin" priority="750" id="iDo-Ll-oLn"/>
                                                 <constraint firstItem="kqT-OE-prv" firstAttribute="top" secondItem="Li6-HR-n84" secondAttribute="bottom" priority="900" constant="4" id="vvF-eE-oGZ"/>
@@ -133,9 +133,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Ewu-gx-HDr" firstAttribute="leading" secondItem="PXw-ht-7dR" secondAttribute="leadingMargin" constant="-16" id="bJ4-Sz-qnt"/>
+                            <constraint firstItem="Ewu-gx-HDr" firstAttribute="leading" secondItem="PXw-ht-7dR" secondAttribute="leading" id="bJ4-Sz-qnt"/>
                             <constraint firstItem="Ewu-gx-HDr" firstAttribute="top" secondItem="PXw-ht-7dR" secondAttribute="topMargin" id="bZg-zY-mVk"/>
-                            <constraint firstItem="Ewu-gx-HDr" firstAttribute="trailing" secondItem="PXw-ht-7dR" secondAttribute="trailingMargin" constant="16" id="fEl-5T-cjY"/>
+                            <constraint firstItem="Ewu-gx-HDr" firstAttribute="trailing" secondItem="PXw-ht-7dR" secondAttribute="trailing" id="fEl-5T-cjY"/>
                             <constraint firstItem="RA3-VW-yQl" firstAttribute="top" secondItem="Ewu-gx-HDr" secondAttribute="bottom" id="gGM-Dy-fEp"/>
                         </constraints>
                     </view>
@@ -146,7 +146,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F9K-8s-xxq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3226" y="475"/>
+            <point key="canvasLocation" x="3226" y="489"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="QNy-Fu-rpQ">
@@ -158,6 +158,9 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="41l-Er-iYS">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="acl-oM-SX4" kind="relationship" relationship="rootViewController" id="h6V-7u-p2L"/>
                     </connections>

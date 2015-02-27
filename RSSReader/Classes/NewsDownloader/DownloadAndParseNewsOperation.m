@@ -10,7 +10,6 @@
 #import "NewsDownloader.h"
 #import "RSSParser.h"
 #import "NewsForegroundDownloader.h"
-#import "NewsBackgroundDownloader.h"
 
 @interface DownloadAndParseNewsOperation()
 
@@ -18,8 +17,6 @@
 @property id<NewsDownloader> downloader;
 @property RSSParser * parser;
 @property (weak) id<NewsDownloaderDelegate> delegate;
-
-@property (nonatomic) BOOL isBackground;
 
 @end
 
@@ -37,18 +34,6 @@
         _url = [url copy];
         _delegate = delegate;
     }
-    
-    _isBackground = NO;
-    return  self;
-}
-
-
-- (instancetype) initBackgroundDownloadAndParseNewsOperationWithURL: (NSURL *) url
-                                                                           andDelegate: (id<NewsDownloaderDelegate>) delegate
-{
-    self = [self initWithURL:url andDelegate:delegate];
-    
-    _isBackground = YES;
     
     return  self;
 }
@@ -76,18 +61,10 @@
 
 - (void)main
 {
-    if (_isBackground)
-    {
-        _downloader = (id<NewsDownloader>)[[NewsBackgroundDownloader alloc] initWithDelegate: self
-                                                         andURL: _url
-                                                      andParser: [[RSSParser alloc] init]];
-    }
-    else
-    {
-        _downloader = (id<NewsDownloader>)[[NewsForegroundDownloader alloc] initWithDelegate: self
-                                                   andURL: _url
-                                                andParser: [[RSSParser alloc] init]];
-    }
+    _downloader = (id<NewsDownloader>)[[NewsForegroundDownloader alloc] initWithDelegate: self
+                                                                                  andURL: _url
+                                                                               andParser: [[RSSParser alloc] init]];
+    
     [_downloader download];
 }
 

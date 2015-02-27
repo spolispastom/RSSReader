@@ -20,7 +20,4 @@
 - (instancetype) initWithURL: (NSURL *) url
                                     andDelegate: (id<NewsDownloaderDelegate>) delegate;
 
-- (instancetype) initBackgroundDownloadAndParseNewsOperationWithURL: (NSURL *) url
-                                                                           andDelegate: (id<NewsDownloaderDelegate>) delegate;
-
 @end

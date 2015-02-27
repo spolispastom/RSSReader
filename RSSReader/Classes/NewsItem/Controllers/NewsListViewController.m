@@ -35,11 +35,24 @@
 }
 
 - (void)refreshTable {
+    [_newsFeed update];
+}
+
+- (void)viewDidDisappear:(BOOL)animated{
+    if (_newsFeedChangeObserver != nil){
+        [[NSNotificationCenter defaultCenter] removeObserver: _newsFeedChangeObserver];
+    }
+}
+
+- (void) setNewsFeed: (NewsFeed *) newsFeed
+{
+    if (_newsFeedChangeObserver != nil){
+        [[NSNotificationCenter defaultCenter] removeObserver: _newsFeedChangeObserver];
+    }
+    
+    _newsFeed = newsFeed;
+    
     _newsFeedChangeObserver = [[NSNotificationCenter defaultCenter] addObserverForName:(NSString*)NewsFeedDidChangeNotification object:_newsFeed queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        
-        if (_newsFeedChangeObserver != nil){
-            [[NSNotificationCenter defaultCenter] removeObserver: _newsFeedChangeObserver];
-        }
         
         [_refreshControl endRefreshing];
         
@@ -67,21 +80,11 @@
                                                          otherButtonTitles: nil];
                 [theAlert show];
             }
+            else{
+                [_rssList reloadData];
+            }
         }
     }];
-    
-    [_newsFeed downloadAgain];
-}
-
-- (void)viewDidDisappear:(BOOL)animated{
-    if (_newsFeedChangeObserver != nil){
-        [[NSNotificationCenter defaultCenter] removeObserver: _newsFeedChangeObserver];
-    }
-}
-
-- (void) setNewsFeed: (NewsFeed *) newsFeed
-{
-    _newsFeed = newsFeed;
     
     [_rssList reloadData];
 }

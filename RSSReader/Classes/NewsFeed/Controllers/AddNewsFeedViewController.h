@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "NewsFeed.h"
 
+extern NSString const * AddNewsFeedViewControllerCompliteNotification;
+
 @interface AddNewsFeedViewController : UIViewController
 
 @property NSURL * itemURL;

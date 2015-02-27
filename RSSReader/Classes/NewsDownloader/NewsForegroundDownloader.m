@@ -7,7 +7,6 @@
 //
 
 #import "NewsForegroundDownloader.h"
-#import "NewsBackgroundDownloader.h"
 #import "NewsParser.h"
 
 @interface  NewsForegroundDownloader()

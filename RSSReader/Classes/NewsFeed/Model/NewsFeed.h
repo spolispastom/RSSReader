@@ -25,16 +25,13 @@ extern NSString const * NewsFeedDidChangeNotificationNumberOfNewNewsKey;
 @property (nonatomic) UIImage * image;
 @property (nonatomic, setter=setNewsItems:) NSArray *newsItems;
 @property (nonatomic, copy) NSString *persistenceId;
+@property (nonatomic, readonly, getter=numberOfUnreadNews) NSInteger numberOfUnreadNews;
 
 - (instancetype) initWithTitle: (NSString *) title andURL: (NSURL*) url andImage: (NSData *) imageData;
 
-- (void)downloadAgain;
+- (void)update;
 
-- (void)backgroundDownloadAgain;
-
-- (void)cancelDownload;
-
-- (NSInteger) numberOfUnreadNews;
+- (void)cancelUpdate;
 
 - (void) readNewsItem: (NewsItem*) newsItem;
 

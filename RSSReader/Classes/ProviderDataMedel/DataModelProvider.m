@@ -196,6 +196,10 @@ static DataModelProvider *sharedProviderDataMedel_ = nil;
      
 - (void) removeNewsFeed: (NewsFeed*) newsFeed
         completionBlock: (void (^)(NSError *error))completionBlock{
+    if (newsFeed == nil){
+        return;
+    }
+    
     NSManagedObjectContext * context = [self managedObjectContext];
     [ context performBlock:^{
         NSError *error = nil;
@@ -234,6 +238,9 @@ static DataModelProvider *sharedProviderDataMedel_ = nil;
 
 - (void) updateNewsFeed: (NewsFeed*) newsFeed
         completionBlock: (void (^)(NSError *error))completionBlock{
+    if (newsFeed == nil){
+        return;
+    }
     NSManagedObjectContext * context = [self managedObjectContext];
     [ context performBlockAndWait:^{
         NSError *error = nil;
@@ -249,6 +256,7 @@ static DataModelProvider *sharedProviderDataMedel_ = nil;
                 persistenceNewsFeed.image = image;
                 
                 if (newsFeed.newsItems != nil) {
+                    [persistenceNewsFeed removeNewsItems:persistenceNewsFeed.newsItems];
                     
                     for (NewsItem * item in newsFeed.newsItems) {
                         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title contains %@", item.title];
@@ -267,31 +275,31 @@ static DataModelProvider *sharedProviderDataMedel_ = nil;
                             [persistenceNewsFeed addNewsItemsObject:entityNewsItem];
                         }
                     }
-                   
-                    [context save:&error];
-                    
-                    [self updateObjectIdInNewsFeed:newsFeed fromNewsFeedPersistence:persistenceNewsFeed];
-                    
-                    if (completionBlock != nil){
-                        if (error){
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                completionBlock([[NSError alloc]initWithDomain:@"DataModelProviderError"
-                                                                          code:DataModelProviderErrorSaving
-                                                                      userInfo:error.userInfo]);
-                            });
-                        } else {
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                completionBlock(nil);
-                            });
-                        }
-                    }
-                } else if (completionBlock != nil) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        completionBlock([[NSError alloc]initWithDomain:@"DataModelProviderError"
-                                                                  code:DataModelProviderErrorNewsFeedNotFound
-                                                              userInfo:nil]);
-                    });
                 }
+                   
+                [context save:&error];
+                
+                [self updateObjectIdInNewsFeed:newsFeed fromNewsFeedPersistence:persistenceNewsFeed];
+                
+                if (completionBlock != nil){
+                    if (error){
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            completionBlock([[NSError alloc]initWithDomain:@"DataModelProviderError"
+                                                                      code:DataModelProviderErrorSaving
+                                                                  userInfo:error.userInfo]);
+                        });
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            completionBlock(nil);
+                        });
+                    }
+                }
+            } else if (completionBlock != nil) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completionBlock([[NSError alloc]initWithDomain:@"DataModelProviderError"
+                                                              code:DataModelProviderErrorNewsFeedNotFound
+                                                          userInfo:nil]);
+                });
             }
         }
     } ];

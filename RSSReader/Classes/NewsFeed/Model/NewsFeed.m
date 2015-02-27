@@ -22,7 +22,6 @@ NSString const * NewsFeedDidChangeNotificationNumberOfNewNewsKey = @"NewsFeedDid
 @property (nonatomic, strong, readwrite) DownloadAndParseNewsOperation *   gettingNews;
 @property (nonatomic) BOOL isBackground;
 @property (weak, nonatomic) DataModelProvider * provider;
-@property (nonatomic) NSInteger oldNumberOfUnreadNews;
 @end
 
 @implementation NewsFeed
@@ -51,7 +50,7 @@ NSString const * NewsFeedDidChangeNotificationNumberOfNewNewsKey = @"NewsFeedDid
     }];
 }
 
-- (void)downloadAgain
+- (void)update
 {
     _isBackground = NO;
     if (_gettingNews.isReady)
@@ -62,19 +61,7 @@ NSString const * NewsFeedDidChangeNotificationNumberOfNewNewsKey = @"NewsFeedDid
     [self.queue addOperation: self.gettingNews];
 }
 
-
-- (void)backgroundDownloadAgain
-{
-    _isBackground = YES;
-    if (!_gettingNews.isFinished)
-        [_gettingNews cancel];
-    self.gettingNews = [[DownloadAndParseNewsOperation alloc] initBackgroundDownloadAndParseNewsOperationWithURL: _url
-                                                                                                     andDelegate: self];
-    
-    [self.queue addOperation: self.gettingNews];
-}
-
-- (void)cancelDownload
+- (void)cancelUpdate
 {
     if (!_gettingNews.isFinished)
         [_gettingNews cancel];
@@ -128,22 +115,12 @@ NSString const * NewsFeedDidChangeNotificationNumberOfNewNewsKey = @"NewsFeedDid
 
 - (NSInteger) numberOfUnreadNews
 {
-    NSMutableArray * changetNewsItems = [NSMutableArray new];
-    
+    NSInteger numberOfUnreadNews = 0;
     for (NewsItem * item in _newsItems) {
-        if (item.isRead) {
-            [changetNewsItems addObject:item];
+        if (!item.isRead) {
+            numberOfUnreadNews++;
         }
     }
-    
-    NSInteger numberOfUnreadNews = _newsItems.count - changetNewsItems.count;
-    
-    
-    /*if (_oldNumberOfUnreadNews != numberOfUnreadNews && _oldNumberOfUnreadNews != -1){
-        _newsFeed = [_provider updateNewsFeedFromURL:_newsFeed.url ofTitle:_newsFeed.title andImage:_newsFeed.imageData andNewNewsItems:changetNewsItems];
-    }*/
-    
-    _oldNumberOfUnreadNews = numberOfUnreadNews;
     return numberOfUnreadNews;
 }
 
