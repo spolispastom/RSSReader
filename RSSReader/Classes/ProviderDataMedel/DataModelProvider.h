@@ -38,4 +38,7 @@ enum {
 -(void) readNewsItem: (NewsItem *) newsItem
             completionBlock: (void (^)(NSError *error))completionBlock;
 
+-(void) changeNewsItemPin: (NewsItem *) newsItem
+          completionBlock: (void (^)(NSError *error))completionBlock;
+
 @end

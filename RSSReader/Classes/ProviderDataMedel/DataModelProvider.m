@@ -135,6 +135,7 @@ static DataModelProvider *sharedProviderDataMedel_ = nil;
                 newsItem.persistenceId = entityItem.objectID.URIRepresentation.absoluteString;
                 
                 newsItem.isRead = [entityItem.isRead boolValue];
+                newsItem.isPin = [entityItem.pin boolValue];
                 [newsItems addObject:newsItem];
             }
             newsFeed.newsItems = [newsItems allObjects];
@@ -168,6 +169,7 @@ static DataModelProvider *sharedProviderDataMedel_ = nil;
             entityNewsItem.creationDate = newsItem.creationDate;
             entityNewsItem.content = newsItem.content;
             entityNewsItem.isRead = [NSNumber numberWithBool:newsItem.isRead];
+            entityNewsItem.pin = [NSNumber numberWithBool:newsItem.isPin];
             
             [entityNewsItem setValue: item forKey:@"newsFeed"];
             [item addNewsItemsObject:entityNewsItem];
@@ -270,7 +272,8 @@ static DataModelProvider *sharedProviderDataMedel_ = nil;
                             entityNewsItem.creationDate = item.creationDate;
                             entityNewsItem.content = item.content;
                             entityNewsItem.isRead = [NSNumber numberWithBool:item.isRead];
-                        
+                            entityNewsItem.pin = [NSNumber numberWithBool:item.isPin];
+                            
                             [entityNewsItem setValue: persistenceNewsFeed forKey:@"newsFeed"];
                             [persistenceNewsFeed addNewsItemsObject:entityNewsItem];
                         }
@@ -317,7 +320,7 @@ static DataModelProvider *sharedProviderDataMedel_ = nil;
             if(objectId != nil) {
                 NewsItemPersistence * persistenceNewsItem = (NewsItemPersistence*)[context objectWithID:objectId];
                 persistenceNewsItem.isRead = [NSNumber numberWithBool:YES];
-        
+                
                 [context save:&error];
                 
                 newsItem.persistenceId = persistenceNewsItem.objectID.URIRepresentation.absoluteString;
@@ -344,7 +347,49 @@ static DataModelProvider *sharedProviderDataMedel_ = nil;
             }
         }
     }];
+    
+}
 
+-(void) changeNewsItemPin: (NewsItem *) newsItem
+      completionBlock: (void (^)(NSError *error))completionBlock{
+    NSManagedObjectContext * context = [self managedObjectContext];
+    [ context performBlockAndWait:^{
+        NSError *error = nil;
+        
+        NSURL *persistentUTI = [NSURL URLWithString:newsItem.persistenceId];
+        if (persistentUTI != nil){
+            NSManagedObjectID *objectId = [_persistentStoreCoordinator managedObjectIDForURIRepresentation:persistentUTI];
+            if(objectId != nil) {
+                NewsItemPersistence * persistenceNewsItem = (NewsItemPersistence*)[context objectWithID:objectId];
+                persistenceNewsItem.pin = [NSNumber numberWithBool:newsItem.isPin];
+                
+                [context save:&error];
+                
+                newsItem.persistenceId = persistenceNewsItem.objectID.URIRepresentation.absoluteString;
+                
+                if (completionBlock != nil){
+                    if (error){
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            completionBlock([[NSError alloc]initWithDomain:@"DataModelProviderError"
+                                                                      code:DataModelProviderErrorSaving
+                                                                  userInfo:error.userInfo]);
+                        });
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            completionBlock(nil);
+                        });
+                    }
+                }
+            } else if (completionBlock != nil) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completionBlock([[NSError alloc]initWithDomain:@"DataModelProviderError"
+                                                              code:DataModelProviderErrorNewsFeedNotFound
+                                                          userInfo:nil]);
+                });
+            }
+        }
+    }];
+    
 }
 
 -(void) updateObjectIdInNewsFeed: (NewsFeed*) newsFeed fromNewsFeedPersistence: (NewsFeedPersistence*) newsFeedPersistence{

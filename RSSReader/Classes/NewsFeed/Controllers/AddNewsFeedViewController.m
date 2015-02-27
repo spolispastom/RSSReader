@@ -104,20 +104,19 @@ NSString const * AddNewsFeedViewControllerCompliteNotification = @"AddNewsFeedVi
 
 
 - (IBAction)urlTextChanged:(id)sender {
-    [_saveButton setEnabled: [self validatingURL] != nil];
+    [_saveButton setEnabled: [self validatedURL] != nil];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if (sender != self.saveButton) return;
     
-    _itemURL =  [self validatingURL];
+    _itemURL =  [self validatedURL];
     [[NSNotificationCenter defaultCenter] postNotificationName:(NSString*)AddNewsFeedViewControllerCompliteNotification object:self];
 }
 
-- (NSURL *) validatingURL {
+- (NSURL *) validatedURL {
     if (_urlTextFild.text.length > 0){
         NSString * tempUrlString = _urlTextFild.text;
-#warning сделай касивую проверку и коррекцию урла
 
         NSURL* url = [NSURL URLWithString:tempUrlString];
         if (url != nil && [[UIApplication sharedApplication] canOpenURL:url]){

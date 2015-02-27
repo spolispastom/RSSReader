@@ -113,13 +113,7 @@
 - (void)configureBasicCell:(NewsTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     NewsItem * newsItem = [_newsFeed.newsItems objectAtIndex: indexPath.row ];
     
-    cell.title = newsItem.title;
-    cell.creationData = newsItem.creationDate;
-    
-    if (newsItem.isRead)
-        [cell setBackgroundColor:[UIColor clearColor]];
-    else [cell setBackgroundColor:[UIColor colorWithRed:0.9 green:0.9 blue:1 alpha:1]];
-    
+    cell.newsItem = newsItem;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -166,6 +160,10 @@
         item.isRead = YES;
         [newsContent setNewsItem: item];
     }
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self.rssList reloadData];
 }
 
 @end

@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *creationDataLabel;
+@property (weak, nonatomic) IBOutlet UIButton *pinButton;
 
 @end
 
@@ -43,20 +44,33 @@
     }
 }
 
--(void) setTitle: (NSString*) title
+-(void) setNewsItem: (NewsItem*) newsItem
 {
-    _titleLabel.text = title;
-}
+    _newsItem = newsItem;
+    
+    _titleLabel.text = _newsItem.title;
 
--(void) setCreationData: (NSDate*) creationData
-{
     if (!_defaultDateFormatter)
     {
         _defaultDateFormatter = [[NSDateFormatter alloc] init];
         [_defaultDateFormatter setDateFormat:@"dd MMMM yyyy HH:mm"];
     }
-    _creationDataLabel.text = [_defaultDateFormatter stringFromDate: creationData];
+    _creationDataLabel.text = [_defaultDateFormatter stringFromDate: _newsItem.creationDate];
+
+    if (_newsItem.isRead)
+        [self setBackgroundColor:[UIColor clearColor]];
+    else [self setBackgroundColor:[UIColor colorWithRed:0.9 green:0.9 blue:1 alpha:1]];
+    
+    [self updatePinButton];
+}
+- (IBAction)pinTouchDoun:(id)sender {
+    _newsItem.isPin = !_newsItem.isPin;
+    
+    [self updatePinButton];
 }
 
+-(void) updatePinButton{
+    _pinButton.selected = _newsItem.isPin;
+}
 
 @end

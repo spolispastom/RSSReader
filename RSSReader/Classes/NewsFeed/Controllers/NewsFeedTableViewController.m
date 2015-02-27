@@ -15,7 +15,9 @@
 @interface NewsFeedTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
-@property (strong, nonatomic) id<NSObject> newsFeedDidChangeObserver;
+@property (strong, nonatomic) id<NSObject> newsFeedListAddNewsFeedObserver;
+@property (strong, nonatomic) id<NSObject> newsFeedListAddNewsFeedFailObserver;
+@property (strong, nonatomic) id<NSObject> newsFeedListRemoveNewsFeedObserver;
 @property (strong, nonatomic) id<NSObject> addNewsFeedObserver;
 @property (nonatomic) NSArray * newsFeeds;
 
@@ -38,68 +40,59 @@
 
 - (void)setNewsFeedList:(NewsFeedList *)sourse
 {
-    if (_newsFeedDidChangeObserver != nil){
-        [[NSNotificationCenter defaultCenter] removeObserver:_newsFeedDidChangeObserver];
+    if (_newsFeedListAddNewsFeedObserver != nil){
+        [[NSNotificationCenter defaultCenter] removeObserver:_newsFeedListAddNewsFeedObserver];
+    }
+    if (_newsFeedListAddNewsFeedFailObserver != nil){
+        [[NSNotificationCenter defaultCenter] removeObserver:_newsFeedListAddNewsFeedFailObserver];
+    }
+    if (_newsFeedListRemoveNewsFeedObserver != nil){
+        [[NSNotificationCenter defaultCenter] removeObserver:_newsFeedListRemoveNewsFeedObserver];
     }
     
     _newsFeedList = sourse;
     
-    _newsFeedDidChangeObserver = [[NSNotificationCenter defaultCenter] addObserverForName: (NSString*)NewsFeedListDidChangeNotification object:sourse queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        NSNumber * notificationType = [note.userInfo objectForKey:(NSString*)NewsFeedListChangeType];
+    _newsFeedListAddNewsFeedObserver = [[NSNotificationCenter defaultCenter] addObserverForName: (NSString*)NewsFeedListAddNewsFeedNotification object:sourse queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         
-        if (notificationType != nil){
-            NSMutableArray * oldItemsIndex = [NSMutableArray new];
+        _newsFeeds = _newsFeedList.newsFeeds;
+        [self.tableView reloadData];
+    }];
+    
+    _newsFeedListAddNewsFeedFailObserver = [[NSNotificationCenter defaultCenter] addObserverForName: (NSString*)NewsFeedListAddNewsFeedFailNotification object:sourse queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        NSString * ondNewsFeedTitle = [note.userInfo objectForKey:@"title"];
+        NSString * message = @"Новостная лента уже существует.";
+        if (ondNewsFeedTitle != nil){
+            message = [NSString stringWithFormat:@"Новостная лента %@ уже существует.", ondNewsFeedTitle];
+        }
+        
+        UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle: @"Невозможно добавить новостную ленту"
+                                                           message: message
+                                                          delegate: self
+                                                 cancelButtonTitle: @"OK"
+                                                 otherButtonTitles: nil];
+        [theAlert show];
+    }];
+    
+    _newsFeedListRemoveNewsFeedObserver = [[NSNotificationCenter defaultCenter] addObserverForName: (NSString*)NewsFeedListRemoveNewsFeedNotification object:sourse queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        if (_newsFeeds != nil){
+            BOOL isRemove = YES;
             
-            if ([notificationType isEqual:
-                 [NSNumber numberWithInt: NewsFeedListChangeTypeAddNewsFeedFail]]){
-               
-                NSString * ondNewsFeedTitle = [note.userInfo objectForKey:@"title"];
-                NSString * message = @"Новостная лента уже существует.";
-                if (ondNewsFeedTitle != nil){
-                    message = [NSString stringWithFormat:@"Новостная лента %@ уже существует.", ondNewsFeedTitle];
-                }
-                
-                UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle: @"Невозможно добавить новостную ленту"
-                                                                   message: message
-                                                                  delegate: self
-                                                         cancelButtonTitle: @"OK"
-                                                         otherButtonTitles: nil];
-                [theAlert show];
-            } else if ([notificationType isEqual:
-                        [NSNumber numberWithInt: NewsFeedListChangeTypeAddNewsFeed]]){
-                
-            } else if ([notificationType isEqual:
-                    [NSNumber numberWithInt: NewsFeedListChangeTypeRemoveNewsFeed]]){
-                if (_newsFeeds != nil){
-                    BOOL isRemove = YES;
-                   
-                    for (int i = 0; i < _newsFeeds.count; i++) {
-                        isRemove = YES;
-                        NewsFeed * oldNewsFeed = [_newsFeeds objectAtIndex:i];
-                        for (NewsFeed * newNewsFeed in _newsFeedList.newsFeeds) {
-                            if ([newNewsFeed.url isEqual:oldNewsFeed.url]){
-                                isRemove = NO;
-                            }
-                        }
-                        if (isRemove){
-                            [oldItemsIndex addObject:[NSNumber numberWithInt:i]];
-                        }
+            [[self tableView]beginUpdates];
+            for (int i = 0; i < _newsFeeds.count; i++) {
+                isRemove = YES;
+                NewsFeed * oldNewsFeed = [_newsFeeds objectAtIndex:i];
+                for (NewsFeed * newNewsFeed in _newsFeedList.newsFeeds) {
+                    if ([newNewsFeed.url isEqual:oldNewsFeed.url]){
+                        isRemove = NO;
                     }
                 }
-            }
-        
-            _newsFeeds = _newsFeedList.newsFeeds.copy;
-            if (oldItemsIndex.count > 0){
-                [[self tableView]beginUpdates];
-                for (NSNumber * index in oldItemsIndex) {
-                    [[self tableView] deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:index.longValue inSection:0]]
+                if (isRemove){
+                    [[self tableView] deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:i inSection:0]]
                                             withRowAnimation:UITableViewRowAnimationAutomatic];
                 }
-                [[self tableView]endUpdates];
             }
-            else{
-                [[self tableView] reloadData];
-            }
+            _newsFeeds = _newsFeedList.newsFeeds;
+            [[self tableView]endUpdates];
         }
     }];
 }

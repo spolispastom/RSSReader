@@ -78,21 +78,36 @@ NSString const * NewsFeedDidChangeNotificationNumberOfNewNewsKey = @"NewsFeedDid
     _image = [UIImage imageWithData: image];
     
     if (newsItems != nil) {
+        NSMutableArray * newNewsItems = [NSMutableArray new];
         NSMutableArray * readingNews = [NSMutableArray new];
         
         for (NewsItem * item in _newsItems) {
             if (item.isRead){
                 [readingNews addObject:item.url];
             }
+            if (item.isPin){
+                [newNewsItems addObject:item];
+            }
         }
+       
         
         for (NewsItem * item in newsItems) {
+            BOOL isContains = NO;
+            for (NewsItem * flagItem in newNewsItems) {
+                if ([item.url.absoluteString compare:flagItem.url.absoluteString] == NSOrderedSame){
+                    isContains = YES;
+                }
+            }            
+            if (!isContains){
+                [newNewsItems addObject:item];
+            }
             if ([readingNews containsObject:item.url]){
                 item.isRead = YES;
             }
+
         }
         
-        [self setNewsItems: newsItems];
+        [self setNewsItems: newNewsItems];
     }
 
     [_provider updateNewsFeed:self completionBlock:^(NSError *error) {

@@ -11,11 +11,12 @@
         <attribute name="creationDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="isRead" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pin" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="newsFeed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NewsFeedPersistence" inverseName="newsItems" inverseEntity="NewsFeedPersistence" syncable="YES"/>
     </entity>
     <elements>
-        <element name="NewsItemPersistence" positionX="-405" positionY="182" width="128" height="133"/>
         <element name="NewsFeedPersistence" positionX="-189" positionY="212" width="128" height="103"/>
+        <element name="NewsItemPersistence" positionX="-405" positionY="182" width="128" height="150"/>
     </elements>
 </model>

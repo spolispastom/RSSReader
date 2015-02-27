@@ -37,7 +37,15 @@ NSString const * NewsItemDidReadNotification = @"NewsItemDidReadNotification";
         }];
     }
     else { _isRead = NO; }
-    [[NSNotificationCenter defaultCenter] postNotificationName:(NSString*)NewsItemDidReadNotification object:self];
+}
+
+-(void) setIsPin: (BOOL) isPin{
+    _isPin = isPin;
+    [[DataModelProvider instance] changeNewsItemPin:self completionBlock:^(NSError *error) {
+        if (error == nil){
+            _isPin = isPin;
+        }
+    }];
 }
 
 @end

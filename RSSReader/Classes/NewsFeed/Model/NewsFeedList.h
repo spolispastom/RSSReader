@@ -13,15 +13,10 @@
 
 @class NewsFeedList;
 
-extern NSString const * NewsFeedListDidChangeNotification;
-extern NSString const * NewsFeedListChangeType;
-
-enum NewsFeedListChangeType{
-    NewsFeedListChangeTypeAddNewsFeed,
-    NewsFeedListChangeTypeAddNewsFeedFail,
-    NewsFeedListChangeTypeRemoveNewsFeed,
-    NewsFeedListChangeTypeRemoveNewsFeedFail,
-};
+extern NSString const * NewsFeedListAddNewsFeedNotification;
+extern NSString const * NewsFeedListAddNewsFeedFailNotification;
+extern NSString const * NewsFeedListRemoveNewsFeedNotification;
+extern NSString const * NewsFeedTitleKey;
 
 @interface NewsFeedList : NSObject
 

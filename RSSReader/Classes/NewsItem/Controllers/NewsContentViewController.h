@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "NewsItem.h"
 
-@interface NewsContentViewController : UIViewController
+@interface NewsContentViewController : UIViewController <UIWebViewDelegate>
 
-- (void) setNewsItem: (NewsItem *) news;
+@property (nonatomic, setter=setNewsItem:) NewsItem * newsItem;
 
 @end

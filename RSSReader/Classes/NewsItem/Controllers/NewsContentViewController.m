@@ -11,12 +11,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLable;
 @property (weak, nonatomic) IBOutlet UILabel *dateLable;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *titleTab;
+@property (weak, nonatomic) IBOutlet UIButton *pinButton;
 @property (weak, nonatomic) IBOutlet UIWebView *contentWebVew;
 
-@property (nonatomic) NSString * newsTitle;
-@property (nonatomic) NSString * newsCreationDate;
-@property (nonatomic) NSString * newsContent;
-@property (nonatomic) NSURL * newsURL;
 @property (nonatomic) NSDateFormatter * defaultDateFormatter;
 
 @end
@@ -25,15 +22,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (_newsTitle)
+    if (_newsItem)
     {
-        _titleLable.text = _newsTitle;
+        _titleLable.text = _newsItem.title;
+    
+        self.dateLable.text = [_defaultDateFormatter stringFromDate:_newsItem.creationDate];
+
+        [self.contentWebVew loadHTMLString:[NSString stringWithFormat:@"<p style=\"font-size: 16px; font-family: Arial; text-align: justify; margin: 0px;\">%@<p>", _newsItem.content] baseURL:nil];
+        
+        _pinButton.selected = _newsItem.isPin;
     }
-    if (_newsCreationDate)
-        self.dateLable.text = _newsCreationDate;
-    else self.dateLable.text = @"";
-    if (_newsContent)
-        [self.contentWebVew loadHTMLString:_newsContent baseURL:nil];
+    _contentWebVew.delegate = self;
     
     [self chackActiveLink];
 }
@@ -48,39 +47,49 @@
     
     if (news)
     {
-        _newsTitle = news.title;
-        _newsCreationDate = [_defaultDateFormatter stringFromDate: news.creationDate];
-        _newsContent = news.content;
-        _newsURL = news.url;
+        _newsItem = news;
         
-        if (_newsTitle)
+        if (_newsItem)
         {
-            _titleLable.text = _newsTitle;
-        }
-        if (_newsCreationDate)
-            self.dateLable.text = _newsCreationDate;
-        else self.dateLable.text = @"";
-        if (_newsContent)
-        {
-#warning Возможно имеет смысл все HTML содержимое оборачивать в эти теги для того что бы текс выглядел единобразно, если автор новости сам не установит другой шрифт
-            //NSRange loc = [_newsContent rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch];
-            if (YES)//loc.length <= 0)
-            {
-                _newsContent = [NSString stringWithFormat:@"<p style=\"font-size: 16px; font-family: Arial; text-align: justify; margin: 0px;\">%@<p>", _newsContent];
-                
-                //_newsContent = [NSString stringWithFormat:@"<p style=\"font-size: 16px; font-family: Arial; text-align: justify; margin: 0px 8px;\">%@ %@ %@ %@ %@<p>", _newsContent, _newsContent, _newsContent, _newsContent, _newsContent];
-            }
-            [self.contentWebVew loadHTMLString:_newsContent baseURL:nil];
+            _titleLable.text = _newsItem.title;
+            
+            self.dateLable.text = [_defaultDateFormatter stringFromDate:_newsItem.creationDate];
+            
+            [self.contentWebVew loadHTMLString:[NSString stringWithFormat:@"<p style=\"font-size: 16px; font-family: Arial; text-align: justify; margin: 0px;\">%@<p>", _newsItem.content] baseURL:nil];
+            
+            _pinButton.selected = _newsItem.isPin;
         }
         
         [self chackActiveLink];
         news.isRead = YES;
+        
         [self updateViewConstraints];
     }
 }
 
+- (IBAction)pinButtonTouchDown:(id)sender {
+    _newsItem.isPin = !_newsItem.isPin;
+    
+    _pinButton.selected = _newsItem.isPin;
+}
+
+- (BOOL)webView:(UIWebView *)webView
+shouldStartLoadWithRequest:(NSURLRequest *)request
+ navigationType:(UIWebViewNavigationType)navigationType{
+    NSURL * url = request.URL;
+    if (url.host == nil){
+        return YES;
+    }
+    else{
+        if ([[UIApplication sharedApplication] canOpenURL: url])
+            [[UIApplication sharedApplication] openURL: url];
+
+        return NO;
+    }
+}
+
 -(void) chackActiveLink {
-    if (_newsURL && [[UIApplication sharedApplication] canOpenURL: _newsURL]) {
+    if (_newsItem.url && [[UIApplication sharedApplication] canOpenURL: _newsItem.url]) {
         self.titleTab.enabled = YES;
         [self.titleLable setTextColor: [UIColor blueColor]];
     }
@@ -91,8 +100,8 @@
 }
 
 - (IBAction)goLink:(id)sender {
-    if ([[UIApplication sharedApplication] canOpenURL: _newsURL])
-        [[UIApplication sharedApplication] openURL: _newsURL];
+    if ([[UIApplication sharedApplication] canOpenURL: _newsItem.url])
+        [[UIApplication sharedApplication] openURL: _newsItem.url];
 }
 
 @end

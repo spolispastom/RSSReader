@@ -18,6 +18,7 @@ extern NSString const * NewsItemDidReadNotification;
 @property (nonatomic) NSString * content;
 @property (nonatomic) NSDate * creationDate;
 @property (nonatomic, setter=setIsRead:) BOOL isRead;
+@property (nonatomic, setter=setIsPin:) BOOL isPin;
 @property (nonatomic) NSString * title;
 @property (nonatomic) NSURL * url;
 @property (nonatomic, copy) NSString *persistenceId;

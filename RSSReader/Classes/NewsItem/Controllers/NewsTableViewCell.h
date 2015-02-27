@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NewsItem.h"
 
 @interface NewsTableViewCell : UITableViewCell
 
-@property (nonatomic, setter=setTitle:) NSString* title;
-@property (nonatomic, setter=setCreationData:) NSDate* creationData;
+@property (nonatomic, setter=setNewsItem:) NewsItem* newsItem;
 @property (nonatomic, getter=defaultDateFormatter) NSDateFormatter * defaultDateFormatter;
-
 @end
