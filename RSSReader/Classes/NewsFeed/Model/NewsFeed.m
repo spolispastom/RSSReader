@@ -124,13 +124,4 @@ NSString const * NewsFeedDidChangeNotificationNumberOfNewNewsKey = @"NewsFeedDid
     return numberOfUnreadNews;
 }
 
-- (void) readNewsItem: (NewsItem*) newsItem{
-    __block NewsItem * blockNewsItem = newsItem;
-    [_provider readNewsItem:newsItem completionBlock:^(NSError *error) {
-        if (error == nil){
-        blockNewsItem.isRead = YES;
-        }
-    }];
-}
-
 @end

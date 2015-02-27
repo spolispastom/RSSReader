@@ -33,7 +33,5 @@ extern NSString const * NewsFeedDidChangeNotificationNumberOfNewNewsKey;
 
 - (void)cancelUpdate;
 
-- (void) readNewsItem: (NewsItem*) newsItem;
-
 @end
 

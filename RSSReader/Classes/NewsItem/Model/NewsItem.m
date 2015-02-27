@@ -8,6 +8,7 @@
 
 #import "NewsItem.h"
 #import "NewsFeed.h"
+#import "DataModelProvider.h"
 
 NSString const * NewsItemDidReadNotification = @"NewsItemDidReadNotification";
 
@@ -28,6 +29,14 @@ NSString const * NewsItemDidReadNotification = @"NewsItemDidReadNotification";
 
 - (void) setIsRead: (BOOL) isRead{
     _isRead = isRead;
+    if (isRead) {
+        [[DataModelProvider instance] readNewsItem:self completionBlock:^(NSError *error) {
+            if (error == nil){
+                _isRead = YES;
+            }
+        }];
+    }
+    else { _isRead = NO; }
     [[NSNotificationCenter defaultCenter] postNotificationName:(NSString*)NewsItemDidReadNotification object:self];
 }
 

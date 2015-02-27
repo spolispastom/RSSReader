@@ -163,8 +163,8 @@
         NewsContentViewController * newsContent = (NewsContentViewController *)[navigation topViewController];
     
         NewsItem * item = [_newsFeed.newsItems objectAtIndex: [_rssList indexPathForCell:sender].row];
+        item.isRead = YES;
         [newsContent setNewsItem: item];
-        [_newsFeed readNewsItem:item];
     }
 }
 
