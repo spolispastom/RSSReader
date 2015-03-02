@@ -181,6 +181,21 @@
     return YES;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+        NewsItem * item = [_newsItems objectAtIndex: indexPath.row];
+        item.isPin = NO;
+        NSMutableArray * newNewsItems = [NSMutableArray arrayWithArray:_newsItems];
+        [newNewsItems removeObject:item];
+        [self setNewsItems:newNewsItems];
+        [[self tableView] deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [self updateNewsItemsFromNewsFeedsList:_newsFeedList];
@@ -201,13 +216,5 @@
         [newsContent setNewsItem: item];
     }
 }
-
-/*
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

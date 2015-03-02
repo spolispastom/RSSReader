@@ -116,16 +116,16 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="CreationData" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hdt-2X-S0K">
-                                            <rect key="frame" x="8" y="63" width="584" height="16"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NewsFeedTitle" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wQU-f7-NV7">
                                             <rect key="frame" x="8" y="37" width="584" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="CreationData" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hdt-2X-S0K">
+                                            <rect key="frame" x="8" y="63" width="584" height="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -135,11 +135,11 @@
                                         <constraint firstItem="wQU-f7-NV7" firstAttribute="leading" secondItem="xxH-Om-6yO" secondAttribute="leadingMargin" id="GgX-2M-KGX"/>
                                         <constraint firstItem="Hdt-2X-S0K" firstAttribute="leading" secondItem="xxH-Om-6yO" secondAttribute="leadingMargin" id="OYL-Ln-FlW"/>
                                         <constraint firstItem="3Rl-9Y-yBK" firstAttribute="top" secondItem="xxH-Om-6yO" secondAttribute="topMargin" id="Ugt-A4-Acu"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Hdt-2X-S0K" secondAttribute="trailing" id="YAw-wN-viJ"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Hdt-2X-S0K" secondAttribute="trailing" priority="950" id="YAw-wN-viJ"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="Hdt-2X-S0K" secondAttribute="bottom" id="c91-a9-Clh"/>
                                         <constraint firstItem="Hdt-2X-S0K" firstAttribute="top" secondItem="wQU-f7-NV7" secondAttribute="bottom" priority="900" constant="8" id="eVX-al-PjQ"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="wQU-f7-NV7" secondAttribute="trailing" id="ky9-MB-8XR"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="3Rl-9Y-yBK" secondAttribute="trailing" id="zwa-vk-LLA"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="wQU-f7-NV7" secondAttribute="trailing" priority="950" id="ky9-MB-8XR"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="3Rl-9Y-yBK" secondAttribute="trailing" priority="950" id="zwa-vk-LLA"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
