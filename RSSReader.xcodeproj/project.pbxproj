@@ -20,6 +20,8 @@
 		CF21E24A1A934F9F006CEACB /* NewsFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2491A934F9F006CEACB /* NewsFeed.m */; };
 		CF21E24D1A934FB2006CEACB /* NewsItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CF21E24C1A934FB2006CEACB /* NewsItem.m */; };
 		CF21E2601A9357E1006CEACB /* DataModelProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = CF21E25F1A9357E1006CEACB /* DataModelProvider.m */; };
+		CF4130301AA455A500093C26 /* CottageNewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF41302D1AA455A500093C26 /* CottageNewsTableViewCell.m */; };
+		CF4130311AA455A500093C26 /* CottageNewsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF41302F1AA455A500093C26 /* CottageNewsTableViewController.m */; };
 		CF68EB0D1A691A29009BF032 /* RSSReaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CF68EB0C1A691A29009BF032 /* RSSReaderTests.m */; };
 		CFD95B221A7768BC00A894B3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CFD95B031A7768BC00A894B3 /* AppDelegate.m */; };
 		CFD95B2A1A7768BC00A894B3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFD95B1A1A7768BC00A894B3 /* Images.xcassets */; };
@@ -71,6 +73,10 @@
 		CF21E24C1A934FB2006CEACB /* NewsItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsItem.m; sourceTree = "<group>"; };
 		CF21E25E1A9357E1006CEACB /* DataModelProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModelProvider.h; sourceTree = "<group>"; };
 		CF21E25F1A9357E1006CEACB /* DataModelProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataModelProvider.m; sourceTree = "<group>"; };
+		CF41302C1AA455A500093C26 /* CottageNewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CottageNewsTableViewCell.h; path = CottageNews/CottageNewsTableViewCell.h; sourceTree = "<group>"; };
+		CF41302D1AA455A500093C26 /* CottageNewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CottageNewsTableViewCell.m; path = CottageNews/CottageNewsTableViewCell.m; sourceTree = "<group>"; };
+		CF41302E1AA455A500093C26 /* CottageNewsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CottageNewsTableViewController.h; path = CottageNews/CottageNewsTableViewController.h; sourceTree = "<group>"; };
+		CF41302F1AA455A500093C26 /* CottageNewsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CottageNewsTableViewController.m; path = CottageNews/CottageNewsTableViewController.m; sourceTree = "<group>"; };
 		CF68EAED1A691A29009BF032 /* RSSReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSSReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF68EB061A691A29009BF032 /* RSSReaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSSReaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF68EB0B1A691A29009BF032 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -250,9 +256,21 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		CF6C57B21AA4545300B8C91E /* СottageNews */ = {
+			isa = PBXGroup;
+			children = (
+				CF41302C1AA455A500093C26 /* CottageNewsTableViewCell.h */,
+				CF41302D1AA455A500093C26 /* CottageNewsTableViewCell.m */,
+				CF41302E1AA455A500093C26 /* CottageNewsTableViewController.h */,
+				CF41302F1AA455A500093C26 /* CottageNewsTableViewController.m */,
+			);
+			name = "СottageNews";
+			sourceTree = "<group>";
+		};
 		CFD95B001A7768BC00A894B3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				CF6C57B21AA4545300B8C91E /* СottageNews */,
 				CFD95B521A78499300A894B3 /* DataModel */,
 				CFD95B011A7768BC00A894B3 /* AppDelegate */,
 				CF21E25D1A9357E1006CEACB /* ProviderDataMedel */,
@@ -453,10 +471,12 @@
 				CF21E24D1A934FB2006CEACB /* NewsItem.m in Sources */,
 				CF21E23C1A934689006CEACB /* NewsContentViewController.m in Sources */,
 				CFFC9E491AA0B05D00982BE8 /* NewsItemPersistence.m in Sources */,
+				CF4130311AA455A500093C26 /* CottageNewsTableViewController.m in Sources */,
 				CF21E23B1A934689006CEACB /* NewsFeedList.m in Sources */,
 				CF21E2381A934689006CEACB /* NewsFeedTableViewCell.m in Sources */,
 				CF21E24A1A934F9F006CEACB /* NewsFeed.m in Sources */,
 				CF21E2341A934689006CEACB /* DownloadAndParseNewsOperation.m in Sources */,
+				CF4130301AA455A500093C26 /* CottageNewsTableViewCell.m in Sources */,
 				CF21E2361A934689006CEACB /* NewsForegroundDownloader.m in Sources */,
 				CFFC9E461AA0B05D00982BE8 /* NewsFeedPersistence.m in Sources */,
 				CFD95B2E1A7768BC00A894B3 /* main.m in Sources */,

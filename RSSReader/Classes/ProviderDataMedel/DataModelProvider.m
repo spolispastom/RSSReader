@@ -134,6 +134,8 @@ static DataModelProvider *sharedProviderDataMedel_ = nil;
                 
                 newsItem.persistenceId = entityItem.objectID.URIRepresentation.absoluteString;
                 
+                newsItem.newsFeed = newsFeed;
+                
                 newsItem.isRead = [entityItem.isRead boolValue];
                 newsItem.isPin = [entityItem.pin boolValue];
                 [newsItems addObject:newsItem];

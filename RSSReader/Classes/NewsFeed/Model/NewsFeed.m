@@ -99,6 +99,7 @@ NSString const * NewsFeedDidChangeNotificationNumberOfNewNewsKey = @"NewsFeedDid
                 }
             }            
             if (!isContains){
+                item.newsFeed = self;
                 [newNewsItems addObject:item];
             }
             if ([readingNews containsObject:item.url]){
