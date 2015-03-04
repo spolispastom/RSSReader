@@ -24,6 +24,6 @@ extern NSString const * NewsItemDidReadNotification;
 @property (weak, nonatomic) NewsFeed* newsFeed;
 @property (nonatomic, copy) NSString *persistenceId;
 
-- (instancetype) initWithTitle: (NSString*) title andCreationDate: (NSDate*) creationDate andContent: (NSString *) content andUrl: (NSURL*) url;
+- (instancetype) initWithTitle: (NSString*) title andCreationDate: (NSDate*) creationDate andContent: (NSString *) content andUrl: (NSURL*) url andPin: (BOOL) pin;
 
 @end

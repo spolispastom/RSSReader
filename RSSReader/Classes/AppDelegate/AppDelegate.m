@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "NewsFeedTableViewController.h"
+#import "CottageNewsTableViewController.h"
 
 @interface AppDelegate ()
 
@@ -31,7 +32,9 @@
     NSTimeInterval interval = UIApplicationBackgroundFetchIntervalMinimum;
     [application setMinimumBackgroundFetchInterval: interval];
     
-    UINavigationController * navigation = (UINavigationController *)self.window.rootViewController;
+    UITabBarController * mainTabBarController = (UITabBarController *)self.window.rootViewController;
+    
+    UINavigationController * navigation = (UINavigationController *)mainTabBarController.viewControllers[0];
     
     _newsFeedList = (NewsFeedTableViewController *)[navigation topViewController];
     
@@ -43,6 +46,14 @@
     {
         [newsFeed update];
     }
+    
+    //CottageNewsTableViewController * cottageNewsTable = (CottageNewsTableViewController *)mainTabBarController.viewControllers[1];
+    
+    UINavigationController * cottageNewsTableNavigation = (UINavigationController *)mainTabBarController.viewControllers[1];
+    
+    CottageNewsTableViewController * cottageNewsTable = (CottageNewsTableViewController *)[cottageNewsTableNavigation topViewController];
+    
+    cottageNewsTable.newsFeedList = _sourse;
     
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]){
         [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];

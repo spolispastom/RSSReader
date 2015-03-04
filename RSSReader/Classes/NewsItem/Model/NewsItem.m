@@ -14,8 +14,8 @@ NSString const * NewsItemDidReadNotification = @"NewsItemDidReadNotification";
 
 @implementation NewsItem
 
-- (instancetype) initWithTitle: (NSString*) title andCreationDate: (NSDate*) creationDate andContent: (NSString *) content andUrl: (NSURL*) url
-{
+- (instancetype) initWithTitle: (NSString*) title andCreationDate: (NSDate*) creationDate andContent: (NSString *) content andUrl: (NSURL*) url andPin: (BOOL) pin{
+
     self = [super init];
     
     _title = title;
@@ -23,6 +23,7 @@ NSString const * NewsItemDidReadNotification = @"NewsItemDidReadNotification";
     _content = content;
     _url = url;
     _isRead = NO;
+    _isPin = pin;
     
     return self;
 }
@@ -30,7 +31,7 @@ NSString const * NewsItemDidReadNotification = @"NewsItemDidReadNotification";
 - (void) setIsRead: (BOOL) isRead{
     _isRead = isRead;
     if (isRead) {
-        [[DataModelProvider instance] readNewsItem:self completionBlock:^(NSError *error) {
+        [[DataModelProvider instance] updateNewsItem:self completionBlock:^(NSError *error) {
             if (error == nil){
                 _isRead = YES;
             }
@@ -41,7 +42,7 @@ NSString const * NewsItemDidReadNotification = @"NewsItemDidReadNotification";
 
 -(void) setIsPin: (BOOL) isPin{
     _isPin = isPin;
-    [[DataModelProvider instance] changeNewsItemPin:self completionBlock:^(NSError *error) {
+    [[DataModelProvider instance] updateNewsItem:self completionBlock:^(NSError *error) {
         if (error == nil){
             _isPin = isPin;
         }

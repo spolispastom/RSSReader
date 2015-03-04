@@ -55,7 +55,7 @@
     
     _newsFeedListAddNewsFeedObserver = [[NSNotificationCenter defaultCenter] addObserverForName: (NSString*)NewsFeedListAddNewsFeedNotification object:sourse queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         
-        _newsFeeds = _newsFeedList.newsFeeds;
+        _newsFeeds = [NSArray arrayWithArray: _newsFeedList.newsFeeds];
         [self.tableView reloadData];
     }];
     
@@ -92,7 +92,7 @@
                                             withRowAnimation:UITableViewRowAnimationAutomatic];
                 }
             }
-            _newsFeeds = _newsFeedList.newsFeeds;
+            _newsFeeds = [NSArray arrayWithArray: _newsFeedList.newsFeeds];
             [[self tableView]endUpdates];
         }
     }];
@@ -191,9 +191,6 @@
         NewsFeed * item = [_newsFeeds objectAtIndex: [self.tableView indexPathForCell:sender].row];
         newsContent.newsFeed = item;
         //[sourse update];
-    } else if ([[navigation topViewController] isKindOfClass:[CottageNewsTableViewController class]]){
-        CottageNewsTableViewController * newsContent = (CottageNewsTableViewController *)[navigation topViewController];
-        newsContent.newsFeedList = _newsFeedList;
     }else if ([[navigation topViewController] isKindOfClass:[AddNewsFeedViewController class]]){
         AddNewsFeedViewController * addNewsSource = (AddNewsFeedViewController *)[navigation topViewController];
         _addNewsFeedObserver = [[NSNotificationCenter defaultCenter] addObserverForName:(NSString*)AddNewsFeedViewControllerCompliteNotification object:addNewsSource queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {

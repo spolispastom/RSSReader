@@ -130,14 +130,14 @@ static DataModelProvider *sharedProviderDataMedel_ = nil;
                 NewsItem * newsItem = [[NewsItem alloc]initWithTitle:entityItem.title
                                                      andCreationDate:entityItem.creationDate
                                                           andContent:entityItem.content
-                                                              andUrl:[NSURL URLWithString:entityItem.link]];
+                                                              andUrl:[NSURL URLWithString:entityItem.link]
+                                                              andPin:[entityItem.pin boolValue]];
                 
                 newsItem.persistenceId = entityItem.objectID.URIRepresentation.absoluteString;
                 
                 newsItem.newsFeed = newsFeed;
                 
                 newsItem.isRead = [entityItem.isRead boolValue];
-                newsItem.isPin = [entityItem.pin boolValue];
                 [newsItems addObject:newsItem];
             }
             newsFeed.newsItems = [newsItems allObjects];
@@ -310,7 +310,7 @@ static DataModelProvider *sharedProviderDataMedel_ = nil;
     } ];
 }
 
--(void) readNewsItem: (NewsItem *) newsItem
+-(void) updateNewsItem: (NewsItem *) newsItem
      completionBlock: (void (^)(NSError *error))completionBlock{
     NSManagedObjectContext * context = [self managedObjectContext];
     [ context performBlockAndWait:^{
@@ -321,48 +321,8 @@ static DataModelProvider *sharedProviderDataMedel_ = nil;
             NSManagedObjectID *objectId = [_persistentStoreCoordinator managedObjectIDForURIRepresentation:persistentUTI];
             if(objectId != nil) {
                 NewsItemPersistence * persistenceNewsItem = (NewsItemPersistence*)[context objectWithID:objectId];
-                persistenceNewsItem.isRead = [NSNumber numberWithBool:YES];
                 
-                [context save:&error];
-                
-                newsItem.persistenceId = persistenceNewsItem.objectID.URIRepresentation.absoluteString;
-                
-                if (completionBlock != nil){
-                    if (error){
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            completionBlock([[NSError alloc]initWithDomain:@"DataModelProviderError"
-                                                                      code:DataModelProviderErrorSaving
-                                                                  userInfo:error.userInfo]);
-                        });
-                    } else {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            completionBlock(nil);
-                        });
-                    }
-                }
-            } else if (completionBlock != nil) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completionBlock([[NSError alloc]initWithDomain:@"DataModelProviderError"
-                                                              code:DataModelProviderErrorNewsFeedNotFound
-                                                          userInfo:nil]);
-                });
-            }
-        }
-    }];
-    
-}
-
--(void) changeNewsItemPin: (NewsItem *) newsItem
-      completionBlock: (void (^)(NSError *error))completionBlock{
-    NSManagedObjectContext * context = [self managedObjectContext];
-    [ context performBlockAndWait:^{
-        NSError *error = nil;
-        
-        NSURL *persistentUTI = [NSURL URLWithString:newsItem.persistenceId];
-        if (persistentUTI != nil){
-            NSManagedObjectID *objectId = [_persistentStoreCoordinator managedObjectIDForURIRepresentation:persistentUTI];
-            if(objectId != nil) {
-                NewsItemPersistence * persistenceNewsItem = (NewsItemPersistence*)[context objectWithID:objectId];
+                persistenceNewsItem.isRead = [NSNumber numberWithBool:newsItem.isRead];
                 persistenceNewsItem.pin = [NSNumber numberWithBool:newsItem.isPin];
                 
                 [context save:&error];

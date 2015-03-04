@@ -54,7 +54,7 @@
             _titleLable.text = _newsItem.title;
             
             self.dateLable.text = [_defaultDateFormatter stringFromDate:_newsItem.creationDate];
-            
+
             [self.contentWebVew loadHTMLString:[NSString stringWithFormat:@"<p style=\"font-size: 16px; font-family: Arial; text-align: justify; margin: 0px;\">%@<p>", _newsItem.content] baseURL:nil];
             
             _pinButton.selected = _newsItem.isPin;

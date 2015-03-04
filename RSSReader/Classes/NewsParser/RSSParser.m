@@ -139,7 +139,8 @@
         NewsItem * item = [[NewsItem alloc] initWithTitle:_title
                                           andCreationDate:_creationDate
                                                andContent:_content
-                                                   andUrl:[NSURL URLWithString:_linkString]];
+                                                   andUrl:[NSURL URLWithString:_linkString]
+                                                   andPin:NO];
         [_newsList addObject:item];
         
         _title = @"";
