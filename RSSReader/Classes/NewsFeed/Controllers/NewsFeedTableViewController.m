@@ -15,6 +15,7 @@
 
 @interface NewsFeedTableViewController ()
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
 @property (strong, nonatomic) id<NSObject> newsFeedListAddNewsFeedObserver;
 @property (strong, nonatomic) id<NSObject> newsFeedListAddNewsFeedFailObserver;
@@ -28,6 +29,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
     }
 
 - (void)didReceiveMemoryWarning {
@@ -184,15 +187,18 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UINavigationController * navigation = [segue destinationViewController];
+    navigation.hidesBottomBarWhenPushed = YES;
+    
     if ([[navigation topViewController] isKindOfClass:[NewsListViewController class]])
     {
         NewsListViewController * newsContent = (NewsListViewController *)[navigation topViewController];
-        
+       
         NewsFeed * item = [_newsFeeds objectAtIndex: [self.tableView indexPathForCell:sender].row];
         newsContent.newsFeed = item;
         //[sourse update];
     }else if ([[navigation topViewController] isKindOfClass:[AddNewsFeedViewController class]]){
         AddNewsFeedViewController * addNewsSource = (AddNewsFeedViewController *)[navigation topViewController];
+        
         _addNewsFeedObserver = [[NSNotificationCenter defaultCenter] addObserverForName:(NSString*)AddNewsFeedViewControllerCompliteNotification object:addNewsSource queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
             if (addNewsSource.itemURL!= nil){
                 [_newsFeedList addNewsFeed: addNewsSource.itemURL];

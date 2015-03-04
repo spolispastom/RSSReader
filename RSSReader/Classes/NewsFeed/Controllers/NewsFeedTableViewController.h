@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "NewsFeedList.h"
 
-@interface NewsFeedTableViewController : UITableViewController 
+@interface NewsFeedTableViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, setter=setNewsFeedList:) NewsFeedList * newsFeedList;
 

@@ -204,10 +204,12 @@
 - (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
 {
     UINavigationController * navigation = [segue destinationViewController];
+    navigation.hidesBottomBarWhenPushed = YES;
+    
     if ([[navigation topViewController] isKindOfClass:[NewsContentViewController class]])
     {
         NewsContentViewController * newsContent = (NewsContentViewController *)[navigation topViewController];
-        
+       
         NewsItem * item = [_newsItems objectAtIndex: [[self tableView] indexPathForCell:sender].row];
         item.isRead = YES;
         [newsContent setNewsItem: item];

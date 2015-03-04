@@ -60,6 +60,7 @@
     }
     
     _window.tintColor = [UIColor blueColor];
+    _window.backgroundColor = [UIColor whiteColor];
     
     return YES;
 }

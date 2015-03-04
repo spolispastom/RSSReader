@@ -23,6 +23,8 @@
 		CF4130301AA455A500093C26 /* CottageNewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CF41302D1AA455A500093C26 /* CottageNewsTableViewCell.m */; };
 		CF4130311AA455A500093C26 /* CottageNewsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CF41302F1AA455A500093C26 /* CottageNewsTableViewController.m */; };
 		CF68EB0D1A691A29009BF032 /* RSSReaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CF68EB0C1A691A29009BF032 /* RSSReaderTests.m */; };
+		CFAAE4581AA711FE00AEA83B /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = CFAAE4571AA711FE00AEA83B /* MainTabBarController.m */; };
+		CFAAE45B1AA71D1700AEA83B /* AnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = CFAAE45A1AA71D1700AEA83B /* AnimatedTransitioning.m */; };
 		CFD95B221A7768BC00A894B3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CFD95B031A7768BC00A894B3 /* AppDelegate.m */; };
 		CFD95B2A1A7768BC00A894B3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFD95B1A1A7768BC00A894B3 /* Images.xcassets */; };
 		CFD95B2B1A7768BC00A894B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CFD95B1C1A7768BC00A894B3 /* Main.storyboard */; };
@@ -81,6 +83,10 @@
 		CF68EB061A691A29009BF032 /* RSSReaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSSReaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF68EB0B1A691A29009BF032 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF68EB0C1A691A29009BF032 /* RSSReaderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSSReaderTests.m; sourceTree = "<group>"; };
+		CFAAE4561AA711FE00AEA83B /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
+		CFAAE4571AA711FE00AEA83B /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
+		CFAAE4591AA71D1700AEA83B /* AnimatedTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedTransitioning.h; sourceTree = "<group>"; };
+		CFAAE45A1AA71D1700AEA83B /* AnimatedTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedTransitioning.m; sourceTree = "<group>"; };
 		CFD95B021A7768BC00A894B3 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CFD95B031A7768BC00A894B3 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		CFD95B1A1A7768BC00A894B3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -145,6 +151,10 @@
 				CF21E21B1A934689006CEACB /* NewsFeedTableViewCell.m */,
 				CF21E21C1A934689006CEACB /* NewsFeedTableViewController.h */,
 				CF21E21D1A934689006CEACB /* NewsFeedTableViewController.m */,
+				CFAAE4561AA711FE00AEA83B /* MainTabBarController.h */,
+				CFAAE4571AA711FE00AEA83B /* MainTabBarController.m */,
+				CFAAE4591AA71D1700AEA83B /* AnimatedTransitioning.h */,
+				CFAAE45A1AA71D1700AEA83B /* AnimatedTransitioning.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -475,7 +485,9 @@
 				CF21E23B1A934689006CEACB /* NewsFeedList.m in Sources */,
 				CF21E2381A934689006CEACB /* NewsFeedTableViewCell.m in Sources */,
 				CF21E24A1A934F9F006CEACB /* NewsFeed.m in Sources */,
+				CFAAE4581AA711FE00AEA83B /* MainTabBarController.m in Sources */,
 				CF21E2341A934689006CEACB /* DownloadAndParseNewsOperation.m in Sources */,
+				CFAAE45B1AA71D1700AEA83B /* AnimatedTransitioning.m in Sources */,
 				CF4130301AA455A500093C26 /* CottageNewsTableViewCell.m in Sources */,
 				CF21E2361A934689006CEACB /* NewsForegroundDownloader.m in Sources */,
 				CFFC9E461AA0B05D00982BE8 /* NewsFeedPersistence.m in Sources */,
@@ -592,6 +604,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "RSSReader/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -602,6 +615,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "RSSReader/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
